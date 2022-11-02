@@ -28,7 +28,7 @@ Verify the server runs:
 python manage.py runserver
 ```
 
-Visit the 
+Visit the local host URL to see the server running. 
 ## Frontend
 
 Download and set up npm and Node.js:
@@ -43,6 +43,6 @@ You can ignore any vulnerablitity issues for now. To validate the installation, 
 ```
 npm start
 ```
-
+See the URL printed out in console to see the React basic app. 
 To learn more about React see the auto-generated `README` in the `frontend` directory.
 

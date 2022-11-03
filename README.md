@@ -46,3 +46,16 @@ npm start
 See the URL printed out in console to see the React basic app. 
 To learn more about React see the auto-generated `README` in the `frontend` directory.
 
+## Docker
+
+Docker is a lightweight container (think of a virtual machine but with less overhead). You can use docker to run applications on consistent environments. 
+
+To get started download Docker Desktop: https://www.docker.com/products/docker-desktop/
+
+To run the entire application in the main directory, outside of `backend` and `frontend`:
+
+```
+docker-compose build
+docker-compose up
+```
+

@@ -2,7 +2,7 @@
 
 ## Backend
 
-On the command line, navigate to the `backend` directory. Create a new Python environment in your choice - either Anaconda or virtualenv with Python version as 3.8.5. 
+On the command line, navigate to the `backend` directory. Create a new Python environment in your choice — either Anaconda or virtualenv with Python version as 3.8.5. 
 
 Install the dependencies (inside the `backend` directory):
 ```
@@ -12,7 +12,7 @@ pip install -r requirements.txt
 Create a `.env` file inside the `backend` in the following format:
 
 ```
-SECRET_KEY='...'
+SECRET_KEY='...'S
 DB_USER='YOUR POSTGRES USERNAME'
 DB_PASSWORD='YOUR POSTGRES PASSWORD'
 ```

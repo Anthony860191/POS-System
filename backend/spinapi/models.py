@@ -123,63 +123,67 @@ class DjangoSession(models.Model):
 
 
 class Ingredients(models.Model):
-    ingredient_name = models.CharField(primary_key=True, max_length=-1)
-    quantity = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
-    units = models.CharField(max_length=-1, blank=True, null=True)
-    ingr_type = models.CharField(max_length=-1, blank=True, null=True)
-    usage_value = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    ingredient_name = models.CharField(primary_key=True, max_length=100)
+    quantity = models.DecimalField(max_digits=65535, decimal_places=2, blank=True, null=True)
+    units = models.CharField(max_length=100, blank=True, null=True)
+    ingr_type = models.CharField(max_length=100, blank=True, null=True)
+    usage_value = models.DecimalField(max_digits=65535, decimal_places=2, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'ingredients'
+        verbose_name_plural = "ingredients"
 
 
 class Menu(models.Model):
-    menu_item = models.CharField(primary_key=True, max_length=-1)
-    item_type = models.CharField(max_length=-1, blank=True, null=True)
-    price = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
-    topping1 = models.CharField(max_length=-1, blank=True, null=True)
-    topping2 = models.CharField(max_length=-1, blank=True, null=True)
-    topping3 = models.CharField(max_length=-1, blank=True, null=True)
-    topping4 = models.CharField(max_length=-1, blank=True, null=True)
-    sauce = models.CharField(max_length=-1, blank=True, null=True)
-    drizzle = models.CharField(max_length=-1, blank=True, null=True)
-    cheese_type = models.CharField(max_length=-1, blank=True, null=True)
-    default_crust = models.CharField(max_length=-1, blank=True, null=True)
+    menu_item = models.CharField(primary_key=True, max_length=100)
+    item_type = models.CharField(max_length=100, blank=True, null=True)
+    price = models.DecimalField(max_digits=65535, decimal_places=2, blank=True, null=True)
+    topping1 = models.CharField(max_length=100, blank=True, null=True)
+    topping2 = models.CharField(max_length=100, blank=True, null=True)
+    topping3 = models.CharField(max_length=100, blank=True, null=True)
+    topping4 = models.CharField(max_length=100, blank=True, null=True)
+    sauce = models.CharField(max_length=100, blank=True, null=True)
+    drizzle = models.CharField(max_length=100, blank=True, null=True)
+    cheese_type = models.CharField(max_length=100, blank=True, null=True)
+    default_crust = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'menu'
+        verbose_name_plural = "menu items"
 
 
 class Orders(models.Model):
     order_date = models.DateField(blank=True, null=True)
-    price = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
-    payment_type = models.CharField(max_length=-1, blank=True, null=True)
-    customer_name = models.CharField(max_length=-1, blank=True, null=True)
+    price = models.DecimalField(max_digits=65535, decimal_places=2, blank=True, null=True)
+    payment_type = models.CharField(max_length=100, blank=True, null=True)
+    customer_name = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'orders'
+        verbose_name_plural = "Orders"
 
 
 class Pizzas(models.Model):
     orderid = models.ForeignKey(Orders, models.DO_NOTHING, db_column='orderid', blank=True, null=True)
-    pizza_type = models.CharField(max_length=-1, blank=True, null=True)
-    cheese_type = models.CharField(max_length=-1, blank=True, null=True)
-    crust = models.CharField(max_length=-1, blank=True, null=True)
-    sauce = models.CharField(max_length=-1, blank=True, null=True)
-    drizzle = models.CharField(max_length=-1, blank=True, null=True)
-    drink = models.CharField(max_length=-1, blank=True, null=True)
-    topping1 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping1', blank=True, null=True)
-    topping2 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping2', blank=True, null=True)
-    topping3 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping3', blank=True, null=True)
-    topping4 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping4', blank=True, null=True)
-    price = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    pizza_type = models.CharField(max_length=100, blank=True, null=True)
+    cheese_type = models.CharField(max_length=100, blank=True, null=True)
+    crust = models.CharField(max_length=100, blank=True, null=True)
+    sauce = models.CharField(max_length=100, blank=True, null=True)
+    drizzle = models.CharField(max_length=100, blank=True, null=True)
+    drink = models.CharField(max_length=100, blank=True, null=True)
+    topping1 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping1', blank=True, null=True, related_name='ingredient_name1')
+    topping2 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping2', blank=True, null=True, related_name='ingredient_name2')
+    topping3 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping3', blank=True, null=True, related_name='ingredient_name3')
+    topping4 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping4', blank=True, null=True, related_name='ingredient_name4')
+    price = models.DecimalField(max_digits=65535, decimal_places=2, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'pizzas'
+        verbose_name_plural = "pizzas"
 
 
 class Teammembers(models.Model):
@@ -194,7 +198,7 @@ class Teammembers(models.Model):
 
 
 class Test(models.Model):
-    id = models.IntegerField(blank=True, null=True)
+    t = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

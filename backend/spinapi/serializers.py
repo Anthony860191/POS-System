@@ -34,4 +34,7 @@ class IngredientSerializer(serializers.HyperlinkedModelSerializer):
 
 class PriceSerializer(serializers.Serializer):
     price = serializers.DecimalField(max_digits=4,decimal_places=2)
-    
+
+class AvailableIngredientsSerializer(serializers.Serializer):
+    ingredient_name = serializers.CharField(max_length=100)
+    ingr_type = serializers.CharField(max_length=100)

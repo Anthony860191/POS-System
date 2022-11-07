@@ -12,7 +12,7 @@ pip install -r requirements.txt
 Create a `.env` file inside the `backend` in the following format:
 
 ```
-SECRET_KEY='...'S
+SECRET_KEY='...'
 DB_USER='YOUR POSTGRES USERNAME'
 DB_PASSWORD='YOUR POSTGRES PASSWORD'
 ```

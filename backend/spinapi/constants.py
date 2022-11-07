@@ -5,7 +5,7 @@ DB_NAME = 'csce315_904_41'
 
 # SQL queries
 GET_PRICE_QUERY = 'SELECT * FROM get_price_of_pizza({},{},{});'
-
+SELECT_FROM_AVAILABLE_TOPPINGS = 'SELECT * FROM available_toppings;'
 
 # Helper functions
 

@@ -30,3 +30,8 @@ class IngredientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ingredients
         fields = [f.name for f in Ingredients._meta.get_fields()][4:]
+    
+
+class PriceSerializer(serializers.Serializer):
+    price = serializers.DecimalField(max_digits=4,decimal_places=2)
+    

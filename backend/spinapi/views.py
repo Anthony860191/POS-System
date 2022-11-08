@@ -29,10 +29,20 @@ class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredients.objects.all().order_by('ingredient_name')
     serializer_class = IngredientSerializer
 
+
     def get_queryset(self):
+        # only one parameter allowed for now
+
+        # extract queries
         ingr_type = self.request.query_params.get('ingr_type')
+        ingredient_name = self.request.query_params.get('ingredient_name')
+
+        # `if variable` basically checks if variable is not null
         if ingr_type:
             return Ingredients.objects.filter(ingr_type=ingr_type).order_by('ingredient_name')
+        if ingredient_name:
+            return Ingredients.objects.filter(ingredient_name=ingredient_name)
+
         return Ingredients.objects.all().order_by('ingredient_name')
 
 

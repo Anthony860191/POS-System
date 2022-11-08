@@ -18,6 +18,15 @@ class PizzaViewSet(viewsets.ModelViewSet):
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Orders.objects.all().order_by('id')
     serializer_class = OrderSerializer
+    
+
+    def get_queryset(self):
+        get_latest = self.request.query_params.get('latest')
+        if get_latest:
+            return Orders.objects.all().order_by('-id')[:1]
+        return Orders.objects.all().order_by('id')
+    
+
 
 
 class MenuViewSet(viewsets.ModelViewSet):

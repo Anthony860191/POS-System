@@ -17,7 +17,8 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Orders
         # skip meta field for many to one relation 
-        fields = [f.name for f in Orders._meta.get_fields()][1:]
+        fields = [f.name for f in Orders._meta.get_fields()]
+        print(fields)
         
 
 class MenuSerializer(serializers.HyperlinkedModelSerializer):

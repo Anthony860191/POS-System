@@ -1,7 +1,6 @@
 import React from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Customer from "./Customer";
 import Manager from "./Manager";
@@ -11,23 +10,18 @@ import { Routes, Route, Link } from 'react-router-dom';
 export function MenuBar() {
     return (
         <>
-            <Container>
-                <Navbar>
-                    <Container>
-                        <Navbar.Brand href="">Spin 'n Stone Pizza</Navbar.Brand>
-                        <Nav className="me-auto">
-                            <Nav.Item eventKey={1} href="/">
-                                <Nav.Link as={Link} to="/" >Home</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item eventKey={2} href="/Customer">
-                                <Nav.Link as={Link} to="/Customer" >Customer</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item eventKey={3} href="/Manager">
-                                <Nav.Link as={Link} to="/Manager" >Manager</Nav.Link>
-                            </Nav.Item>
-                        </Nav>
-                    </Container>
-                </Navbar>
+            <Container className="bg-white border-0">
+                    <Nav variant="pills" defaultActiveKey="/">
+                        <Nav.Item>
+                            <Nav.Link as={Link} to="/" href="/">Home</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link as={Link} to="/Customer" href="/Customer">Customer</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link as={Link} to="/Manager" href="Manager">Manager</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
             </Container>
             <Routes>
                 <Route exact path='/' />

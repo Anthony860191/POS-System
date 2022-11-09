@@ -148,6 +148,9 @@ function Tabs() {
             }}
           />
           <h3>Total Price: $0.00</h3>
+          <Button variant="contained" sx= {{m: 1}}> Credit Card</Button> 
+          <Button variant="contained" sx= {{m: 1}}> Debit Card</Button>
+          <Button variant="contained" sx= {{m: 1}}> Meal Swipes</Button>
       </Popup>
     </div>
   );

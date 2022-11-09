@@ -86,6 +86,8 @@ function Tabs() {
           <hr />
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>Zesty Red</Button>
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>Alfredo</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>Traditional Pizza Sauce</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>No Sauce</Button>
         </div>
 
         <div
@@ -106,20 +108,30 @@ function Tabs() {
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Black Forest Ham</Button>
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Black Olives</Button>
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Broccoli</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Bacon</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Green Peppers</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Italian Sausage</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Jalapenos</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Meatballs</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Mushrooms</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Pineapple</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Red Onions</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Roasted Garlic</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Smoked Chicken</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Spinach</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={toppingHandleClick}>Tomatoes</Button>
         </div>
         <div
           className={toggleState === 5 ? "content  active-content" : "content"}
         >
           <h2>Select your Drizzle</h2>
           <hr />
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>No Drizzle</Button>
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>BBQ Sauce</Button>
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Ranch</Button>
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Balsamic Glaze</Button>
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Sriracha</Button>
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Olive Oil</Button>
           <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Oregano</Button>
+          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>No Drizzle</Button>
 
         </div>
       </div>
@@ -135,7 +147,7 @@ function Tabs() {
               setName(e.target.value);
             }}
           />
-          <h3>Your Entered Value is: {name}</h3>
+          <h3>Total Price: $0.00</h3>
       </Popup>
     </div>
   );

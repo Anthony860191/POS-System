@@ -461,6 +461,11 @@ function ManagerTabs() {
                     <hr/>
                     <table>
                         <tr>
+                            <th>Ingredient Name</th>
+                            <th>Current Amount</th>
+                            <th>Alter Inventory</th>
+                        </tr>
+                        <tr>
                             <td>House Blend</td>
                             <td>0</td>
 
@@ -498,6 +503,13 @@ function ManagerTabs() {
                     <h2>CRUST</h2>
                     <hr/>
                     <table>
+                        <tr>
+                            <th>Ingredient Name</th>
+                            <th>Current Amount</th>
+                            <th>Alter Inventory</th>
+                        </tr>
+                        <th>
+                        </th>
                         <tr>
                             <td>Regular</td>
                             <td>0</td>

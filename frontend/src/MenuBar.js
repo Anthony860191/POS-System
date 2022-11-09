@@ -16,7 +16,7 @@ export function MenuBar() {
                     <Container>
                         <Navbar.Brand href="">Spin 'n Stone Pizza</Navbar.Brand>
                         <Nav className="me-auto">
-                        <Nav.Item eventKey={2} href="/">
+                            <Nav.Item eventKey={1} href="/">
                                 <Nav.Link as={Link} to="/" >Home</Nav.Link>
                             </Nav.Item>
                             <Nav.Item eventKey={2} href="/Customer">

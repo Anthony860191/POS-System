@@ -63,11 +63,12 @@ function ManagerTabs() {
                     <table>
                         <tr>
                             <th>Ingredient Name</th>
-
+                            <th>Current Amount</th>
                             <th>Alter Inventory</th>
                         </tr>
                         <tr>
                             <td>Banana Peppers</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -80,6 +81,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Brocolli</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -92,6 +94,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Cauliflower</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -104,6 +107,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Green Peppers</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -116,6 +120,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Jalapenos</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -128,6 +133,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Mushrooms</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -140,6 +146,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Onions</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -152,6 +159,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Pineapple</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -164,6 +172,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Roasted Garlic</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -176,6 +185,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Spinach</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -188,6 +198,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Tomatoes</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -210,11 +221,12 @@ function ManagerTabs() {
                     <table>
                         <tr>
                             <th>Ingredient Name</th>
-
+                            <th>Current Amount</th>
                             <th>Alter Inventory</th>
                         </tr>
                         <tr>
                             <td>Black Forest Ham</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -227,6 +239,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Diced Ham</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -239,6 +252,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Italian Sausage</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -251,6 +265,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Meatball</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -263,6 +278,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Pepperoni</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -275,6 +291,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Salami</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -287,6 +304,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Smoked Chicken</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -305,14 +323,15 @@ function ManagerTabs() {
                 >
                     <h2>SAUCE</h2>
                     <hr/>
-                   <table>
+                    <table>
                         <tr>
                             <th>Ingredient Name</th>
-
+                            <th>Current Amount</th>
                             <th>Alter Inventory</th>
                         </tr>
                         <tr>
                             <td>Alfredo</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -325,6 +344,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Traditional BBQ</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -337,6 +357,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Zesty Red</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -355,14 +376,16 @@ function ManagerTabs() {
                 >
                     <h2>DRIZZLE</h2>
                     <hr/>
-                   <table>
+                    <table>
                         <tr>
                             <th>Ingredient Name</th>
-
+                            <th>Current Amount</th>
                             <th>Alter Inventory</th>
                         </tr>
                         <tr>
                             <td>BBQ Sauce</td>
+                            <td>0</td>
+
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -375,6 +398,8 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Olive Oil</td>
+                            <td>0</td>
+
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -387,6 +412,8 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Oregano</td>
+                            <td>0</td>
+
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -399,6 +426,8 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Ranch</td>
+                            <td>0</td>
+
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -411,6 +440,7 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Sriracha</td>
+                            <td>0</td>
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -430,8 +460,10 @@ function ManagerTabs() {
                     <h2>CHEESE</h2>
                     <hr/>
                     <table>
-                                                <tr>
+                        <tr>
                             <td>House Blend</td>
+                            <td>0</td>
+
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -444,6 +476,8 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Parmesan</td>
+                            <td>0</td>
+
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -466,6 +500,8 @@ function ManagerTabs() {
                     <table>
                         <tr>
                             <td>Regular</td>
+                            <td>0</td>
+
                             <td>
                                 <input
                                     onKeyPress={(event) => {
@@ -478,6 +514,8 @@ function ManagerTabs() {
                         </tr>
                         <tr>
                             <td>Parmesan</td>
+                            <td>0</td>
+
                             <td>
                                 <input
                                     onKeyPress={(event) => {

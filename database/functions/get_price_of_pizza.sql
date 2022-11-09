@@ -6,6 +6,7 @@ AS
     DECLARE
         current_price numeric;
     BEGIN
+        current_price := 0.00;
         current_price := (SELECT price FROM menu WHERE pizzatype = menu_item);
         current_price := current_price + (SELECT price FROM menu where crusttype = menu_item);
 

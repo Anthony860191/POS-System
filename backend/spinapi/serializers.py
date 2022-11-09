@@ -17,7 +17,8 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Orders
         # skip meta field for many to one relation 
-        fields = [f.name for f in Orders._meta.get_fields()][1:]
+        fields = [f.name for f in Orders._meta.get_fields()]
+        print(fields)
         
 
 class MenuSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,7 +27,16 @@ class MenuSerializer(serializers.HyperlinkedModelSerializer):
         fields = [f.name for f in Menu._meta.get_fields()]
 
 
-class IngredientSerializer(serializers.HyperlinkedModelSerializer):
+class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredients
-        fields = [f.name for f in Ingredients._meta.get_fields()][4:]
+        fields = [f.name for f in Ingredients._meta.get_fields()]
+    
+    
+
+class PriceSerializer(serializers.Serializer):
+    price = serializers.DecimalField(max_digits=4,decimal_places=2)
+
+class AvailableIngredientsSerializer(serializers.Serializer):
+    ingredient_name = serializers.CharField(max_length=100)
+    ingr_type = serializers.CharField(max_length=100)

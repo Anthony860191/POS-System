@@ -167,17 +167,17 @@ class Orders(models.Model):
 
 
 class Pizzas(models.Model):
-    orderid = models.ForeignKey(Orders, models.DO_NOTHING, db_column='orderid', blank=True, null=True)
+    orderid = models.IntegerField()
     pizza_type = models.CharField(max_length=100, blank=True, null=True)
     cheese_type = models.CharField(max_length=100, blank=True, null=True)
     crust = models.CharField(max_length=100, blank=True, null=True)
     sauce = models.CharField(max_length=100, blank=True, null=True)
     drizzle = models.CharField(max_length=100, blank=True, null=True)
     drink = models.CharField(max_length=100, blank=True, null=True)
-    topping1 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping1', blank=True, null=True, related_name='ingredient_name1')
-    topping2 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping2', blank=True, null=True, related_name='ingredient_name2')
-    topping3 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping3', blank=True, null=True, related_name='ingredient_name3')
-    topping4 = models.ForeignKey(Ingredients, models.DO_NOTHING, db_column='topping4', blank=True, null=True, related_name='ingredient_name4')
+    topping1 = models.CharField(max_length=100, blank=True, null=True)
+    topping2 = models.CharField(max_length=100, blank=True, null=True)
+    topping3 = models.CharField(max_length=100, blank=True, null=True)
+    topping4 = models.CharField(max_length=100, blank=True, null=True)
     price = models.DecimalField(max_digits=65535, decimal_places=2, blank=True, null=True)
 
     class Meta:

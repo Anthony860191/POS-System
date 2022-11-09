@@ -1,4 +1,4 @@
-import Tabs from './Tabs';
+import Tabs from './managerComponents/Tabs';
 
 const Manager = () => {
   return (

@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Customer from "./Customer";
 import Manager from "./Manager";
+import Home from "./Home";
 import { Routes, Route, Link } from 'react-router-dom';
 
 
@@ -11,9 +12,9 @@ export function MenuBar() {
     return (
         <>
             <Container className="bg-white border-0">
-                    <Nav variant="pills" defaultActiveKey="/">
+                    <Nav variant="pills" defaultActiveKey="/Home">
                         <Nav.Item>
-                            <Nav.Link as={Link} to="/" href="/">Home</Nav.Link>
+                            <Nav.Link as={Link} to="/" href="/Home">Home</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link as={Link} to="/Customer" href="/Customer">Customer</Nav.Link>
@@ -24,7 +25,7 @@ export function MenuBar() {
                     </Nav>
             </Container>
             <Routes>
-                <Route exact path='/' />
+                <Route exact path='/' element={<Home />}/>
                 <Route exact path='/Customer' element={<Customer />} />
                 <Route exact path='/Manager' element={<Manager />} />
                 <Route render={function () {

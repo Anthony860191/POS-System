@@ -1,10 +1,12 @@
 import './App.css';
-import {MenuBar} from "./MenuBar"
+import { MenuBar } from "./MenuBar";
 
 
 function App() {
   return (
-    <MenuBar />
+    <>
+      <MenuBar />
+    </>
   );
 }
 

@@ -1,14 +1,35 @@
-import { useState } from "react";
+import * as React from 'react';
+import { useEffect, useState } from "react";
 import "./Tabs.css";
 import Popup from './Popup';
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from  "@mui/material/Alert";
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 function Tabs() {
-    const [toggleState, setToggleState] = useState(1);
-    const [buttonPopup, setButtonPopup]= useState(false);
-    const [name, setName] = useState("");
+    const [toggleState, setToggleState] = useState(1); // function to switch between tabs
+    const [paymentPopup, setPaymentPopup]= useState(false); // function to open the payment popup
+    const [name, setName] = useState(""); // function to set the customers name
+    const [open, setOpen] = useState(false); // condition to show pizza added snackbar
 
+    const Alert = React.forwardRef(function Alert(props, ref) {
+      return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const handleClick = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+    
     const toggleTab = (index) => {
             setToggleState(index);
     };
@@ -135,8 +156,17 @@ function Tabs() {
 
         </div>
       </div>
-      <Button variant="contained" id = "completeOrder" onClick={() => setButtonPopup(true)}>Complete Order</Button>
-      <Popup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
+      <ButtonGroup size = "large" sx = {{m:1}}>
+        <Button variant="contained" color = "success" onClick={handleClick}>Add Pizza</Button>
+        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={{ width: '100%'}}>
+            Pizza Added
+          </Alert>
+        </Snackbar>
+        <Button variant="contained" color = "success" onClick={() => setPaymentPopup(true)}>Complete Order</Button>
+        <Button variant="contained" color = "error">Cancel Order</Button>
+      </ButtonGroup>
+      <Popup trigger = {paymentPopup} setTrigger = {setPaymentPopup}>
           <h3>Complete Order</h3>
           <TextField 
             sx = {{mt: 2,  mb: 2}}

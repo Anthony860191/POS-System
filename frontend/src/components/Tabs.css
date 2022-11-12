@@ -61,22 +61,19 @@
     border: none;
     
   }
-  #completeOrder {
-    border:rgb(42, 45, 50);
+  .completeOrder {
     background-color: rgb(151, 228, 112);
     color: black;
     font-size: 20px;
-    text-align: center;
     height: 50px;
     width: 250px;
     border-radius: 5px;
-    margin: 10px 10px;
     cursor: pointer;
   }
   .ingredientButton {
     height: 150px;
     width: 250px;
-    
+    font-size: 20px;
   }
   .content-tabs {
     flex-grow : 1;

@@ -6,6 +6,7 @@ import Customer from "./Customer";
 import Manager from "./Manager";
 import Home from "./Home";
 import { Routes, Route, Link } from 'react-router-dom';
+import VegetableManager from "./VegetableManager";
 
 
 export function MenuBar() {
@@ -22,12 +23,13 @@ export function MenuBar() {
                         <Nav.Item>
                             <Nav.Link as={Link} to="/Manager" href="Manager">Manager</Nav.Link>
                         </Nav.Item>
+                       
                     </Nav>
             </Container>
             <Routes>
                 <Route exact path='/' element={<Home />}/>
                 <Route exact path='/Customer' element={<Customer />} />
-                <Route exact path='/Manager' element={<Manager />} />
+                <Route exact path='/Manager' element={<Manager />} />        
                 <Route render={function () {
                     return <p>Not found</p>
                 }} />

@@ -3,6 +3,10 @@ import "./Tabs.css";
 import Popup from './Popup';
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
+import CustomerCrustSelection from "../CustomerCrustSelection";
+import CustomerSauceSelection from "../CustomerSauceSelecti";
+import CustomerCheeseSelection from "../CustomerCheeseSelection";
+import CustomerDrizzleSelection from "../CustomerDrizzleSelection";
 
 function Tabs() {
     const [toggleState, setToggleState] = useState(1);
@@ -13,25 +17,16 @@ function Tabs() {
             setToggleState(index);
     };
     
-    const crustHandleClick = () => {
-        alert("Selected Crust");
-    };
+   
 
-    const sauceHandleClick = () => {
-      alert("Selected Sauce");
-    };
+    
 
-    const cheeseHandleClick = () => {
-      alert("Selected Cheese");
-    };
-
+    
     const toppingHandleClick = () => {
       alert("Selected Toppings");
     };
 
-    const drizzleHandleClick = () => {
-      alert("Selected Drizzle");
-    };
+    
 
     return (
       <div className="container">
@@ -74,8 +69,7 @@ function Tabs() {
         >
           <h2>Select your Crust</h2>
           <hr />
-          <Button disableRipple variant="contained" sx= {{m: 1}} className="ingredientButton" onClick={crustHandleClick}>Cauliflower</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className="ingredientButton" onClick={crustHandleClick}>Regular</Button>
+        <CustomerCrustSelection></CustomerCrustSelection>
 
         </div>
 
@@ -84,10 +78,7 @@ function Tabs() {
         >
           <h2>Select your Sauce</h2>
           <hr />
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>Zesty Red</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>Alfredo</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>Traditional Pizza Sauce</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>No Sauce</Button>
+          <CustomerSauceSelection></CustomerSauceSelection>
         </div>
 
         <div
@@ -95,8 +86,7 @@ function Tabs() {
         >
           <h2>Select your Cheese</h2>
           <hr />
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={cheeseHandleClick}>Houseblend</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={cheeseHandleClick}>Parmesan</Button>
+        <CustomerCheeseSelection></CustomerCheeseSelection>
         </div>
         <div
           className={toggleState === 4 ? "content  active-content" : "content"}
@@ -125,14 +115,7 @@ function Tabs() {
         >
           <h2>Select your Drizzle</h2>
           <hr />
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>BBQ Sauce</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Ranch</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Balsamic Glaze</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Sriracha</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Olive Oil</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>Oregano</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={drizzleHandleClick}>No Drizzle</Button>
-
+        <CustomerDrizzleSelection></CustomerDrizzleSelection>
         </div>
       </div>
       <Button variant="contained" id = "completeOrder" onClick={() => setButtonPopup(true)}>Complete Order</Button>

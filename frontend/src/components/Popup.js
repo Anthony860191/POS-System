@@ -8,7 +8,7 @@ function Popup(props) {
             <div className = "popup-inner">
                 <Button 
                     variant = "contained" 
-                    sx = {{backgroundColor : 'red'}} 
+                    color = "error"
                     className = "close-btn" 
                     onClick={() => props.setTrigger(false)}
                 >Cancel</Button>

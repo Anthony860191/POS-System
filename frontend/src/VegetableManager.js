@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+
 class VegetableManager extends React.Component {
 
     // Constructor 
@@ -17,22 +18,23 @@ class VegetableManager extends React.Component {
         axios.get("http://localhost:8000/ingredients/?ingr_type=VEGGIES")
             .then(res => {
                 const veggies = res.data;
-                this.setState({ items: veggies, DataisLoaded: true });
+                this.setState({items: veggies, DataisLoaded: true});
             })
 
     }
+
     render() {
-        const { DataisLoaded, items } = this.state;
+        const {DataisLoaded, items} = this.state;
         if (!DataisLoaded) return <div>
-            <h1> Please wait some time.... </h1> </div>;
+            <h1> Please wait some time.... </h1></div>;
 
         return (
-            //  <div className="content-tabs">
             <table>
                 <tr>
                     <th>Ingredient Name</th>
                     <th>Current Amount</th>
-                    <th>Alter Inventory</th>  </tr>
+                    <th>Alter Inventory</th>
+                </tr>
                 {
                     items.map((item) => (
                         <tr>
@@ -49,8 +51,8 @@ class VegetableManager extends React.Component {
                     ))
                 }
             </table>
-            // </div>
-        );
+        )
+            ;
     }
 }
 

@@ -59,7 +59,8 @@
   
   button {
     border: none;
-    
+    font-size: 22px;
+    font-weight: bold;
   }
   .completeOrder {
     background-color: rgb(151, 228, 112);

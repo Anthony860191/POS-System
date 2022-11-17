@@ -76,6 +76,7 @@ function ManagerTabs() {
                     <hr/>
                     <VegetableManager></VegetableManager>
                     <div>
+                        <br></br>
                         <h2>Add Ingredient</h2>
                         <hr/>
                         <AddIngrForm></AddIngrForm>
@@ -89,6 +90,7 @@ function ManagerTabs() {
                     <hr/>
                     <MeatManager></MeatManager>
                     <div>
+                        <br></br>
                         <h2>Add Ingredient</h2>
                         <hr/>
                         <AddIngrForm></AddIngrForm>
@@ -102,6 +104,7 @@ function ManagerTabs() {
                     <hr/>
                     <SauceManager></SauceManager>
                     <div>
+                        <br></br>
                         <h2>Add Ingredient</h2>
                         <hr/>
                         <AddIngrForm></AddIngrForm>
@@ -115,6 +118,7 @@ function ManagerTabs() {
                     <hr/>
                     <DrizzleManager></DrizzleManager>
                     <div>
+                        <br></br>
                         <h2>Add Ingredient</h2>
                         <hr/>
                         <AddIngrForm></AddIngrForm>
@@ -128,6 +132,7 @@ function ManagerTabs() {
                     <hr/>
                     <CheeseManager></CheeseManager>
                     <div>
+                        <br></br>
                         <h2>Add Ingredient</h2>
                         <hr/>
                         <AddIngrForm></AddIngrForm>
@@ -142,6 +147,7 @@ function ManagerTabs() {
                     <hr/>
                     <CrustManager></CrustManager>
                     <div>
+                        <br></br>
                         <h2>Add Ingredient</h2>
                         <hr/>
                         <AddIngrForm></AddIngrForm>

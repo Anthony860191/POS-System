@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, {Fragment} from 'react';
 import Button from "@mui/material/Button";
 
-class AddForm extends React.Component {
+class AddIngrForm extends React.Component {
     constructor (props) {
         super(props);
         this.initialState = {
@@ -21,10 +21,10 @@ class AddForm extends React.Component {
 
     submitForm = async() => {
         const itemData = new FormData();
-        itemData.append("ingredient_name", AddForm.ingredientName)
+        itemData.append("ingredient_name", AddIngrForm.ingredientName)
         itemData.append("quantity", '0.00')
         itemData.append("units", "lbs")
-        itemData.append("ingr_type", AddForm.ingredientType)
+        itemData.append("ingr_type", AddIngrForm.ingredientType)
         itemData.append("usage_value", "0.10")
 
         const other = {
@@ -50,24 +50,25 @@ class AddForm extends React.Component {
     const {name, job} = this.state;
 
     return (
-      <form onSubmit={this.submitForm}>
-            <input
-                type="text"
-                name="ingredientName"
-                value={name}
-                placeholder={"Ingredient Name"}
-                onChange={this.handleChange} />
-            <input
-                type="text"
-                name="ingredientType"
-                value={name}
-                placeholder={"Ingredient Type"}
-                onChange={this.handleChange} />
-            <Button variant="contained" onClick={() => this.submitForm}>Add</Button>
-      </form>
+        <form action="/ingredients/" method="post">
+            <label for="ingredient_name">Ingredient Name: </label>
+            <br></br>
+            <input id="ingredient_name" type="text" name="ingredient_name" placeholder="Insert Name" />
+            <br></br>
+            <label htmlFor="ingredient_type">Ingredient Type: </label>
+            <br></br>
+            <select id="ingredient_type" name="ingredient_type">
+                <option value="VEGGIES">Vegetables</option>
+                <option value="MEAT">Meat</option>
+                <option value="SAUCE">Sauce</option>
+                <option value="DRIZZLE">Drizzle</option>
+                <option value="CHEESE">Cheese</option>
+                <option value="CRUST">Crust</option>
+            </select>
+        </form>
     )
   }
 }
 
-export default AddForm;
+export default AddIngrForm;
 

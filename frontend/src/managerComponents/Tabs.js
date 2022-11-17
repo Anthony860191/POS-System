@@ -10,9 +10,7 @@ import DrizzleManager from "../DrizzleManager";
 import CheeseManager from "../CheeseManager";
 import CrustManager from "../CrustManager";
 import MenuManager from "./Menu"
-import AddForm from "./addForm";
-import RemoveForm from "./removeForm"
-import Menu from "./Menu";
+import AddIngrForm from "./addForm";
 
 function ManagerTabs() {
     const [toggleState, setToggleState] = useState(1);
@@ -76,14 +74,11 @@ function ManagerTabs() {
                 >
                     <h2>Vegetables</h2>
                     <hr/>
-                  <VegetableManager></VegetableManager>
-                    <div id="addRemovePanel">
+                    <VegetableManager></VegetableManager>
+                    <div>
                         <h2>Add Ingredient</h2>
                         <hr/>
-                        <AddForm></AddForm>
-                        <h2>Remove Ingredient</h2>
-                        <hr/>
-                        <RemoveForm></RemoveForm>
+                        <AddIngrForm></AddIngrForm>
                     </div>
                 </div>
 
@@ -92,14 +87,11 @@ function ManagerTabs() {
                 >
                     <h2>MEAT</h2>
                     <hr/>
-                   <MeatManager></MeatManager>
-                    <div id="addRemovePanel">
+                    <MeatManager></MeatManager>
+                    <div>
                         <h2>Add Ingredient</h2>
                         <hr/>
-                        <AddForm></AddForm>
-                        <h2>Remove Ingredient</h2>
-                        <hr/>
-                        <RemoveForm></RemoveForm>
+                        <AddIngrForm></AddIngrForm>
                     </div>
                 </div>
 
@@ -109,13 +101,10 @@ function ManagerTabs() {
                     <h2>SAUCE</h2>
                     <hr/>
                     <SauceManager></SauceManager>
-                    <div id="addRemovePanel">
+                    <div>
                         <h2>Add Ingredient</h2>
                         <hr/>
-                        <AddForm></AddForm>
-                        <h2>Remove Ingredient</h2>
-                        <hr/>
-                        <RemoveForm></RemoveForm>
+                        <AddIngrForm></AddIngrForm>
                     </div>
                 </div>
 
@@ -125,13 +114,10 @@ function ManagerTabs() {
                     <h2>DRIZZLE</h2>
                     <hr/>
                     <DrizzleManager></DrizzleManager>
-                    <div id="addRemovePanel">
+                    <div>
                         <h2>Add Ingredient</h2>
                         <hr/>
-                        <AddForm></AddForm>
-                        <h2>Remove Ingredient</h2>
-                        <hr/>
-                        <RemoveForm></RemoveForm>
+                        <AddIngrForm></AddIngrForm>
                     </div>
                 </div>
 
@@ -141,13 +127,10 @@ function ManagerTabs() {
                     <h2>CHEESE</h2>
                     <hr/>
                     <CheeseManager></CheeseManager>
-                    <div id="addRemovePanel">
+                    <div>
                         <h2>Add Ingredient</h2>
                         <hr/>
-                        <AddForm></AddForm>
-                        <h2>Remove Ingredient</h2>
-                        <hr/>
-                        <RemoveForm></RemoveForm>
+                        <AddIngrForm></AddIngrForm>
                     </div>
                 </div>
 
@@ -158,19 +141,16 @@ function ManagerTabs() {
                     <h2>CRUST</h2>
                     <hr/>
                     <CrustManager></CrustManager>
-                    <div id="addRemovePanel">
+                    <div>
                         <h2>Add Ingredient</h2>
                         <hr/>
-                        <AddForm></AddForm>
-                        <h2>Remove Ingredient</h2>
-                        <hr/>
-                        <RemoveForm></RemoveForm>
+                        <AddIngrForm></AddIngrForm>
                     </div>
                 </div>
                 <div
                     className={toggleState === 7 ? "content  active-content" : "content"}
                 >
-                    <h2>CRUST</h2>
+                    <h2>Menu</h2>
                     <hr/>
                     <MenuManager></MenuManager>
                 </div>

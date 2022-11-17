@@ -48,7 +48,7 @@ class MenuManager extends React.Component {
                             <td>{item.item_type} </td>
                             <td>{item.price} </td>
                             <td>
-                                <select>
+                                <select id="menuSelect">
                                     <option value={item.topping1}>{item.topping1}</option>
                                     <option value={item.topping2}>{item.topping2}</option>
                                     <option value={item.topping3}>{item.topping3}</option>

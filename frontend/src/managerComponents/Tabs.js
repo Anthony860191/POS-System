@@ -10,7 +10,7 @@ import DrizzleManager from "../DrizzleManager";
 import CheeseManager from "../CheeseManager";
 import CrustManager from "../CrustManager";
 import MenuManager from "./Menu"
-import AddIngrForm from "./addForm";
+import AddIngrForm from "./AddForm";
 
 function ManagerTabs() {
     const [toggleState, setToggleState] = useState(1);

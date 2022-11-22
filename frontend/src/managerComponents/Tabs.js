@@ -88,72 +88,77 @@ function ManagerTabs() {
                 <div
                     className={toggleState === 2 ? "content  active-content" : "content"}
                 >
-                    <h2>MEAT</h2>
-                    <hr/>
-                    <MeatManager></MeatManager>
-                    <div>
-                        <br></br>
-                        <h2>Add Ingredient</h2>
-                        <hr/>
-                        <AddIngrForm></AddIngrForm>
-                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <MeatManager></MeatManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div
                     className={toggleState === 3 ? "content  active-content" : "content"}
                 >
-                    <h2>SAUCE</h2>
-                    <hr/>
-                    <SauceManager></SauceManager>
-                    <div>
-                        <br></br>
-                        <h2>Add Ingredient</h2>
-                        <hr/>
-                        <AddIngrForm></AddIngrForm>
-                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <SauceManager></SauceManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div
                     className={toggleState === 4 ? "content  active-content" : "content"}
                 >
-                    <h2>DRIZZLE</h2>
-                    <hr/>
-                    <DrizzleManager></DrizzleManager>
-                    <div>
-                        <br></br>
-                        <h2>Add Ingredient</h2>
-                        <hr/>
-                        <AddIngrForm></AddIngrForm>
-                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <DrizzleManager></DrizzleManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div
                     className={toggleState === 5 ? "content  active-content" : "content"}
                 >
-                    <h2>CHEESE</h2>
-                    <hr/>
-                    <CheeseManager></CheeseManager>
-                    <div>
-                        <br></br>
-                        <h2>Add Ingredient</h2>
-                        <hr/>
-                        <AddIngrForm></AddIngrForm>
-                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <CheeseManager></CheeseManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
 
                 <div
                     className={toggleState === 6 ? "content  active-content" : "content"}
                 >
-                    <h2>CRUST</h2>
-                    <hr/>
-                    <CrustManager></CrustManager>
-                    <div>
-                        <br></br>
-                        <h2>Add Ingredient</h2>
-                        <hr/>
-                        <AddIngrForm></AddIngrForm>
-                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <CrustManager></CrustManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <div
                     className={toggleState === 7 ? "content  active-content" : "content"}
@@ -167,11 +172,6 @@ function ManagerTabs() {
                     <AddMenuForm></AddMenuForm>
                 </div>
             </div>
-            <Button variant="contained" id="Order" onClick={() => setButtonPopup(true)}>Order</Button>
-            <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-                <h3>Finalize Changes</h3>
-                <h3>Display the changes made to inventory here</h3>
-            </Popup>
         </div>
     );
 }

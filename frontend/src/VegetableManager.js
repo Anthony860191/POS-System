@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
+import {wait} from "@testing-library/user-event/dist/utils";
 
 
 class VegetableManager extends React.Component {
@@ -45,13 +46,24 @@ class VegetableManager extends React.Component {
                     method: 'put',
                     url: 'http://localhost:8000/ingredients/' + item.ingredient_name + '/',
                     data: formField
-                }).then(response => {
-                    console.log(response.data);
-                    window.location.reload(false);
+                }).then((response) => {
+                    if (response.status === 200) {
+                        console.log(response);
+                    } else {
+                        alert("Bad Request!");
+                        console.log(response);
+                    }
                 })
             }
-
+            window.location.reload(false);
         }
+
+        const reverseChanges = (e) => {
+            e.preventDefault();
+            window.location.reload(false);
+        }
+
+
 
         return (
             //  <div className="content-tabs">
@@ -77,8 +89,17 @@ class VegetableManager extends React.Component {
                     ))
                 }
                 <tr>
-                    <button onClick={AlterIngredients} className="btn btn-primary btn-block">Alter Inventory Amount
-                    </button>
+                    <td colSpan={2}>
+                        <button onClick={AlterIngredients} className="btn btn-primary btn-block">Finalize Changes
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colSpan={2}>
+                        <button id="revChangeBtn" onClick={reverseChanges} className="btn btn-primary btn-block">
+                            Reverse Changes
+                        </button>
+                    </td>
                 </tr>
             </table>
             // </div>

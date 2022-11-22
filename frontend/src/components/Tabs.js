@@ -7,7 +7,14 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from  "@mui/material/Alert";
 import ButtonGroup from '@mui/material/ButtonGroup';
+function customPizzaClick(x)
+{
 
+}
+function presetPizzaClick(x)
+{
+
+}
 function Tabs() {
     const [toggleState, setToggleState] = useState(1); // function to switch between tabs
     const [paymentPopup, setPaymentPopup]= useState(false); // function to open the payment popup
@@ -251,7 +258,7 @@ function Tabs() {
 
   return (
     <div>
-      {customize}
+      
     </div>
   )
 }

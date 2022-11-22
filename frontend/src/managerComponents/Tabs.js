@@ -3,6 +3,12 @@ import "./Tabs.css";
 import Popup from '../components/Popup';
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
+import VegetableManager from "../VegetableManager";
+import MeatManager from "../MeatManager";
+import SauceManager from "../SauceManager";
+import DrizzleManager from "../DrizzleManager";
+import CheeseManager from "../CheeseManager";
+import CrustManager from "../CrustManager";
 
 function ManagerTabs() {
     const [toggleState, setToggleState] = useState(1);
@@ -60,157 +66,7 @@ function ManagerTabs() {
                 >
                     <h2>VEGETABLES</h2>
                     <hr/>
-                    <table>
-                        <tr>
-                            <th>Ingredient Name</th>
-                            <th>Current Amount</th>
-                            <th>Alter Inventory</th>
-                        </tr>
-                        <tr>
-                            <td>Banana Peppers</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Brocolli</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Cauliflower</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Green Peppers</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Jalapenos</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mushrooms</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Onions</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Pineapple</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Roasted Garlic</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Spinach</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tomatoes</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                    </table>
-
+                  <VegetableManager></VegetableManager>
                 </div>
 
                 <div
@@ -218,104 +74,7 @@ function ManagerTabs() {
                 >
                     <h2>MEAT</h2>
                     <hr/>
-                    <table>
-                        <tr>
-                            <th>Ingredient Name</th>
-                            <th>Current Amount</th>
-                            <th>Alter Inventory</th>
-                        </tr>
-                        <tr>
-                            <td>Black Forest Ham</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Diced Ham</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Italian Sausage</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Meatball</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Pepperoni</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Salami</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Smoked Chicken</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                    </table>
+                   <MeatManager></MeatManager>
                 </div>
 
                 <div
@@ -323,52 +82,7 @@ function ManagerTabs() {
                 >
                     <h2>SAUCE</h2>
                     <hr/>
-                    <table>
-                        <tr>
-                            <th>Ingredient Name</th>
-                            <th>Current Amount</th>
-                            <th>Alter Inventory</th>
-                        </tr>
-                        <tr>
-                            <td>Alfredo</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Traditional BBQ</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Zesty Red</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                    </table>
+                    <SauceManager></SauceManager>
                 </div>
 
                 <div
@@ -376,82 +90,7 @@ function ManagerTabs() {
                 >
                     <h2>DRIZZLE</h2>
                     <hr/>
-                    <table>
-                        <tr>
-                            <th>Ingredient Name</th>
-                            <th>Current Amount</th>
-                            <th>Alter Inventory</th>
-                        </tr>
-                        <tr>
-                            <td>BBQ Sauce</td>
-                            <td>0</td>
-
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Olive Oil</td>
-                            <td>0</td>
-
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Oregano</td>
-                            <td>0</td>
-
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ranch</td>
-                            <td>0</td>
-
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sriracha</td>
-                            <td>0</td>
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                    </table>
+                    <DrizzleManager></DrizzleManager>
                 </div>
 
                 <div
@@ -459,41 +98,7 @@ function ManagerTabs() {
                 >
                     <h2>CHEESE</h2>
                     <hr/>
-                    <table>
-                        <tr>
-                            <th>Ingredient Name</th>
-                            <th>Current Amount</th>
-                            <th>Alter Inventory</th>
-                        </tr>
-                        <tr>
-                            <td>House Blend</td>
-                            <td>0</td>
-
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Parmesan</td>
-                            <td>0</td>
-
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                    </table>
+                    <CheeseManager></CheeseManager>
                 </div>
 
 
@@ -502,43 +107,7 @@ function ManagerTabs() {
                 >
                     <h2>CRUST</h2>
                     <hr/>
-                    <table>
-                        <tr>
-                            <th>Ingredient Name</th>
-                            <th>Current Amount</th>
-                            <th>Alter Inventory</th>
-                        </tr>
-                        <th>
-                        </th>
-                        <tr>
-                            <td>Regular</td>
-                            <td>0</td>
-
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Parmesan</td>
-                            <td>0</td>
-
-                            <td>
-                                <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </td>
-                        </tr>
-                    </table>
+                    <CrustManager></CrustManager>
                 </div>
             </div>
             <Button variant="contained" id="Order" onClick={() => setButtonPopup(true)}>Order</Button>

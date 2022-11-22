@@ -7,14 +7,7 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from  "@mui/material/Alert";
 import ButtonGroup from '@mui/material/ButtonGroup';
-function customPizzaClick(x)
-{
 
-}
-function presetPizzaClick(x)
-{
-
-}
 function Tabs() {
     const [toggleState, setToggleState] = useState(1); // function to switch between tabs
     const [paymentPopup, setPaymentPopup]= useState(false); // function to open the payment popup
@@ -97,27 +90,59 @@ function Tabs() {
       setToggleState(index);
     };
     
-    const crustHandleClick = () => {
-        alert("Selected Crust");
+    // variable to store the current pizza order information
+    const [currentOrder, setCurrentorder] = useState(Array(9).fill(""));
+
+    const customPizzaClick = (pizzaType) => {
+      currentOrder[0] = pizzaType;
+      currentOrder[4] = "";
+      currentOrder[5] = "";
+      currentOrder[6] = "";
+      currentOrder[7] = "";
+      if(pizzaType === "1 TOPPING") {
+        setMaxToppings(1);
+        setCurrToppings(0);
+      } else {
+        setMaxToppings(4);
+        setCurrToppings(0);
+      }
+      setToggleState(2);
+    }
+
+    const presetPizzaClick = (pizzaType) => {
+      currentOrder[0] = pizzaType;
+      
+    }
+
+    const crustHandleClick = (crustType) => {
+      currentOrder[1] = crustType;
     };
 
-    const sauceHandleClick = () => {
-      alert("Selected Sauce");
+    const sauceHandleClick = (sauceType) => {
+      currentOrder[2] = sauceType;
     };
 
-    const cheeseHandleClick = () => {
-      alert("Selected Cheese");
+    const cheeseHandleClick = (cheeseType) => {
+      currentOrder[3] = cheeseType;
     };
 
-    const toppingHandleClick = () => {
-      alert("Selected Toppings");
+    const toppingHandleClick = (toppingType) => {
+      if(currToppings < maxToppings) {
+        currentOrder[4+currToppings] = toppingType;
+        setCurrToppings(currToppings+1);
+        
+      } else {
+        setToppingNotification(true); 
+      }
+      alert(currentOrder);
     };
 
-    const drizzleHandleClick = () => {
-      alert("Selected Drizzle");
+    const drizzleHandleClick = (drizzleType) => {
+      currentOrder[8] = drizzleType;
     };
 
-    return (
+    const customize = [];
+    customize.push (
       <div className="container">
         <div className="bloc-tabs">
         <button
@@ -176,10 +201,9 @@ function Tabs() {
         >
           <h2>Select your Crust</h2>
           <hr />
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>Zesty Red</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>Alfredo</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>Traditional Pizza Sauce</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={sauceHandleClick}>No Sauce</Button>
+          {crust && crust.map (itemName => (
+            <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => crustHandleClick(itemName)} >{itemName}</Button>
+          ))}
         </div>
 
         <div
@@ -187,8 +211,9 @@ function Tabs() {
         >
           <h2>Select your Sauce</h2>
           <hr />
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={cheeseHandleClick}>Houseblend</Button>
-          <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={cheeseHandleClick}>Parmesan</Button>
+          {sauce && sauce.map (itemName => (
+            <Button disableRipple variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => sauceHandleClick(itemName)} >{itemName}</Button>
+          ))}
         </div>
 
         <div
@@ -258,7 +283,7 @@ function Tabs() {
 
   return (
     <div>
-      
+      {customize}
     </div>
   )
 }

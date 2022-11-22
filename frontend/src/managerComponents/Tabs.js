@@ -11,6 +11,7 @@ import CheeseManager from "../CheeseManager";
 import CrustManager from "../CrustManager";
 import MenuManager from "./Menu"
 import AddIngrForm from "./AddForm";
+import AddMenuForm from "./AddMenu";
 
 function ManagerTabs() {
     const [toggleState, setToggleState] = useState(1);
@@ -159,6 +160,7 @@ function ManagerTabs() {
                     <h2>Menu</h2>
                     <hr/>
                     <MenuManager></MenuManager>
+                    <AddMenuForm></AddMenuForm>
                 </div>
             </div>
             <Button variant="contained" id="Order" onClick={() => setButtonPopup(true)}>Order</Button>

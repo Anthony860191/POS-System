@@ -31,20 +31,20 @@ class MeatManager extends React.Component {
              <table>
                         <tr>
                             <th>Ingredient Name</th>
-                            <th>Current Amount</th>
-                            <th>Alter Inventory</th>  </tr>
+                            <th>Alter Amount in Inventory</th>
+                        </tr>
                             {
                 items.map((item) => ( 
                 <tr>
-                    <td>{ item.ingredient_name }</td>
-                    <td>{item.quantity} </td>
+                    <td>{item.ingredient_name }</td>
                     <input
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
+                        type="number"
+                        className="form-control form-control-lg"
+                        id="alterInventoryAmt"
+                        defaultValue={item.quantity}
+                        placeholder={item.quantity}
+                        name="alterInventoryAmt"
+                    />
                 </tr>
                 ))
             }

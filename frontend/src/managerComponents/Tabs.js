@@ -73,15 +73,16 @@ function ManagerTabs() {
                 <div
                     className={toggleState === 1 ? "content  active-content" : "content"}
                 >
-                    <h2>Vegetables</h2>
-                    <hr/>
-                    <VegetableManager></VegetableManager>
-                    <div>
-                        <br></br>
-                        <h2>Add Ingredient</h2>
-                        <hr/>
-                        <AddIngrForm></AddIngrForm>
-                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <VegetableManager></VegetableManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div
@@ -160,6 +161,9 @@ function ManagerTabs() {
                     <h2>Menu</h2>
                     <hr/>
                     <MenuManager></MenuManager>
+                    <br></br>
+                    <h2>Add Menu Item</h2>
+                    <hr/>
                     <AddMenuForm></AddMenuForm>
                 </div>
             </div>

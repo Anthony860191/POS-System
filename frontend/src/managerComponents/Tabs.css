@@ -133,3 +133,7 @@
   #menuSelect {
     width: 80%;
   }
+
+  .form-group {
+    padding: 5px;
+  }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import Button from "@mui/material/Button";
+import {FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import {useNavigate, useParams} from 'react-router-dom';
 
 const AddIngrForm = () => {
@@ -10,7 +11,7 @@ const AddIngrForm = () => {
 
     const [ingredient_name, set_ingr_name] = useState(null)
     const [quantity, set_quantity] = useState(null)
-    const [units, set_units] = useState(null)
+    const [units, set_units] = useState('')
     const [ingr_type, set_ingr_type] = useState(null)
     const [usage_value, set_usage_value] = useState(null)
 
@@ -23,6 +24,8 @@ const AddIngrForm = () => {
         formField.append('ingr_type', ingr_type)
         formField.append('usage_value', usage_value)
 
+        console.log(formField)
+
 
         await axios({
             method: 'post',
@@ -30,8 +33,17 @@ const AddIngrForm = () => {
             data: formField
         }).then(response => {
             console.log(response.data);
-            navigate('/Manager')
+            window.location.reload(false);
+            navigate('/manager');
         })
+    }
+
+    const handleUnitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        set_units(event.target.value);
+    }
+
+    const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        set_ingr_type(event.target.value);
     }
 
     return (
@@ -57,24 +69,20 @@ const AddIngrForm = () => {
                 />
             </div>
             <div className="form-group">
-                <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter Units"
-                    name="units"
-                    value={units}
-                    onChange={(e) => set_units(e.target.value)}
-                />
+                <TextField label="Select Unit" select value={units} onChange={handleUnitChange} fullWidth>
+                    <MenuItem value='lbs'>lbs</MenuItem>
+                    <MenuItem value='liters'>liters</MenuItem>
+                </TextField>
             </div>
             <div className="form-group">
-                <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter Ingredient Type"
-                    name="ingredient_name"
-                    value={ingr_type}
-                    onChange={(e) => set_ingr_type(e.target.value)}
-                />
+                <TextField label="Select Ingredient Type" select value={ingr_type} onChange={handleTypeChange} fullWidth>
+                    <MenuItem value='VEGGIES'>Vegetable</MenuItem>
+                    <MenuItem value='MEAT'>Meat</MenuItem>
+                    <MenuItem value='SAUCE'>Sauce</MenuItem>
+                    <MenuItem value='DRIZZLE'>Drizzle</MenuItem>
+                    <MenuItem value='CHEESE'>Cheese</MenuItem>
+                    <MenuItem value='CRUST'>Crust</MenuItem>
+                </TextField>
             </div>
             <div className="form-group">
                 <input
@@ -93,4 +101,3 @@ const AddIngrForm = () => {
 }
 
 export default AddIngrForm;
-

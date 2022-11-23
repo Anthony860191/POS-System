@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React from 'react';
 
+
 class SauceManager extends React.Component {
+
 
     // Constructor 
     constructor(props) {
@@ -16,6 +18,7 @@ class SauceManager extends React.Component {
     // execute the code 
     componentDidMount() {
         axios.get("http://localhost:8000/ingredients/?ingr_type=SAUCE")
+
             .then(res => {
                 const res_data = res.data;
                 this.setState({items: res_data, DataisLoaded: true});
@@ -103,5 +106,6 @@ class SauceManager extends React.Component {
         );
     }
 }
+
 
 export default SauceManager;

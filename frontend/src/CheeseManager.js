@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React from 'react';
+
 import {wait} from "@testing-library/user-event/dist/utils";
 
 class CheeseManager extends React.Component {
+
 
     // Constructor 
     constructor(props) {
@@ -13,10 +15,12 @@ class CheeseManager extends React.Component {
         };
     }
 
+
     // ComponentDidMount is used to
     // execute the code 
     componentDidMount() {
         axios.get("http://localhost:8000/ingredients/?ingr_type=CHEESE")
+
             .then(res => {
                 const res_data = res.data;
                 this.setState({items: res_data, DataisLoaded: true});
@@ -104,5 +108,6 @@ class CheeseManager extends React.Component {
         );
     }
 }
+
 
 export default CheeseManager;

@@ -9,9 +9,11 @@ import SauceManager from "../SauceManager";
 import DrizzleManager from "../DrizzleManager";
 import CheeseManager from "../CheeseManager";
 import CrustManager from "../CrustManager";
+
 import MenuManager from "./Menu"
 import AddIngrForm from "./AddForm";
 import AddMenuForm from "./AddMenu";
+
 
 function ManagerTabs() {
     const [toggleState, setToggleState] = useState(1);
@@ -73,6 +75,7 @@ function ManagerTabs() {
                 <div
                     className={toggleState === 1 ? "content  active-content" : "content"}
                 >
+
                     <table>
                         <tr>
                             <td>
@@ -83,11 +86,13 @@ function ManagerTabs() {
                             </td>
                         </tr>
                     </table>
+
                 </div>
 
                 <div
                     className={toggleState === 2 ? "content  active-content" : "content"}
                 >
+
                     <table>
                         <tr>
                             <td>
@@ -98,11 +103,13 @@ function ManagerTabs() {
                             </td>
                         </tr>
                     </table>
+
                 </div>
 
                 <div
                     className={toggleState === 3 ? "content  active-content" : "content"}
                 >
+
                     <table>
                         <tr>
                             <td>
@@ -113,11 +120,13 @@ function ManagerTabs() {
                             </td>
                         </tr>
                     </table>
+
                 </div>
 
                 <div
                     className={toggleState === 4 ? "content  active-content" : "content"}
                 >
+
                     <table>
                         <tr>
                             <td>
@@ -128,11 +137,13 @@ function ManagerTabs() {
                             </td>
                         </tr>
                     </table>
+
                 </div>
 
                 <div
                     className={toggleState === 5 ? "content  active-content" : "content"}
                 >
+
                     <table>
                         <tr>
                             <td>
@@ -143,12 +154,14 @@ function ManagerTabs() {
                             </td>
                         </tr>
                     </table>
+
                 </div>
 
 
                 <div
                     className={toggleState === 6 ? "content  active-content" : "content"}
                 >
+
                     <table>
                         <tr>
                             <td>
@@ -159,6 +172,7 @@ function ManagerTabs() {
                             </td>
                         </tr>
                     </table>
+
                 </div>
                 <div
                     className={toggleState === 7 ? "content  active-content" : "content"}

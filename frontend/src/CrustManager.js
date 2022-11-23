@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React from 'react';
 
+
 class CrustManager extends React.Component {
+
 
     // Constructor 
     constructor(props) {
@@ -12,10 +14,13 @@ class CrustManager extends React.Component {
         };
     }
 
+
+
     // ComponentDidMount is used to
     // execute the code 
     componentDidMount() {
         axios.get("http://localhost:8000/ingredients/?ingr_type=CRUST")
+
             .then(res => {
                 const res_data = res.data;
                 this.setState({items: res_data, DataisLoaded: true});
@@ -103,5 +108,6 @@ class CrustManager extends React.Component {
         );
     }
 }
+
 
 export default CrustManager;

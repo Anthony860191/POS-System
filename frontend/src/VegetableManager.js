@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+
 import {useNavigate} from 'react-router-dom';
 import {wait} from "@testing-library/user-event/dist/utils";
 
@@ -7,6 +8,7 @@ import {wait} from "@testing-library/user-event/dist/utils";
 class VegetableManager extends React.Component {
 
     // Constructor
+
     constructor(props) {
         super(props);
         this.state = {
@@ -16,11 +18,12 @@ class VegetableManager extends React.Component {
     }
 
     // ComponentDidMount is used to
-    // execute the code
+
     componentDidMount() {
         axios.get("http://localhost:8000/ingredients/?ingr_type=VEGGIES")
             .then(res => {
                 const veggies = res.data;
+
                 this.setState({items: veggies, DataisLoaded: true});
             })
     }
@@ -65,11 +68,13 @@ class VegetableManager extends React.Component {
 
 
 
+
         return (
             //  <div className="content-tabs">
             <table>
                 <tr>
                     <th>Ingredient Name</th>
+
                     <th>Alter Amount in Inventory</th>
                 </tr>
                 {
@@ -101,6 +106,7 @@ class VegetableManager extends React.Component {
                         </button>
                     </td>
                 </tr>
+
             </table>
             // </div>
         );

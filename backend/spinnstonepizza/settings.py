@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 from decouple import config
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,7 +78,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
 CORS_ORIGIN_WHITELIST = (
-    'http//:127.0.0.1:3000',
+    'http//:127.0.0.1:3000', 'http//:127.0.0.1:3001',
 )
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -89,7 +90,8 @@ DATABASES = {
         'USER': config('DB_USER'),
         'PASSWORD':  config('DB_PASSWORD'),
         'HOST': 'csce-315-db.engr.tamu.edu',
-        'PORT': '5432'
+        'PORT': '5432',
+       # 'OPTIONS': {'sslmode': 'require', 'sslrootcert': os.path.join(BASE_DIR, 'ca-certificate.crt'),},
 
     }
 }

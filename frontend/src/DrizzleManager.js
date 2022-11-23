@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React from 'react';
 
+
 class DrizzleManager extends React.Component {
+
 
     // Constructor 
     constructor(props) {
@@ -12,10 +14,12 @@ class DrizzleManager extends React.Component {
         };
     }
 
+
     // ComponentDidMount is used to
     // execute the code 
     componentDidMount() {
         axios.get("http://localhost:8000/ingredients/?ingr_type=DRIZZLE")
+
             .then(res => {
                 const res_data = res.data;
                 this.setState({items: res_data, DataisLoaded: true});
@@ -103,5 +107,6 @@ class DrizzleManager extends React.Component {
         );
     }
 }
+
 
 export default DrizzleManager;

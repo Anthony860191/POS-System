@@ -10,6 +10,11 @@ import DrizzleManager from "../DrizzleManager";
 import CheeseManager from "../CheeseManager";
 import CrustManager from "../CrustManager";
 
+import MenuManager from "./Menu"
+import AddIngrForm from "./AddForm";
+import AddMenuForm from "./AddMenu";
+
+
 function ManagerTabs() {
     const [toggleState, setToggleState] = useState(1);
     const [buttonPopup, setButtonPopup] = useState(false);
@@ -58,63 +63,129 @@ function ManagerTabs() {
                 >
                     Crusts
                 </button>
+                <button
+                    className={toggleState === 7 ? "tabs active-tabs" : "tabs"}
+                    onClick={() => toggleTab(7)}
+                >
+                    Menu
+                </button>
             </div>
 
             <div className="content-tabs">
                 <div
                     className={toggleState === 1 ? "content  active-content" : "content"}
                 >
-                    <h2>VEGETABLES</h2>
-                    <hr/>
-                  <VegetableManager></VegetableManager>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <VegetableManager></VegetableManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
 
                 <div
                     className={toggleState === 2 ? "content  active-content" : "content"}
                 >
-                    <h2>MEAT</h2>
-                    <hr/>
-                   <MeatManager></MeatManager>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <MeatManager></MeatManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
 
                 <div
                     className={toggleState === 3 ? "content  active-content" : "content"}
                 >
-                    <h2>SAUCE</h2>
-                    <hr/>
-                    <SauceManager></SauceManager>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <SauceManager></SauceManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
 
                 <div
                     className={toggleState === 4 ? "content  active-content" : "content"}
                 >
-                    <h2>DRIZZLE</h2>
-                    <hr/>
-                    <DrizzleManager></DrizzleManager>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <DrizzleManager></DrizzleManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
 
                 <div
                     className={toggleState === 5 ? "content  active-content" : "content"}
                 >
-                    <h2>CHEESE</h2>
-                    <hr/>
-                    <CheeseManager></CheeseManager>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <CheeseManager></CheeseManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
 
 
                 <div
                     className={toggleState === 6 ? "content  active-content" : "content"}
                 >
-                    <h2>CRUST</h2>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <CrustManager></CrustManager>
+                            </td>
+                            <td>
+                                <AddIngrForm></AddIngrForm>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div
+                    className={toggleState === 7 ? "content  active-content" : "content"}
+                >
+                    <h2>Menu</h2>
                     <hr/>
-                    <CrustManager></CrustManager>
+                    <MenuManager></MenuManager>
+                    <br></br>
+                    <h2>Add Menu Item</h2>
+                    <hr/>
+                    <AddMenuForm></AddMenuForm>
                 </div>
             </div>
-            <Button variant="contained" id="Order" onClick={() => setButtonPopup(true)}>Order</Button>
-            <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-                <h3>Finalize Changes</h3>
-                <h3>Display the changes made to inventory here</h3>
-            </Popup>
         </div>
     );
 }

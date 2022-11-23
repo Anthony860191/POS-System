@@ -1,5 +1,5 @@
 import {useState} from "react";
-import "./Tabs.css";
+import "./ManagerTabs.css";
 import Popup from '../components/Popup';
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";

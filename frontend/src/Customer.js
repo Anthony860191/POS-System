@@ -1,10 +1,10 @@
 import "./Customer.css";
-import Tabs from './components/Tabs';
+import CustomerTabs from './components/CustomerTabs';
 
 const Customer = () => {
   return (
     <div className="Customer">
-        <Tabs />
+        <CustomerTabs />
     </div>
   );
 }

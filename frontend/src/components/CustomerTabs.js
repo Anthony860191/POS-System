@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import "./Tabs.css";
+import "./CustomerTabs.css";
 import Popup from './Popup';
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
@@ -8,7 +8,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from  "@mui/material/Alert";
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-function Tabs() {
+function CustomerTabs() {
     const [toggleState, setToggleState] = useState(1); // function to switch between tabs
     const [paymentPopup, setPaymentPopup]= useState(false); // function to open the payment popup
     const [name, setName] = useState(""); // function to set the customers name
@@ -401,4 +401,4 @@ function Tabs() {
   )
 }
 
-export default Tabs;
+export default CustomerTabs;

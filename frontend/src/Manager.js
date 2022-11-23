@@ -1,5 +1,5 @@
 import DailySalesTotal from './components/DailySalesTotal';
-import Tabs from './managerComponents/Tabs';
+import Tabs from './managerComponents/ManagerTabs';
 
 const Manager = () => {
   return (

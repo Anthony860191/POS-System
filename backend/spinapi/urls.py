@@ -17,5 +17,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('price', views.PriceView.as_view(), name='price'),
-    path('available_ingredients', views.AvailableIngredientsView.as_view(), name='available_ingredients')
+    path('available_ingredients', views.AvailableIngredientsView.as_view(), name='available_ingredients'),
+    path('daily_sales_total/',views.DailySalesDataView.as_view(), name='daily_sales_total')
 ]

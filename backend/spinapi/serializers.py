@@ -40,3 +40,7 @@ class PriceSerializer(serializers.Serializer):
 class AvailableIngredientsSerializer(serializers.Serializer):
     ingredient_name = serializers.CharField(max_length=100)
     ingr_type = serializers.CharField(max_length=100)
+
+class DailySalesTotalSerializer(serializers.Serializer):
+    order_date = serializers.CharField(max_length=100)
+    sales_total = serializers.DecimalField(max_digits=1000, decimal_places=2)

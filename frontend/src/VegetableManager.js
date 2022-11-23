@@ -95,7 +95,7 @@ class VegetableManager extends React.Component {
                 }
                 <tr>
                     <td colSpan={2}>
-                        <button onClick={AlterIngredients} className="btn btn-primary btn-block">Finalize Changes
+                        <button id="changeBtn" onClick={AlterIngredients} className="btn btn-primary btn-block">Alter Inventory Amount
                         </button>
                     </td>
                 </tr>

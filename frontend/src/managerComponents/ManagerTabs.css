@@ -136,6 +136,12 @@
 
   #revChangeBtn {
     background: #934040;
+    width: 75%;
+  }
+
+  #changeBtn {
+    background: rgb(21, 114, 245);
+    width: 75%;
   }
 
   input {

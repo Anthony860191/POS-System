@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { GoogleMap, MarkerF, InfoWindowF, useJsApiLoader } from '@react-google-maps/api';
 
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+
 export default function MyMap() {
     const containerStyle = {
         width: '400px',
@@ -16,7 +18,7 @@ export default function MyMap() {
 
     const { isLoaded } = useJsApiLoader({
         id: "script-loader",
-        googleMapsApiKey: "AIzaSyDpmXxXhpZTrQ0HaYxin1n7K2X1ezBrrbY",
+        googleMapsApiKey: apiKey,
         version: "3.47"
     });
 

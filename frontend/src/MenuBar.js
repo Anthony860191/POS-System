@@ -6,7 +6,6 @@ import Customer from "./Customer";
 import Manager from "./Manager";
 import Home from "./Home";
 import { Routes, Route, Link } from 'react-router-dom';
-import VegetableManager from "./VegetableManager";
 
 
 export function MenuBar() {

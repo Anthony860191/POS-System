@@ -8,7 +8,7 @@ import pandas as pd
 from rest_framework.decorators import api_view
 
 from .constants import DB_HOST, DB_NAME, GET_PRICE_QUERY, SELECT_FROM_AVAILABLE_TOPPINGS, parse_sql_argument
-from .serializers import DailySalesTotalSerializer, OrderSerializer, PizzaSerializer, IngredientSerializer, MenuSerializer, PriceSerializer, \
+from .serializers import DailySalesTotalSerializer, IngredientUsageSerializer, OrderSerializer, PizzaSerializer, IngredientSerializer, MenuSerializer, PriceSerializer, \
     AvailableIngredientsSerializer
 from .models import Pizzas, Orders, Ingredients, Menu
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -104,3 +104,16 @@ class DailySalesDataView(views.APIView):
       
         results = DailySalesTotalSerializer(json_obj, many=True).data
         return response.Response(results)
+
+
+class IngredientUsageReport(views.APIView):
+    def get(self, request):
+        date = request.GET.get('date')
+        conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
+        sql_date = parse_sql_argument(date)
+        df = pd.read_sql("SELECT * FROM get_excess_ingredients({},100);".format(sql_date), conn)
+        conn.close()
+        json_obj = [entry for entry in df.T.to_dict().values()]
+        results = IngredientUsageSerializer(json_obj, many=True).data
+        return response.Response(results)
+        

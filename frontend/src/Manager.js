@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import DailySalesTotal from './components/DailySalesTotal';
 import Tabs from './managerComponents/ManagerTabs';
 import Login from './Login';
+import SalesDashboard from './components/SalesDashboard';
 
 const Manager = () => {
 
@@ -21,7 +21,7 @@ const Manager = () => {
         <Tabs />
       </center>
       <center>
-        <DailySalesTotal></DailySalesTotal>
+      <SalesDashboard></SalesDashboard>
       </center>
     </div>
   );

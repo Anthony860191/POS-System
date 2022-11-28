@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -55,7 +55,7 @@ export default function Login({ setToken }) {
                             onFailure={onFailure}
                             cookiePolicy={'single_host_origin'}
                             //For testing comment out isSignedIn
-                            isSignedIn={true}
+                            //isSignedIn={true}
                         />
                         </Container>
                     </Form>

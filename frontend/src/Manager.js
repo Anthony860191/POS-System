@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import DailySalesTotal from './components/DailySalesTotal';
 import Tabs from './managerComponents/ManagerTabs';
 import Login from './Login';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Manager = () => {
 

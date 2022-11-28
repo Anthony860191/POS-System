@@ -48,15 +48,15 @@ export default function Login({ setToken }) {
                         </Form.Group>
                         <Button type="submit" variant="primary">Submit</Button>
                         <Container className="bg-white border-0">
-                        <GoogleLogin
-                            clientId={clientId}
-                            buttonText="Sign in with Google"
-                            onSuccess={onSuccess}
-                            onFailure={onFailure}
-                            cookiePolicy={'single_host_origin'}
-                            //For testing comment out isSignedIn
-                            //isSignedIn={true}
-                        />
+                            <GoogleLogin
+                                clientId={clientId}
+                                buttonText="Sign in with Google"
+                                onSuccess={onSuccess}
+                                onFailure={onFailure}
+                                cookiePolicy={'single_host_origin'}
+                                //For testing comment out isSignedIn
+                                isSignedIn={true}
+                            />
                         </Container>
                     </Form>
                 </Container>

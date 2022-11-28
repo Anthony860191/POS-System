@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 export function MenuBar() {
     return (
         <>
-            <Container className="bg-white border-0 padding-5">
+            <Container className="bg-white border-0">
                 <Nav variant="pills">
                     <Nav.Item>
                         <Nav.Link as={NavLink} to="/" href="/Home">Home</Nav.Link>

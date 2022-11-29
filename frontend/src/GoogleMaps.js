@@ -19,7 +19,7 @@ export default function MyMap() {
     const { isLoaded } = useJsApiLoader({
         id: "script-loader",
         googleMapsApiKey: apiKey,
-        version: "3.47"
+        version: "3.47",
     });
 
     return (

@@ -3,14 +3,14 @@ import DailySalesTotal from './components/DailySalesTotal';
 import Tabs from './managerComponents/ManagerTabs';
 import Login from './Login';
 
-const Manager = () => {
+const Manager = ({ lang }) => {
 
   const [token, setToken] = useState();
 
   if (!token) {
     return (
       <>
-        <Login setToken={setToken} />
+        <Login lang={lang} setToken={setToken} />
       </>
     );
   }

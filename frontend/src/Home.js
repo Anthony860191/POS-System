@@ -4,7 +4,6 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-
 const Home = ({ lang }) => {
     return (
         <Translator
@@ -14,7 +13,7 @@ const Home = ({ lang }) => {
         >
             <div className="Home">
                 <center>
-                    <h1><Translate>Spin 'N Stone Pizza</Translate></h1>
+                    <h1>Spin 'N Stone Pizza</h1>
                     <div>
                         <MyMap />
                     </div>

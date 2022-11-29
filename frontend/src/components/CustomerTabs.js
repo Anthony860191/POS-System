@@ -282,25 +282,25 @@ function CustomerTabs({ lang }) {
             className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(3)}
           >
-            Sauce
+            <Translate>Sauce</Translate>
           </button>
           <button
             className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(4)}
           >
-            Cheese
+            <Translate>Cheese</Translate>
           </button>
           <button
             className={toggleState === 5 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(5)}
           >
-            Toppings
+            <Translate>Toppings</Translate>
           </button>
           <button
             className={toggleState === 6 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(6)}
           >
-            Drizzle
+            <Translate>Drizzle</Translate>
           </button>
         </div>
 
@@ -314,74 +314,74 @@ function CustomerTabs({ lang }) {
               <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => customPizzaClick(itemName)} ><Translate>{itemName}</Translate></Button>
             ))}
             {presetPizzas && presetPizzas.map(itemName => (
-              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => presetPizzaClick(itemName)} >{itemName.menu_item}</Button>
+              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => presetPizzaClick(itemName)} ><Translate>{itemName.menu_item}</Translate></Button>
             ))}
           </div>
           <div
             className={toggleState === 2 ? "content  active-content" : "content"}
           >
-            <h2>Select your Crust</h2>
+            <h2><Translate>Select your Crust</Translate></h2>
             <hr />
             {crust && crust.map(itemName => (
-              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => crustHandleClick(itemName)} >{itemName}</Button>
+              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => crustHandleClick(itemName)} ><Translate>{itemName}</Translate></Button>
             ))}
           </div>
 
           <div
             className={toggleState === 3 ? "content  active-content" : "content"}
           >
-            <h2>Select your Sauce</h2>
+            <h2><Translate>Select your Sauce</Translate></h2>
             <hr />
             {sauce && sauce.map(itemName => (
-              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => sauceHandleClick(itemName)} >{itemName}</Button>
+              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => sauceHandleClick(itemName)} ><Translate>{itemName}</Translate></Button>
             ))}
           </div>
 
           <div
             className={toggleState === 4 ? "content  active-content" : "content"}
           >
-            <h2>Select your Cheese</h2>
+            <h2><Translate>Select your Cheese</Translate></h2>
             <hr />
             {cheese && cheese.map(itemName => (
-              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => cheeseHandleClick(itemName)} >{itemName}</Button>
+              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => cheeseHandleClick(itemName)} ><Translate>{itemName}</Translate></Button>
             ))}
           </div>
           <div
             className={toggleState === 5 ? "content  active-content" : "content"}
           >
-            <h2>Select your Topping(s)</h2>
+            <h2><Translate>Select your Topping(s)</Translate></h2>
             <hr />
             {toppings && toppings.map(itemName => (
-              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => toppingHandleClick(itemName)} >{itemName}</Button>
+              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => toppingHandleClick(itemName)} ><Translate>{itemName}</Translate></Button>
             ))}
             <Snackbar open={toppingNotification} autoHideDuration={3000} onClose={handleClose}>
               <Alert onClose={handleClose} severity="info" sx={{ width: '100%' }}>
-                Can't Select More Toppings
+                <Translate>Can't Select More Toppings</Translate>
               </Alert>
             </Snackbar>
           </div>
           <div
             className={toggleState === 6 ? "content  active-content" : "content"}
           >
-            <h2>Select your Drizzle</h2>
+            <h2><Translate>Select your Drizzle</Translate></h2>
             <hr />
             {drizzle && drizzle.map(itemName => (
-              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => drizzleHandleClick(itemName)} >{itemName}</Button>
+              <Button variant="contained" sx={{ m: 1 }} className="ingredientButton" onClick={() => drizzleHandleClick(itemName)} ><Translate>{itemName}</Translate></Button>
             ))}
           </div>
         </div>
         <ButtonGroup size="large" sx={{ m: 1 }}>
-          <Button variant="contained" color="success" onClick={addPizzaHandleClick}>Add Pizza</Button>
+          <Button variant="contained" color="success" onClick={addPizzaHandleClick}><Translate>Add Pizza</Translate></Button>
           <Snackbar open={pizzaNotifaction} autoHideDuration={3000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-              Pizza Added
+              <Translate>Pizza Added</Translate>
             </Alert>
           </Snackbar>
-          <Button variant="contained" color="success" onClick={paymentPopupHandleClick}>Complete Order</Button>
-          <Button variant="contained" color="error">Cancel Order</Button>
+          <Button variant="contained" color="success" onClick={paymentPopupHandleClick}><Translate>Complete Order</Translate></Button>
+          <Button variant="contained" color="error"><Translate>Cancel Order</Translate></Button>
         </ButtonGroup>
-        <Popup trigger={paymentPopup} setTrigger={setPaymentPopup}>
-          <h3>Complete Order</h3>
+        <Popup lang={lang} trigger={paymentPopup} setTrigger={setPaymentPopup}>
+          <h3><Translate>Complete Order</Translate></h3>
           <TextField
             sx={{ mt: 2, mb: 2 }}
             id="nameField"
@@ -391,13 +391,13 @@ function CustomerTabs({ lang }) {
               setName(e.target.value);
             }}
           />
-          <h3>Total Price: {displayPrice.toFixed(2)}</h3>
+          <h3><Translate>Total Price</Translate>: {displayPrice.toFixed(2)}</h3>
           <div>
-            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("CREDIT CARD")}> Credit Card</Button>
-            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("DEBIT CARD")}> Debit Card</Button>
-            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("MEAL SWIPE")}> Meal Swipes</Button>
+            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("CREDIT CARD")}> <Translate>Credit Card</Translate></Button>
+            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("DEBIT CARD")}> <Translate>Debit Card</Translate></Button>
+            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("MEAL SWIPE")}> <Translate>Meal Swipes</Translate></Button>
           </div>
-          <Button variant="contained" color="success" sx={{ m: 1 }} onClick={() => placeOrder()}> Place Order</Button>
+          <Button variant="contained" color="success" sx={{ m: 1 }} onClick={() => placeOrder()}> <Translate>Place Order</Translate></Button>
         </Popup>
       </div>
     </Translator>

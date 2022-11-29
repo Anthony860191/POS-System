@@ -18,7 +18,7 @@ const Manager = ({ lang }) => {
   return (
     <div className="Manager">
       <center>
-        <Tabs />
+        <Tabs lang={lang} />
       </center>
       <center>
         <DailySalesTotal></DailySalesTotal>

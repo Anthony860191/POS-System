@@ -5,7 +5,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Customer from "./Customer";
 import Manager from "./Manager";
 import Home from "./Home";
-import { Translator, Translate } from 'react-auto-translate';
+import { Translator} from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 

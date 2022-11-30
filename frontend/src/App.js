@@ -5,7 +5,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Customer from "./Customer";
 import Manager from "./Manager";
 import Home from "./Home";
-import { Translator} from 'react-auto-translate';
+import { Translator } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
@@ -22,7 +22,7 @@ function App() {
         <MenuBar setLang={setLang} />
         <Routes>
           <Route path='/' element={<Home lang={lang} />} />
-          <Route path='/Customer' element={<Customer lang={lang} />} />
+          <Route path='/Order' element={<Customer lang={lang} />} />
           <Route path='/Manager' element={<Manager lang={lang} />} />
         </Routes>
       </BrowserRouter>

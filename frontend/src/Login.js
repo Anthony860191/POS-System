@@ -68,7 +68,7 @@ export default function Login({ lang, setToken }) {
                             </Container>
                         </Form>
                     </Container>
-                </center>
+                </center> 
             </div>
         </Translator>
     );

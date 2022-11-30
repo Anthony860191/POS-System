@@ -30,7 +30,7 @@ export function MenuBar({ setLang }) {
                             <Nav.Link as={NavLink} to="/" href="/Home"><Translate>Home</Translate></Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link as={NavLink} to="/Customer" href="/Customer"><Translate>Customer</Translate></Nav.Link>
+                            <Nav.Link as={NavLink} to="/Order" href="/Order"><Translate>Order</Translate></Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link as={NavLink} to="/Manager" href="Manager"><Translate>Manager</Translate></Nav.Link>

@@ -1,83 +1,85 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Translator, Translate } from 'react-auto-translate';
 
+import { useNavigate } from 'react-router-dom';
+import { wait } from "@testing-library/user-event/dist/utils";
 
-class DrizzleManager extends React.Component {
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+function DrizzleManager({ lang }) {
+    const [DataisLoaded, setData] = useState();
+    const [items, setItems] = useState([]);
 
-    // Constructor 
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: [],
-            DataisLoaded: false
-        };
-    }
-
-
-    // ComponentDidMount is used to
-    // execute the code 
-    componentDidMount() {
+    useEffect(() => {
         axios.get("http://localhost:8000/ingredients/?ingr_type=DRIZZLE")
-
             .then(res => {
-                const res_data = res.data;
-                this.setState({items: res_data, DataisLoaded: true});
+                setItems(res.data);
+                setData(true);
             })
+    }, []);
 
+    if (!DataisLoaded) return (
+        <Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+            <div>
+                <h1> <Translate>Please wait some time....</Translate> </h1>
+            </div>
+        </Translator>);
+
+    const AlterIngredients = async () => {
+        for (var i = 0; i < items.length; i++) {
+
+            const item = items.at(i);
+            console.log(items.at(i));
+            let formField = new FormData();
+            formField.append('ingredient_name', item.ingredient_name);
+            formField.append('quantity', item.quantity);
+            formField.append('units', item.units);
+            formField.append('ingr_type', item.ingr_type);
+            formField.append('usage_value', item.usage_value);
+
+            await axios({
+                method: 'put',
+                url: 'http://localhost:8000/ingredients/' + item.ingredient_name + '/',
+                data: formField
+            }).then((response) => {
+                if (response.status === 200) {
+                    console.log(response);
+                } else {
+                    alert("Bad Request!");
+                    console.log(response);
+                }
+            })
+        }
+        window.location.reload(false);
     }
 
-    render() {
-        const {DataisLoaded, items} = this.state;
-        if (!DataisLoaded) return <div>
-            <h1> Pleses wait some time.... </h1></div>;
+    const reverseChanges = (e) => {
+        e.preventDefault();
+        window.location.reload(false);
+    }
 
-        const AlterIngredients = async () => {
-            for (var i = 0; i < items.length; i++) {
-
-                const item = items.at(i);
-                let formField = new FormData();
-                formField.append('ingredient_name', item.ingredient_name);
-                formField.append('quantity', item.quantity);
-                formField.append('units', item.units);
-                formField.append('ingr_type', item.ingr_type);
-                formField.append('usage_value', item.usage_value);
-
-                console.log(formField);
-
-                await axios({
-                    method: 'put',
-                    url: 'http://localhost:8000/ingredients/' + item.ingredient_name + '/',
-                    data: formField
-                }).then((response) => {
-                    if (response.status === 200) {
-                        console.log(response);
-                    } else {
-                        alert("Bad Request!");
-                        console.log(response);
-                    }
-                })
-            }
-            window.location.reload(false);
-
-        }
-
-        const reverseChanges = (e) => {
-            e.preventDefault();
-            window.location.reload(false);
-        }
-
-        return (
-            //  <div className="content-tabs">
+    return (
+        //  <div className="content-tabs">
+        <Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
             <table>
                 <tr>
-                    <th>Ingredient Name</th>
-                    <th>Alter Amount in Inventory</th>
+                    <th><Translate>Name</Translate></th>
+
+                    <th><Translate>Alter Amount (litres)</Translate></th>
                 </tr>
                 {
                     items.map((item, index) => (
                         <tr>
-                            <td>{item.ingredient_name}</td>
+                            <td><Translate>{item.ingredient_name}</Translate></td>
                             <input
                                 type="number"
                                 className="form-control form-control-lg"
@@ -92,21 +94,22 @@ class DrizzleManager extends React.Component {
                 }
                 <tr>
                     <td colSpan={2}>
-                        <button id="changeBtn" onClick={AlterIngredients} className="btn btn-primary btn-block">Alter Inventory Amount
+                        <button id="changeBtn" onClick={AlterIngredients} className="btn btn-primary btn-block"><Translate>Alter Inventory Amount</Translate>
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td colSpan={2}>
                         <button id="revChangeBtn" onClick={reverseChanges} className="btn btn-primary btn-block">
-                            Reverse Changes
+                            <Translate>Reverse Changes</Translate>
                         </button>
                     </td>
                 </tr>
-            </table>
-        );
-    }
-}
 
+            </table>
+        </Translator>
+        // </div>
+    );
+}
 
 export default DrizzleManager;

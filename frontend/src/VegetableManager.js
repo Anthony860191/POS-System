@@ -2,9 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Translator, Translate } from 'react-auto-translate';
 
-import { useNavigate } from 'react-router-dom';
-import { wait } from "@testing-library/user-event/dist/utils";
-
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 function VegetableManager({ lang }) {
@@ -63,6 +60,7 @@ function VegetableManager({ lang }) {
         window.location.reload(false);
     }
 
+
     return (
         //  <div className="content-tabs">
         <Translator
@@ -72,9 +70,9 @@ function VegetableManager({ lang }) {
         >
             <table>
                 <tr>
-                    <th><Translate>Ingredient Name</Translate></th>
+                    <th><Translate>Name</Translate></th>
 
-                    <th><Translate>Alter Amount in Inventory</Translate></th>
+                    <th><Translate>Alter Amount (lbs)</Translate></th>
                 </tr>
                 {
                     items.map((item, index) => (

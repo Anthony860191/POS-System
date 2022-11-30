@@ -72,9 +72,9 @@ function CrustManager({ lang }) {
         >
             <table>
                 <tr>
-                    <th><Translate>Ingredient Name</Translate></th>
+                    <th><Translate>Name</Translate></th>
 
-                    <th><Translate>Alter Amount in Inventory</Translate></th>
+                    <th><Translate>Alter Amount (lbs)</Translate></th>
                 </tr>
                 {
                     items.map((item, index) => (

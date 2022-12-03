@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from  "@mui/material/Alert";
 import ButtonGroup from '@mui/material/ButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 function CustomerTabs() {
     const [toggleState, setToggleState] = useState(1); // function to switch between tabs
@@ -14,11 +16,12 @@ function CustomerTabs() {
     const [name, setName] = useState(""); // function to set the customers name
     const [paymentType, setPaymentType] = useState(""); // variable and function to store the payment type
     const [pizzaNotifaction, setPizzaNotification] = useState(false); // condition to show pizza added snackbar
+    const [cancelNotification, setCancelNotification] = useState(false); // condition to show order canceled snackbar
+    const [completeNotifcation, setCompleteNotification] = useState(false); // condition to show order completed snackbar
     const [toppingNotification, setToppingNotification] = useState(false); // condition to show max number of toppings added snackbar
     const [ingredients, setIngredients] = useState([]); // variable to store the ingredients fetched from the database
     const [menuItems, setMenuItems] = useState([]); // variable to store the the menu items available
-    const [maxToppings, setMaxToppings] = useState(4);
-    const [currToppings, setCurrToppings] = useState(0);
+    const [maxToppings, setMaxToppings] = useState(0);
     const url = 'http://localhost:8000/';
     
     useEffect(() => {
@@ -37,24 +40,24 @@ function CustomerTabs() {
     },[]);
 
     // variables to store the different ingredients types
-    const crust = [];
-    const sauce = [];
-    const cheese = [];
-    const toppings = [];
-    const drizzle = [];
+    const crustOptions = [];
+    const sauceOptions = [];
+    const cheeseOptions = [];
+    const toppingsOptions = [];
+    const drizzleOptions = [];
 
     // get the different types of customization options
     for(let i = 0; i < ingredients.length; i++) {
       if (ingredients[i].ingr_type === "CRUST") {
-        crust.push(ingredients[i].ingredient_name);
+        crustOptions.push(ingredients[i].ingredient_name);
       } else if (ingredients[i].ingr_type === "SAUCE") {
-        sauce.push(ingredients[i].ingredient_name);
+        sauceOptions.push(ingredients[i].ingredient_name);
       } else if (ingredients[i].ingr_type === "CHEESE") {
-        cheese.push(ingredients[i].ingredient_name);
+        cheeseOptions.push(ingredients[i].ingredient_name);
       } else if (ingredients[i].ingr_type === "VEGGIES" || ingredients[i].ingr_type === "MEAT") {
-        toppings.push(ingredients[i].ingredient_name);
+        toppingsOptions.push(ingredients[i].ingredient_name);
       } else if (ingredients[i].ingr_type === "DRIZZLE") {
-        drizzle.push(ingredients[i].ingredient_name);
+        drizzleOptions.push(ingredients[i].ingredient_name);
       }
     }
 
@@ -79,9 +82,12 @@ function CustomerTabs() {
       if (reason === 'clickaway') {
         return;
       }
-  
+      
+      // set all snackbars to false 
       setPizzaNotification(false);
       setToppingNotification(false);
+      setCancelNotification(false);
+      setCompleteNotification(false);
     };
     
     // function to change the content displayed dependent on the tab selected
@@ -91,6 +97,7 @@ function CustomerTabs() {
 
     const [displayPrice, setDisplayPrice] = useState(0)
     const paymentPopupHandleClick = async() => {
+      console.log(sauce, crust, cheese, toppings);
       setPaymentPopup(true);
       const response = await fetch(`${url}price?pizzatype=${currentOrder[0]}&crusttype=${currentOrder[1]}&drinktype=`);
       const result = await response.json();
@@ -101,13 +108,33 @@ function CustomerTabs() {
       }
     };
 
+    const cancelHandleClick = () => {
+      setCancelNotification(true);
+      setAllOrders([]);
+      setCrust("");
+      setSauce("");
+      setCheese("");
+      setToppings([]);
+      setCurrentOrder(Array(9).fill(""));
+      setTotalPrice(0);
+    };
+
+    const deleteByIndex = index => {
+      console.log(allOrders[index]);
+      setAllOrders(oldValues => {
+        return oldValues.filter((_, i) => i !== index)
+      })
+    }
+
     let [totalPrice, setTotalPrice] = useState(0) // variable to store the total price of the order
     // function to POST order to database
     const placeOrder = async() => {
+      setPaymentPopup(false);
+      setCompleteNotification(true);
       const current = new Date();
       const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
       
-      const responsePrice = await fetch(`${url}price?pizzatype=${currentOrder[0]}&crusttype=${currentOrder[1]}&drinktype=`);
+      const responsePrice = await fetch(`${url}price?pizzatype=${currentOrder[0]}&crusttype=${crust}&drinktype=`);
       const resultPrice = await responsePrice.json();
       totalPrice += parseFloat(resultPrice.price); // store the price obtained as a number in the price variable      
       
@@ -147,15 +174,15 @@ function CustomerTabs() {
         body: JSON.stringify({
           "orderid": parseInt(resultId[0].id),
           "pizza_type": currentOrder[0],
-          "cheese_type": currentOrder[3],
-          "crust": currentOrder[1],
-          "sauce": currentOrder[2],
+          "cheese_type": cheese,
+          "crust": crust,
+          "sauce": sauce,
           "drizzle": currentOrder[8],
           "drink": "",
-          "topping1": currentOrder[4] === "" ? null : currentOrder[4],
-          "topping2": currentOrder[5] === "" ? null : currentOrder[5],
-          "topping3": currentOrder[6] === "" ? null : currentOrder[6],
-          "topping4": currentOrder[7] === "" ? null : currentOrder[7],
+          "topping1": toppings.length < 1 ? null : toppings[0],
+          "topping2": toppings.length < 2  ? null : toppings[1],
+          "topping3": toppings.length < 3  ? null : toppings[2],
+          "topping4": toppings.length < 4  ? null : toppings[3],
           "price": parseFloat(resultPrice.price)
         })
       });
@@ -201,25 +228,19 @@ function CustomerTabs() {
 
     const customPizzaClick = (pizzaType) => {
       currentOrder[0] = pizzaType;
-      currentOrder[4] = "";
-      currentOrder[5] = "";
-      currentOrder[6] = "";
-      currentOrder[7] = "";
-      if(pizzaType === "1 TOPPING") {
+      if(pizzaType === "1 Topping") {
         setMaxToppings(1);
-        setCurrToppings(0);
       } else {
         setMaxToppings(4);
-        setCurrToppings(0);
       }
       setToggleState(2);
     }
 
     const presetPizzaClick = (pizzaType) => {
       currentOrder[0] = pizzaType.menu_item;
-      currentOrder[1] = pizzaType.default_crust;
-      currentOrder[2] = pizzaType.sauce;
-      currentOrder[3] = pizzaType.cheese_type;
+      setCrust(pizzaType.default_crust);
+      setSauce(pizzaType.sauce);
+      setCheese(pizzaType.cheese_type);
       currentOrder[4] = pizzaType.topping1;
       currentOrder[5] = pizzaType.topping2;
       currentOrder[6] = pizzaType.topping3;
@@ -228,23 +249,25 @@ function CustomerTabs() {
     }
 
     // functions to store the pizza ingredient selections on button presses
-    const crustHandleClick = (crustType) => {
-      currentOrder[1] = crustType;
+    const [crust, setCrust] = React.useState("");
+    const crustHandleClick = (event, crustType) => {
+      setCrust(crustType);
     };
 
-    const sauceHandleClick = (sauceType) => {
-      currentOrder[2] = sauceType;
+    const [sauce, setSauce] = React.useState("");
+    const sauceHandleClick = (event, sauceType) => {
+      setSauce(sauceType);
     };
 
-    const cheeseHandleClick = (cheeseType) => {
-      currentOrder[3] = cheeseType;
+    const [cheese, setCheese] = React.useState("");
+    const cheeseHandleClick = (event, cheeseType) => {
+      setCheese(cheeseType);
     };
 
-    const toppingHandleClick = (toppingType) => {
-      if(currToppings < maxToppings) {
-        currentOrder[4+currToppings] = toppingType;
-        setCurrToppings(currToppings+1);
-        
+    const [toppings, setToppings] = React.useState([]);
+    const toppingHandleClick = (event, toppingType) => {
+      if(toppingType.length <= maxToppings) {
+        setToppings(toppingType);
       } else {
         setToppingNotification(true); 
       }
@@ -314,9 +337,23 @@ function CustomerTabs() {
         >
           <h2>Select your Crust</h2>
           <hr />
-          {crust && crust.map (itemName => (
-            <Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => crustHandleClick(itemName)} >{itemName}</Button>
-          ))}
+          <ToggleButtonGroup
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto auto",
+              gridGap: "20px",
+              padding: "10px",
+              
+            }}
+            value = {crust}
+            exclusive
+            onChange={crustHandleClick}
+            aria-label = "crust selection"
+            >
+              {crustOptions && crustOptions.map (itemName => (
+                <ToggleButton value = {itemName} aria-label={itemName}>{itemName}</ToggleButton>
+                ))}
+          </ToggleButtonGroup>
         </div>
 
         <div
@@ -324,9 +361,23 @@ function CustomerTabs() {
         >
           <h2>Select your Sauce</h2>
           <hr />
-          {sauce && sauce.map (itemName => (
-            <Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => sauceHandleClick(itemName)} >{itemName}</Button>
-          ))}
+          <ToggleButtonGroup
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto auto",
+              gridGap: "20px",
+              padding: "10px",
+              
+            }}
+            value = {sauce}
+            exclusive
+            onChange={sauceHandleClick}
+            aria-label = "sauce selection"
+            >
+              {sauceOptions && sauceOptions.map (itemName => (
+                <ToggleButton value = {itemName} aria-label={itemName}>{itemName}</ToggleButton>
+                ))}
+          </ToggleButtonGroup>
         </div>
 
         <div
@@ -334,18 +385,45 @@ function CustomerTabs() {
         >
           <h2>Select your Cheese</h2>
           <hr />
-          {cheese && cheese.map (itemName => (
-            <Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => cheeseHandleClick(itemName)} >{itemName}</Button>
-          ))}
+          <ToggleButtonGroup
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto auto",
+              gridGap: "20px",
+              padding: "10px",
+              
+            }}
+            value = {cheese}
+            exclusive
+            onChange={cheeseHandleClick}
+            aria-label = "cheese selection"
+            >
+              {cheeseOptions && cheeseOptions.map (itemName => (
+                <ToggleButton value = {itemName} aria-label={itemName}>{itemName}</ToggleButton>
+                ))}
+          </ToggleButtonGroup>
         </div>
         <div
           className={toggleState === 5 ? "content  active-content" : "content"}
         >
           <h2>Select your Topping(s)</h2>
           <hr />
-          {toppings && toppings.map (itemName => (
-            <Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => toppingHandleClick(itemName)} >{itemName}</Button>
-          ))}
+          <ToggleButtonGroup
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto auto",
+              gridGap: "20px",
+              padding: "10px",
+              
+            }}
+            value = {toppings}
+            onChange={toppingHandleClick}
+            aria-label = "topping selection"
+            >
+              {toppingsOptions && toppingsOptions.map (itemName => (
+                <ToggleButton value = {itemName} aria-label={itemName}>{itemName}</ToggleButton>
+                ))}
+          </ToggleButtonGroup>
           <Snackbar open={toppingNotification} autoHideDuration={3000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="info" sx={{ width: '100%'}}>
               Can't Select More Toppings
@@ -357,7 +435,7 @@ function CustomerTabs() {
         >
           <h2>Select your Drizzle</h2>
           <hr />
-          {drizzle && drizzle.map (itemName => (
+          {drizzleOptions && drizzleOptions.map (itemName => (
             <Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => drizzleHandleClick(itemName)} >{itemName}</Button>
           ))}
         </div>
@@ -370,7 +448,17 @@ function CustomerTabs() {
           </Alert>
         </Snackbar>
         <Button variant="contained" color = "success" onClick={paymentPopupHandleClick}>Complete Order</Button>
-        <Button variant="contained" color = "error">Cancel Order</Button>
+        <Snackbar open={completeNotifcation} autoHideDuration={3000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={{ width: '100%'}}>
+            Order Completed
+          </Alert>
+        </Snackbar>
+        <Button variant="contained" color = "error" onClick={cancelHandleClick}>Cancel Order</Button>
+        <Snackbar open={cancelNotification} autoHideDuration={3000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%'}}>
+            Order Deleted
+          </Alert>
+        </Snackbar>
       </ButtonGroup>
       <Popup trigger = {paymentPopup} setTrigger = {setPaymentPopup}>
           <h3>Complete Order</h3>
@@ -384,6 +472,16 @@ function CustomerTabs() {
             }}
           />
           <h3>Total Price: {displayPrice.toFixed(2)}</h3>
+          <ul>
+            {allOrders.map((pizza, index) => {
+              return (
+                <li key={pizza.pizza_type}>
+                  <span>{pizza.pizza_type}</span>
+                  <button onClick={() => deleteByIndex(index)}>Delete</button>
+                </li>
+              )
+            })}
+          </ul>
           <div>
             <Button variant="contained" sx= {{m: 1}} onClick={() => setPaymentType("CREDIT CARD")}> Credit Card</Button> 
             <Button variant="contained" sx= {{m: 1}} onClick={() => setPaymentType("DEBIT CARD")}> Debit Card</Button>

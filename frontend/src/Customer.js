@@ -1,12 +1,12 @@
 import "./Customer.css";
 import CustomerTabs from './components/CustomerTabs';
 
-const Customer = () => {
+const Customer = ({ lang }) => {
   return (
     <div className="Customer">
-        <CustomerTabs />
+      <CustomerTabs lang={lang} />
     </div>
   );
 }
-    
+
 export default Customer;

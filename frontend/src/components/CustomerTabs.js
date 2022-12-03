@@ -2,14 +2,41 @@ import * as React from 'react';
 import { useEffect, useState } from "react";
 import "./CustomerTabs.css";
 import Popup from './Popup';
-import {TextField} from "@mui/material";
+import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from  "@mui/material/Alert";
+import MuiAlert from "@mui/material/Alert";
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { Translator, Translate } from 'react-auto-translate';
+
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
+function CustomerTabs({ lang }) {
+  const [toggleState, setToggleState] = useState(1); // function to switch between tabs
+  const [paymentPopup, setPaymentPopup] = useState(false); // function to open the payment popup
+  const [name, setName] = useState(""); // function to set the customers name
+  const [paymentType, setPaymentType] = useState(""); // variable and function to store the payment type
+  const [pizzaNotifaction, setPizzaNotification] = useState(false); // condition to show pizza added snackbar
+  const [toppingNotification, setToppingNotification] = useState(false); // condition to show max number of toppings added snackbar
+  const [ingredients, setIngredients] = useState([]); // variable to store the ingredients fetched from the database
+  const [menuItems, setMenuItems] = useState([]); // variable to store the the menu items available
+  const [maxToppings, setMaxToppings] = useState(4);
+  const [currToppings, setCurrToppings] = useState(0);
+  const url = 'http://localhost:8000/';
+
+  useEffect(() => {
+    Promise.all([
+      fetch(`${url}menu/`),
+      fetch(`${url}ingredients/`)
+    ])
+      .then(([resMenu, resIngr]) =>
+        Promise.all([resMenu.json(), resIngr.json()])
+      )
+      .then(([dataMenu, dataIngr]) => {
+        setMenuItems(dataMenu);
+        setIngredients(dataIngr);
 function CustomerTabs() {
     const [toggleState, setToggleState] = useState(1); // function to switch between tabs
     const [paymentPopup, setPaymentPopup]= useState(false); // function to open the payment popup
@@ -36,8 +63,8 @@ function CustomerTabs() {
           setMenuItems(dataMenu);
           setIngredients(dataIngr);
       })
-      
-    },[]);
+
+  }, []);
 
     // variables to store the different ingredients types
     const crustOptions = [];
@@ -60,17 +87,17 @@ function CustomerTabs() {
         drizzleOptions.push(ingredients[i].ingredient_name);
       }
     }
+  }
 
-    // variables to store the different pizza menu items
-    const basePizzas = [];
-    const presetPizzas = [];
+  // variables to store the different pizza menu items
+  const basePizzas = [];
+  const presetPizzas = [];
 
-    for(let i = 0; i < menuItems.length; i++) {
-      if(menuItems[i].item_type === "BASE_PIZZA") {
-        basePizzas.push(menuItems[i].menu_item); 
-      } else if (menuItems[i].item_type === "PRESET_PIZZA") {
-        presetPizzas.push(menuItems[i]);
-      }
+  for (let i = 0; i < menuItems.length; i++) {
+    if (menuItems[i].item_type === "BASE_PIZZA") {
+      basePizzas.push(menuItems[i].menu_item);
+    } else if (menuItems[i].item_type === "PRESET_PIZZA") {
+      presetPizzas.push(menuItems[i]);
     }
   
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -152,20 +179,11 @@ function CustomerTabs() {
         })
       });
 
-      const responseId = await fetch(`${url}orders/?latest=true`);
-      const resultId = await responseId.json();
+    const responseId = await fetch(`${url}orders/?latest=true`);
+    const resultId = await responseId.json();
 
-      if (allOrders.length > 0) {
-        fetch(`${url}pizzas/`,  {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: allOrders
-        });
-      }
-      fetch(`${url}pizzas/`,  {
+    if (allOrders.length > 0) {
+      fetch(`${url}pizzas/`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -186,27 +204,15 @@ function CustomerTabs() {
           "price": parseFloat(resultPrice.price)
         })
       });
-      setAllOrders([]);
-      setCurrentOrder(Array(9).fill(""));
-      setTotalPrice(0);
-    };
-    
-    // array to store the current pizza order information
-    const [currentOrder, setCurrentOrder] = useState(Array(9).fill(""));
-    // array to store all of the pizza orders besides the current one
-    const [allOrders, setAllOrders] = useState([]);
-
-    // notify when pizza has been added to the order
-    const addPizzaHandleClick = async() => {
-      setPizzaNotification(true);
-      const responsePrice = await fetch(`${url}price?pizzatype=${currentOrder[0]}&crusttype=${currentOrder[1]}&drinktype=`);
-      const resultPrice = await responsePrice.json();
-      
-      const responseId = await fetch(`${url}orders/?latest=true`);
-      const resultId = await responseId.json();
-
-      var pizzaOrder = {
-        "orderid": 1 + parseInt(resultId[0].id),
+    }
+    fetch(`${url}pizzas/`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "orderid": parseInt(resultId[0].id),
         "pizza_type": currentOrder[0],
         "cheese_type": currentOrder[3],
         "crust": currentOrder[1],
@@ -218,13 +224,47 @@ function CustomerTabs() {
         "topping3": currentOrder[6] === "" ? null : currentOrder[6],
         "topping4": currentOrder[7] === "" ? null : currentOrder[7],
         "price": parseFloat(resultPrice.price)
-      }
+      })
+    });
+    setAllOrders([]);
+    setCurrentOrder(Array(9).fill(""));
+    setTotalPrice(0);
+  };
 
-      var jsonPizzaOrder = JSON.stringify(pizzaOrder);
-      allOrders.push(jsonPizzaOrder);
-      setCurrentOrder(Array(9).fill(""));
-      setTotalPrice(totalPrice + parseFloat(resultPrice.price));     
-    };
+  // array to store the current pizza order information
+  const [currentOrder, setCurrentOrder] = useState(Array(9).fill(""));
+  // array to store all of the pizza orders besides the current one
+  const [allOrders, setAllOrders] = useState([]);
+
+  // notify when pizza has been added to the order
+  const addPizzaHandleClick = async () => {
+    setPizzaNotification(true);
+    const responsePrice = await fetch(`${url}price?pizzatype=${currentOrder[0]}&crusttype=${currentOrder[1]}&drinktype=`);
+    const resultPrice = await responsePrice.json();
+
+    const responseId = await fetch(`${url}orders/?latest=true`);
+    const resultId = await responseId.json();
+
+    var pizzaOrder = {
+      "orderid": 1 + parseInt(resultId[0].id),
+      "pizza_type": currentOrder[0],
+      "cheese_type": currentOrder[3],
+      "crust": currentOrder[1],
+      "sauce": currentOrder[2],
+      "drizzle": currentOrder[8],
+      "drink": "",
+      "topping1": currentOrder[4] === "" ? null : currentOrder[4],
+      "topping2": currentOrder[5] === "" ? null : currentOrder[5],
+      "topping3": currentOrder[6] === "" ? null : currentOrder[6],
+      "topping4": currentOrder[7] === "" ? null : currentOrder[7],
+      "price": parseFloat(resultPrice.price)
+    }
+
+    var jsonPizzaOrder = JSON.stringify(pizzaOrder);
+    allOrders.push(jsonPizzaOrder);
+    setCurrentOrder(Array(9).fill(""));
+    setTotalPrice(totalPrice + parseFloat(resultPrice.price));
+  };
 
     const customPizzaClick = (pizzaType) => {
       currentOrder[0] = pizzaType;
@@ -273,51 +313,56 @@ function CustomerTabs() {
       }
     };
 
-    const drizzleHandleClick = (drizzleType) => {
-      currentOrder[8] = drizzleType;
-    };
+  const drizzleHandleClick = (drizzleType) => {
+    currentOrder[8] = drizzleType;
+  };
 
-    const customizeTabs = [];
-    customizeTabs.push (
+  const customizeTabs = [];
+  customizeTabs.push(
+    <Translator
+      from='en'
+      to={lang}
+      googleApiKey={apiKey}
+    >
       <div className="container">
         <div className="bloc-tabs">
-        <button
+          <button
             className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(1)}
-        >
-            Pizza Type
-        </button>
-        <button
+          >
+            <Translate>Pizza Type</Translate>
+          </button>
+          <button
             className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(2)}
-        >
-            Crust
-        </button>
-        <button
-          className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
-          onClick={() => toggleTab(3)}
-        >
-            Sauce
-        </button>
-        <button
-          className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
-          onClick={() => toggleTab(4)}
-        >
-            Cheese
-        </button>
-        <button
-          className={toggleState === 5 ? "tabs active-tabs" : "tabs"}
-          onClick={() => toggleTab(5)}
-        >
-            Toppings
-        </button>
-        <button
-          className={toggleState === 6 ? "tabs active-tabs" : "tabs"}
-          onClick={() => toggleTab(6)}
-        >
-            Drizzle
-        </button>
-      </div>
+          >
+            <Translate>Crust</Translate>
+          </button>
+          <button
+            className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
+            onClick={() => toggleTab(3)}
+          >
+            <Translate>Sauce</Translate>
+          </button>
+          <button
+            className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
+            onClick={() => toggleTab(4)}
+          >
+            <Translate>Cheese</Translate>
+          </button>
+          <button
+            className={toggleState === 5 ? "tabs active-tabs" : "tabs"}
+            onClick={() => toggleTab(5)}
+          >
+            <Translate>Toppings</Translate>
+          </button>
+          <button
+            className={toggleState === 6 ? "tabs active-tabs" : "tabs"}
+            onClick={() => toggleTab(6)}
+          >
+            <Translate>Drizzle</Translate>
+          </button>
+        </div>
 
       <div className="content-tabs">
       <div
@@ -483,13 +528,14 @@ function CustomerTabs() {
             })}
           </ul>
           <div>
-            <Button variant="contained" sx= {{m: 1}} onClick={() => setPaymentType("CREDIT CARD")}> Credit Card</Button> 
-            <Button variant="contained" sx= {{m: 1}} onClick={() => setPaymentType("DEBIT CARD")}> Debit Card</Button>
-            <Button variant="contained" sx= {{m: 1}} onClick={() => setPaymentType("MEAL SWIPE")}> Meal Swipes</Button>
+            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("CREDIT CARD")}> <Translate>Credit Card</Translate></Button>
+            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("DEBIT CARD")}> <Translate>Debit Card</Translate></Button>
+            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("MEAL SWIPE")}> <Translate>Meal Swipes</Translate></Button>
           </div>
-          <Button variant="contained" color = "success" sx= {{m: 1}} onClick={() => placeOrder()}> Place Order</Button>
-      </Popup>
-    </div>
+          <Button variant="contained" color="success" sx={{ m: 1 }} onClick={() => placeOrder()}> <Translate>Place Order</Translate></Button>
+        </Popup>
+      </div>
+    </Translator>
   );
 
   return (

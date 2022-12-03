@@ -1,71 +1,80 @@
 import axios from 'axios';
-import React, { Fragment } from "react";
+import React, { useEffect, useState, Fragment } from "react";
+import { Translator, Translate } from 'react-auto-translate';
 
-class MenuManager extends React.Component {
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-    // Constructor
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: [],
-            DataisLoaded: false
-        };
-    }
-
+function MenuManager({ lang }) {
     // ComponentDidMount is used to
     // execute the code
-    componentDidMount() {
+    const [DataisLoaded, setData] = useState();
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
         axios.get("http://localhost:8000/menu/")
-        .then(res => {
-            const res_data = res.data;
-            this.setState({ items:res_data, DataisLoaded:true });
-          })
+            .then(res => {
+                setItems(res.data);
+                setData(true);
+            })
+    }, []);
 
-    }
-    render() {
-        const { DataisLoaded, items } = this.state;
-        if (!DataisLoaded) return <div>
-            <h1> Pleses wait some time.... </h1> </div> ;
 
-        return (
-        <div className="content-tabs">
-             <table>
-                 <thead>
-                     <tr>
-                        <th>Item Name</th>
-                        <th>Item Type</th>
-                        <th>Price</th>
-                        <th>Toppings</th>
-                        <th>Sauce</th>
-                        <th>Drizzle</th>
-                        <th>Cheese</th>
-                    </tr>
-                 </thead>
-                 <tbody>
-                    {items.map((item) => (
+
+    if (!DataisLoaded) return (
+        <Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+            <div>
+                <h1> <Translate>Please wait some time....</Translate> </h1>
+            </div>
+        </Translator>);
+
+    return (
+        <Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+            <div className="content-tabs">
+                <table>
+                    <thead>
                         <tr>
-                            <td>{ item.menu_item }</td>
-                            <td>{item.item_type} </td>
-                            <td>{item.price} </td>
-                            <td>
-                                <select id="menuSelect">
-                                    <option value={item.topping1}>{item.topping1}</option>
-                                    <option value={item.topping2}>{item.topping2}</option>
-                                    <option value={item.topping3}>{item.topping3}</option>
-                                    <option value={item.topping4}>{item.topping4}</option>
-                                </select>
-                            </td>
-                            <td>{item.sauce} </td>
-                            <td>{item.drizzle} </td>
-                            <td>{item.cheese_type} </td>
+                            <th><Translate>Item Name</Translate></th>
+                            <th><Translate>Item Type</Translate></th>
+                            <th><Translate>Price</Translate></th>
+                            <th><Translate>Toppings</Translate></th>
+                            <th><Translate>Sauce</Translate></th>
+                            <th><Translate>Drizzle</Translate></th>
+                            <th><Translate>Cheese</Translate></th>
                         </tr>
-                ))
-            }
-                 </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {items.map((item) => (
+                            <tr>
+                                <td><Translate>{item.menu_item}</Translate></td>
+                                <td><Translate>{item.item_type}</Translate> </td>
+                                <td><Translate>{item.price}</Translate> </td>
+                                <td>
+                                    <select id="menuSelect">
+                                        <option value={item.topping1}><Translate>{item.topping1}</Translate></option>
+                                        <option value={item.topping2}><Translate>{item.topping2}</Translate></option>
+                                        <option value={item.topping3}><Translate>{item.topping3}</Translate></option>
+                                        <option value={item.topping4}><Translate>{item.topping4}</Translate></option>
+                                    </select>
+                                </td>
+                                <td><Translate>{item.sauce}</Translate> </td>
+                                <td><Translate>{item.drizzle}</Translate> </td>
+                                <td><Translate>{item.cheese_type}</Translate> </td>
+                            </tr>
+                        ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </Translator>
     );
-}
 }
 
 export default MenuManager;

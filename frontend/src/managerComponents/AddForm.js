@@ -1,13 +1,16 @@
 import axios from 'axios';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from "@mui/material/Button";
-import {FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
-import {useNavigate, useParams} from 'react-router-dom';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { useNavigate, useParams } from 'react-router-dom';
+import { Translator, Translate } from 'react-auto-translate';
 
-const AddIngrForm = () => {
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+
+function AddIngrForm({ lang }) {
 
     let navigate = useNavigate();
-    const {id} = useParams();
+    const { id } = useParams();
 
     const [ingredient_name, set_ingr_name] = useState(null)
     const [quantity, set_quantity] = useState(null)
@@ -47,71 +50,82 @@ const AddIngrForm = () => {
     }
 
     return (
-        <table>
-            <tr>
-                <th>Add Ingredient</th>
-            </tr>
-            <tr>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        className="form-control form-control-lg"
-                        placeholder="Enter Ingredient Name"
-                        name="ingredient_name"
-                        value={ingredient_name}
-                        onChange={(e) => set_ingr_name(e.target.value)}
-                    />
-                </div>
-            </tr>
-            <tr>
-                <div className="form-group">
-                    <input
-                        type="number"
-                        className="form-control form-control-lg"
-                        placeholder="Enter Quantity"
-                        name="quantity"
-                        value={quantity}
-                        onChange={(e) => set_quantity(e.target.value)}
-                    />
-                </div>
-            </tr>
-            <tr>
-                <div className="form-group">
-                    <TextField label="Select Unit" select value={units} onChange={handleUnitChange} fullWidth>
-                        <MenuItem value='lbs'>lbs</MenuItem>
-                        <MenuItem value='liters'>liters</MenuItem>
-                    </TextField>
-                </div>
-            </tr>
-            <tr>
-                <div className="form-group">
-                    <TextField label="Select Ingredient Type" select value={ingr_type} onChange={handleTypeChange}
-                               fullWidth>
-                        <MenuItem value='VEGGIES'>Vegetable</MenuItem>
-                        <MenuItem value='MEAT'>Meat</MenuItem>
-                        <MenuItem value='SAUCE'>Sauce</MenuItem>
-                        <MenuItem value='DRIZZLE'>Drizzle</MenuItem>
-                        <MenuItem value='CHEESE'>Cheese</MenuItem>
-                        <MenuItem value='CRUST'>Crust</MenuItem>
-                    </TextField>
-                </div>
-            </tr>
-            <tr>
-                <div className="form-group">
-                    <input
-                        type="number"
-                        className="form-control form-control-lg"
-                        placeholder="Enter Usage Value"
-                        name="usage_value"
-                        value={usage_value}
-                        onChange={(e) => set_usage_value(e.target.value)}
-                    />
-                </div>
-            </tr>
-            <tr>
-                <button onClick={AddIngr} className="btn btn-primary btn-block">Add Ingredient</button>
-            </tr>
-        </table>
+        <Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+            <table>
+                <tr>
+                    <th><Translate>Add Ingredient</Translate></th>
+                </tr>
+                <tr>
+                    <div className="form-group">
+                        <b><Translate>Enter Ingredient Name</Translate></b>
+                        <input
+                            type="text"
+                            className="form-control form-control-lg"
+                            placeholder="Enter Ingredient Name"
+                            name="ingredient_name"
+                            value={ingredient_name}
+                            onChange={(e) => set_ingr_name(e.target.value)}
+                        />
+                    </div>
+                </tr>
+                <tr>
+                    <div className="form-group">
+                        <b><Translate>Enter Quantity</Translate></b>
+                        <input
+                            type="number"
+                            className="form-control form-control-lg"
+                            placeholder="Enter Quantity"
+                            name="quantity"
+                            value={quantity}
+                            onChange={(e) => set_quantity(e.target.value)}
+                        />
+                    </div>
+                </tr>
+                <tr>
+                    <div className="form-group">
+                    <b><Translate>Select Unit</Translate></b>
+                        <TextField label="Select Unit" select value={units} onChange={handleUnitChange} fullWidth>
+                            <MenuItem value='lbs'><Translate>lbs</Translate></MenuItem>
+                            <MenuItem value='liters'><Translate>liters</Translate></MenuItem>
+                        </TextField>
+                    </div>
+                </tr>
+                <tr>
+                    <div className="form-group">
+                    <b><Translate>Select Ingredient Type</Translate></b>
+                        <TextField label="Select Ingredient Type" select value={ingr_type} onChange={handleTypeChange}
+                            fullWidth>
+                            <MenuItem value='VEGGIES'><Translate>Vegetable</Translate></MenuItem>
+                            <MenuItem value='MEAT'><Translate>Meat</Translate></MenuItem>
+                            <MenuItem value='SAUCE'><Translate>Sauce</Translate></MenuItem>
+                            <MenuItem value='DRIZZLE'><Translate>Drizzle</Translate></MenuItem>
+                            <MenuItem value='CHEESE'><Translate>Cheese</Translate></MenuItem>
+                            <MenuItem value='CRUST'><Translate>Crust</Translate></MenuItem>
+                        </TextField>
+                    </div>
+                </tr>
+                <tr>
+                    <div className="form-group">
+                        <b><Translate>Enter Usage Value</Translate></b>
+                        <input
+                            type="number"
+                            className="form-control form-control-lg"
+                            placeholder="Enter Usage Value"
+                            name="usage_value"
+                            value={usage_value}
+                            onChange={(e) => set_usage_value(e.target.value)}
+                        />
+                    </div>
+                </tr>
+                <tr>
+                    <button onClick={AddIngr} className="btn btn-primary btn-block"><Translate>Add Ingredient</Translate></button>
+                </tr>
+            </table>
+        </Translator>
     )
 }
 

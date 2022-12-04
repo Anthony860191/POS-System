@@ -6,18 +6,27 @@ import { TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DataGrid } from '@mui/x-data-grid';
-const excessColumns = [
-    { field: 'ingr_name', headerName: 'Ingredient', minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', },
-    { field: 'stock', headerName: 'Current Stock Used', minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', },
-    { field: 'percentage_used', headerName: '% Used', minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', },
+import { Translator, Translate } from 'react-auto-translate';
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-]
+function parseWord(word)
+{
+   if(word.startsWith(","))
+   {
+    return word.substring(1);
+   }
+   else
+   {
+    return word; 
+   }
+}
 class SalesDashboard extends React.Component {
 
     // Constructor 
 
-    constructor(props) {
+    constructor(props, lang="en") {
         super(props);
+        this.lang = lang; 
         this.state = {
             dailySales: [],
             loadedDailyData: false,
@@ -30,6 +39,13 @@ class SalesDashboard extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.updateEndDate = this.updateEndDate.bind(this);
         this.updateStartDate = this.updateStartDate.bind(this);
+        
+         this.excessColumns = [
+            { field: 'ingr_name', headerName: <Translate>Ingredient</Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', renderCell: (params) =>{return <Translate> {params.value}</Translate>;}},
+            { field: 'stock', headerName: <Translate>Current Stock Used</Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', },
+            { field: 'percentage_used', headerName: <Translate>% Used</Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', },
+        
+        ]
 
     }
     handleChange(newValue) {
@@ -67,12 +83,19 @@ class SalesDashboard extends React.Component {
 
     }
 
+    translateRowElement(element)
+    {
+        return <div> <Translate>{element}</Translate> </div>;
+    }
+
     getIngredientReportRows(data) {
 
         let rows = [];
         for (var i = 0; i < data.length; i++) {
+ 
             let row = { id: i, ingr_name: data[i]['ingr_name'], stock: data[i]["stock"], percentage_used: data[i]["percentage_used"] }
             rows.push(row);
+         
         }
         return rows;
     }
@@ -123,7 +146,7 @@ class SalesDashboard extends React.Component {
                         renderInput={(params) => <TextField {...params} />}
                     /> </LocalizationProvider>
                 <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid columns={excessColumns} rows={[]}></DataGrid>
+                    <DataGrid columns={this.excessColumns} rows={[]}></DataGrid>
                 </div>
             </div>);
         }
@@ -184,11 +207,12 @@ class SalesDashboard extends React.Component {
                         onChange={this.handleChange}
                         renderInput={(params) => <TextField {...params} />}
                     /> </LocalizationProvider>
+                  
                 <div style={{ height: 400, width: '100%' }}>
 
-                    <DataGrid columns={excessColumns} rows={excessRows}></DataGrid>
+                    <DataGrid columns={this.excessColumns} rows={excessRows}></DataGrid>
                 </div>
-
+            
             </div>
 
 

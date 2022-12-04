@@ -23,7 +23,7 @@ function App() {
         <MenuBar setLang={setLang} />
         <Routes>
 
-          <Route path='/Sales Dashboard' element={<SalesDashboard/>} />
+          <Route path='/SalesDashboard' element={<SalesDashboard lang={lang}/>} />
           <Route path='/' element={<Home lang={lang} />} />
           <Route path='/Order' element={<Customer lang={lang} />} />
           <Route path='/Manager' element={<Manager lang={lang} />} />

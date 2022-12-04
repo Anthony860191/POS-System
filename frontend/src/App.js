@@ -1,26 +1,36 @@
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { MenuBar } from "./MenuBar";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Customer from "./Customer";
 import Manager from "./Manager";
 import Home from "./Home";
 import SalesDashboard from './components/SalesDashboard';
+import { Translator } from 'react-auto-translate';
 
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 function App() {
+  const [lang, setLang] = useState();
+
   return (
-    <>
+    <Translator
+      from='en'
+      to={lang}
+      googleApiKey={apiKey}
+    >
       <BrowserRouter>
-        <MenuBar />
+        <MenuBar setLang={setLang} />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/Customer' element={<Customer />} />
-          <Route path='/Manager' element={<Manager />} />
+
           <Route path='/Sales Dashboard' element={<SalesDashboard/>} />
+          <Route path='/' element={<Home lang={lang} />} />
+          <Route path='/Order' element={<Customer lang={lang} />} />
+          <Route path='/Manager' element={<Manager lang={lang} />} />
+
         </Routes>
       </BrowserRouter>
-    </>
+    </Translator>
   );
 }
 

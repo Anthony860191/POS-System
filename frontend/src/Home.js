@@ -1,16 +1,25 @@
 import React from 'react';
 import MyMap from "./GoogleMaps"
+import { Translator, Translate } from 'react-auto-translate';
 
-const Home = () => {
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+
+const Home = ({ lang }) => {
     return (
-        <div className="Home">
-            <center>
-                <h1>Spin 'N Stone Pizza</h1>
-                <div>
-                    <MyMap />
-                </div>
-            </center>
-        </div>
+        <Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+            <div className="Home">
+                <center>
+                    <h1>Spin 'N Stone Pizza</h1>
+                    <div>
+                        <MyMap />
+                    </div>
+                </center>
+            </div>
+        </Translator>
     );
 }
 

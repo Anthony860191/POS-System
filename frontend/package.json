@@ -28,7 +28,8 @@
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "rsuite": "^5.22.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-auto-translate": "^0.0.6"
   },
   "scripts": {
     "start": "react-scripts start",

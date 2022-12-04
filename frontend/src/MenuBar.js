@@ -19,6 +19,9 @@ export function MenuBar() {
                     <Nav.Item>
                         <Nav.Link as={NavLink} to="/Manager" href="Manager">Manager</Nav.Link>
                     </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link as={NavLink} to="/Sales Dashboard" href="Sales Dashboard">Sales Dashboard</Nav.Link>
+                    </Nav.Item>
                 </Nav>
             </Container>
         </>

@@ -96,18 +96,32 @@ class AvailableIngredientsView(views.APIView):
 class DailySalesDataView(views.APIView):
 
     def get(self, request):
-        conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
-        df = pd.read_sql("SELECT * FROM daily_sales_total", conn)
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+        if(start_date is None):
+            conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
+            df = pd.read_sql("SELECT * FROM daily_sales_total", conn)
 
-        conn.close()
-        json_obj = [entry for entry in df.T.to_dict().values()]
-      
-        results = DailySalesTotalSerializer(json_obj, many=True).data
-        return response.Response(results)
+            conn.close()
+            json_obj = [entry for entry in df.T.to_dict().values()]
+        
+            results = DailySalesTotalSerializer(json_obj, many=True).data
+            return response.Response(results)
+        else:
+            conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
+            df = pd.read_sql(f"SELECT * FROM get_daily_sales_total('{start_date}','{end_date}')", conn)
+
+            conn.close()
+            json_obj = [entry for entry in df.T.to_dict().values()]
+        
+            results = DailySalesTotalSerializer(json_obj, many=True).data
+            return response.Response(results)
+
 
 
 class IngredientUsageReport(views.APIView):
     def get(self, request):
+
         date = request.GET.get('date')
         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
         sql_date = parse_sql_argument(date)

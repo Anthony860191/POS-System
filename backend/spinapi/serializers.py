@@ -45,6 +45,9 @@ class DailySalesTotalSerializer(serializers.Serializer):
     order_date = serializers.CharField(max_length=100)
     sales_total = serializers.DecimalField(max_digits=1000, decimal_places=2)
 
+class DailySalesTotalSerializerByDate(serializers.Serializer):
+    order_date = serializers.CharField(max_length=100)
+    sales_total = serializers.DecimalField(max_digits=1000, decimal_places=2)
 class IngredientUsageSerializer(serializers.Serializer):
     ingr_name = serializers.CharField(max_length=100)
     stock = serializers.DecimalField(max_digits=1000, decimal_places=2)

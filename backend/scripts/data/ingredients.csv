@@ -1,0 +1,33 @@
+ingredient_name,quantity,units,ingr_type,usage_value
+Salami,50,lbs,MEAT,0.15
+Smoked Chicken,50,lbs,MEAT,0.25
+Zesty Red,48.4,liters,SAUCE,0.1
+Black Forest Ham,49.85,lbs,MEAT,0.05
+Bbq Sauce,50,liters,DRIZZLE,0.05
+Olive Oil,50,liters,DRIZZLE,0.05
+Traditional Bbq,57.9,liters,SAUCE,0.1
+Ranch,50,liters,DRIZZLE,0.05
+Sriracha,50,liters,DRIZZLE,0.05
+Oregano,49.8,liters,DRIZZLE,0.05
+Banana Peppers,51.75,lbs,VEGGIES,0.25
+Black Olives,49.5,lbs,VEGGIES,0.25
+Brocolli,49.95,lbs,VEGGIES,0.05
+Green Peppers,57,lbs,VEGGIES,0.25
+Jalapenos,50,lbs,VEGGIES,0.25
+Alfredo,49.8,liters,SAUCE,0.1
+Mushrooms,53.75,lbs,VEGGIES,0.25
+Onions,54,lbs,VEGGIES,0.25
+Pineapple,50,lbs,VEGGIES,0.25
+Roasted Garlic,50,lbs,VEGGIES,0.25
+Spinach,50,lbs,VEGGIES,0.25
+Tomatoes,50,lbs,VEGGIES,0.25
+Italian Sausage,49.65,lbs,MEAT,0.35
+Meatball,49.65,lbs,MEAT,0.35
+Fountain Drink,66.95,lbs,DRINK,0.05
+Pepperoni,49.4,lbs,MEAT,0.2
+Diced Ham,50,lbs,MEAT,0.25
+Bottled Drink,97.95,lbs,DRINK,0.05
+Parmesan,49.8,lbs,CHEESE,0.1
+House-Blend,48.3,lbs,CHEESE,0.1
+Cauliflower,50,lbs,CRUST,0.1
+Regular,50,lbs,CRUST,0.1

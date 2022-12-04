@@ -20,9 +20,6 @@ const Manager = () => {
       <center>
         <Tabs />
       </center>
-      <center>
-      <SalesDashboard></SalesDashboard>
-      </center>
     </div>
   );
 }

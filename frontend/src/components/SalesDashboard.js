@@ -7,9 +7,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DataGrid } from '@mui/x-data-grid';
 const excessColumns = [
-    {field: 'ingr_name', headerName:'Ingredient', minWidth:200, flex: 1,  align:'center',headerAlign: 'center',},
-    {field: 'stock', headerName:'Current Stock Used', minWidth:200, flex: 1,  align:'center',headerAlign: 'center',},
-    {field: 'percentage_used', headerName:'% Used', minWidth:200, flex: 1, align:'center',headerAlign: 'center',},
+    { field: 'ingr_name', headerName: 'Ingredient', minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', },
+    { field: 'stock', headerName: 'Current Stock Used', minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', },
+    { field: 'percentage_used', headerName: '% Used', minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', },
 
 ]
 class SalesDashboard extends React.Component {
@@ -21,76 +21,119 @@ class SalesDashboard extends React.Component {
         this.state = {
             dailySales: [],
             loadedDailyData: false,
-            value:"2022-1-1",
-            ingrReport: []
+            value: "2022-1-1",
+            ingrReport: [],
+            startDate: "2022-9-1",
+            endDate: "2022-9-9",
         };
         this.dailySalesLineChart = null;
         this.handleChange = this.handleChange.bind(this);
-     
-        
+        this.updateEndDate = this.updateEndDate.bind(this);
+        this.updateStartDate = this.updateStartDate.bind(this);
+
     }
     handleChange(newValue) {
-        this.setState({value: newValue}, this.getIngredientReport);
-    };
-    getIngredientReport()
-    {
-        const { value } = this.state;
-      //  console.log("In here: ", `http://localhost:8000/ingredient_excess_report/?date=${value}`);
-        axios.get(`http://localhost:8000/ingredient_excess_report/?date=${value}`)
-            .then(res => {
-                const res_data = res.data;
-                this.setState({ ingrReport: res_data, loadedDailyData: true });
-        })
-        
+        this.setState({ value: newValue }, this.getIngredientReport);
     }
 
-    getIngredientReportRows(data)
-    {
-
-        let rows = [];
-        for(var i = 0; i < data.length; i++)
-        {
-            let row = {id:i, ingr_name: data[i]['ingr_name'], stock:data[i]["stock"], percentage_used:data[i]["percentage_used"]}
-            rows.push(row);
+    getDailySalesData() {
+        const { startDate, endDate } = this.state;
+        if (startDate.length === 0 || endDate.length === 0) {
+            return 0;
         }
-        return rows; 
-    }
-    // ComponentDidMount is used to
-    // execute the code 
-    componentDidMount() {
-        axios.get("http://localhost:8000/daily_sales_total/")
+        //  console.log("In here: ", `http://localhost:8000/ingredient_excess_report/?date=${value}`);
+        axios.get(`http://localhost:8000/daily_sales_total/?start_date=${startDate}&end_date=${endDate}`)
             .then(res => {
                 const res_data = res.data;
                 this.setState({ dailySales: res_data, loadedDailyData: true });
             })
+    }
+
+    updateStartDate(newValue) {
+        this.setState({ startDate: newValue }, this.getDailySalesData);
+    }
+    updateEndDate(newValue) {
+        console.log(newValue);
+        this.setState({ endDate: newValue}, this.getDailySalesData);
+    }
+    getIngredientReport() {
+        const { value } = this.state;
+        //  console.log("In here: ", `http://localhost:8000/ingredient_excess_report/?date=${value}`);
+        axios.get(`http://localhost:8000/ingredient_excess_report/?date=${value}`)
+            .then(res => {
+                const res_data = res.data;
+                this.setState({ ingrReport: res_data, loadedDailyData: true });
+            })
+
+    }
+
+    getIngredientReportRows(data) {
+
+        let rows = [];
+        for (var i = 0; i < data.length; i++) {
+            let row = { id: i, ingr_name: data[i]['ingr_name'], stock: data[i]["stock"], percentage_used: data[i]["percentage_used"] }
+            rows.push(row);
+        }
+        return rows;
+    }
+    // ComponentDidMount is used to
+    // execute the code 
+    componentDidMount() {
+        /*
+        axios.get("http://localhost:8000/daily_sales_total/")
+            .then(res => {
+                const res_data = res.data;
+                this.setState({ dailySales: res_data, loadedDailyData: true });
+            })*/
+        this.getDailySalesData();
         this.getIngredientReport();
 
     }
     render() {
-        const { dailySales, loadedDailyData, value, ingrReport } = this.state;
+        const { dailySales, loadedDailyData, value, ingrReport, startDate, endDate } = this.state;
         if (!loadedDailyData) {
             return (<div>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                        label="Start Date"
+                        inputFormat="YYYY-MM-DD"
+                        value={startDate}
+                        defaultValue={'2022-01-01'}
+                        onChange={this.updateStartDate}
+                        renderInput={(params) => <TextField {...params} />}
+                    /> </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                        label="End Date"
+                        inputFormat="YYYY-MM-DD"
+                        value={endDate}
+                        defaultValue={'2022-01-01'}
+                        onChange={this.updateEndDate}
+                        renderInput={(params) => <TextField {...params} />}
+                    /> </LocalizationProvider>
+
                 <h1> Loading available sales data </h1> <canvas id="dailysalestotal"> </canvas>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DesktopDatePicker
-          label="View Ingredient Usage Since"
-          inputFormat="YYYY-MM-DD"
-          value={value}
-          defaultValue={'2022-01-01'}
-          onChange={this.handleChange}
-          renderInput={(params) => <TextField {...params} />}
-        /> </LocalizationProvider>
-        <div style={{ height: 400, width: '100%' }}>
-        <DataGrid columns={excessColumns} rows={[]}></DataGrid>
-        </div>
-               </div>);
+                    <DesktopDatePicker
+                        label="View Ingredient Usage Since"
+                        inputFormat="YYYY-MM-DD"
+                        value={value}
+                        defaultValue={'2022-01-01'}
+                        onChange={this.handleChange}
+                        renderInput={(params) => <TextField {...params} />}
+                    /> </LocalizationProvider>
+                <div style={{ height: 400, width: '100%' }}>
+                    <DataGrid columns={excessColumns} rows={[]}></DataGrid>
+                </div>
+            </div>);
         }
         else {
             if (this.dailySalesLineChart != null) {
                 this.dailySalesLineChart.destroy();
             }
-            console.log(value);
+            
             let excessRows = this.getIngredientReportRows(ingrReport);
+            
             this.dailySalesLineChart = new Chart(
                 document.getElementById('dailysalestotal'),
                 {
@@ -108,26 +151,47 @@ class SalesDashboard extends React.Component {
             );
 
             return (<div>
-                <canvas id="dailysalestotal">
+                 
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                        label="Start Date"
+                        inputFormat="YYYY-MM-DD"
+                        value={startDate}
+                        defaultValue={'2022-01-01'}
+                        onChange={this.updateStartDate}
+                        renderInput={(params) => <TextField {...params} />}
+                    /> </LocalizationProvider>
+             
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                        label="End Date"
+                        inputFormat="YYYY-MM-DD"
+                        value={endDate}
+                        defaultValue={'2022-01-01'}
+                        onChange={this.updateEndDate}
+                        renderInput={(params) => <TextField {...params} />}
+                    /> </LocalizationProvider>
+                <canvas id="dailysalestotal" height={"50%"}>
 
                 </canvas>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DesktopDatePicker
-          label="View Ingredient Usage Since"
-          inputFormat="YYYY-MM-DD"
-          value={value}
-          defaultValue={'2022-01-01'}
-          onChange={this.handleChange}
-          renderInput={(params) => <TextField {...params} />}
-        /> </LocalizationProvider>
-          <div style={{ height: 400, width: '100%' }}>
-         
-         <DataGrid columns={excessColumns} rows={excessRows}></DataGrid>
-         </div>
 
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                        label="View Ingredient Usage Since"
+                        inputFormat="YYYY-MM-DD"
+                        value={value}
+                        defaultValue={'2022-01-01'}
+                        onChange={this.handleChange}
+                        renderInput={(params) => <TextField {...params} />}
+                    /> </LocalizationProvider>
+                <div style={{ height: 400, width: '100%' }}>
+
+                    <DataGrid columns={excessColumns} rows={excessRows}></DataGrid>
                 </div>
 
-                
+            </div>
+
+
             );
         }
     }

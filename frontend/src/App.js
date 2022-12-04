@@ -5,6 +5,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Customer from "./Customer";
 import Manager from "./Manager";
 import Home from "./Home";
+import SalesDashboard from './components/SalesDashboard';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/Customer' element={<Customer />} />
           <Route path='/Manager' element={<Manager />} />
+          <Route path='/Sales Dashboard' element={<SalesDashboard/>} />
         </Routes>
       </BrowserRouter>
     </>

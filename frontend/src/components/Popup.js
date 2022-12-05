@@ -5,11 +5,11 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-function Popup(lang, props) {
+function Popup(props) {
     return (props.trigger) ? (
         <Translator
             from='en'
-            to={lang}
+            to={props.lang}
             googleApiKey={apiKey}
         >
             <div className="popup">

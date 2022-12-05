@@ -6,24 +6,19 @@ import { TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DataGrid } from '@mui/x-data-grid';
-import { Translator, Translate } from 'react-auto-translate';
-const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+import { Translate } from 'react-auto-translate';
 
-function parseWord(word)
-{
-   if(word.startsWith(","))
-   {
-    return word.substring(1);
-   }
-   else
-   {
-    return word; 
-   }
-}
+/**
+ * SalesDashboard Component in charge of displaying inventory and sales data.
+ */
 class SalesDashboard extends React.Component {
 
     // Constructor 
-
+    /**
+     * Default constructor for sales dashboard. 
+     * @param {*} props Any property values to pass into parent. 
+     * @param {string} lang Language code to use for Google Translate. Defaults to "en". 
+     */
     constructor(props, lang="en") {
         super(props);
         this.lang = lang; 
@@ -48,14 +43,22 @@ class SalesDashboard extends React.Component {
         ]
 
     }
+    /**
+     * Updates date for excess report. 
+     * @param {string} newValue 
+     * New value of string to use
+     */
     handleChange(newValue) {
         this.setState({ value: newValue }, this.getIngredientReport);
     }
-
+    /**
+     * Gets daily sales data from startDate and endDate.
+     * @returns void
+     */
     getDailySalesData() {
         const { startDate, endDate } = this.state;
         if (startDate.length === 0 || endDate.length === 0) {
-            return 0;
+            return;
         }
         //  console.log("In here: ", `http://localhost:8000/ingredient_excess_report/?date=${value}`);
         axios.get(`http://localhost:8000/daily_sales_total/?start_date=${startDate}&end_date=${endDate}`)
@@ -64,14 +67,26 @@ class SalesDashboard extends React.Component {
                 this.setState({ dailySales: res_data, loadedDailyData: true });
             })
     }
-
+    /**
+     * Update start date for daily sales data range.
+     * @param {string} newValue new valid date
+     */
     updateStartDate(newValue) {
         this.setState({ startDate: newValue }, this.getDailySalesData);
     }
+
+    /**
+     * Updates end date for daily sales data range. 
+     * @param {string} newValue new end date
+     */
     updateEndDate(newValue) {
         console.log(newValue);
         this.setState({ endDate: newValue}, this.getDailySalesData);
     }
+
+    /**
+     * Sets excess report data for ingredients. 
+     */
     getIngredientReport() {
         const { value } = this.state;
         //  console.log("In here: ", `http://localhost:8000/ingredient_excess_report/?date=${value}`);
@@ -82,11 +97,12 @@ class SalesDashboard extends React.Component {
             })
 
     }
-
-    translateRowElement(element)
-    {
-        return <div> <Translate>{element}</Translate> </div>;
-    }
+   
+    /**
+     * Gets individual rows for excess report. 
+     * @param {array} data 
+     * @returns array of JSON objects
+     */
 
     getIngredientReportRows(data) {
 
@@ -101,6 +117,9 @@ class SalesDashboard extends React.Component {
     }
     // ComponentDidMount is used to
     // execute the code 
+    /**
+     * Sets up default page.
+     */
     componentDidMount() {
         /*
         axios.get("http://localhost:8000/daily_sales_total/")
@@ -112,6 +131,10 @@ class SalesDashboard extends React.Component {
         this.getIngredientReport();
 
     }
+    /**
+     * Returns HTML code to be rendered for sales dashboard. 
+     * @returns
+     */
     render() {
         const { dailySales, loadedDailyData, value, ingrReport, startDate, endDate } = this.state;
         if (!loadedDailyData) {

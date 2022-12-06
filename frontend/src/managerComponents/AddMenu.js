@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
-import Button from "@mui/material/Button";
 import {useNavigate, useParams} from 'react-router-dom';
+import { Translator, Translate } from 'react-auto-translate';
 import {MenuItem, TextField} from "@mui/material";
 
-const AddMenuForm = () => {
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+
+const AddMenuForm = ({lang}) => {
 
     useEffect(() => {
         const fetchIngredients = async () => {
@@ -52,7 +54,7 @@ const AddMenuForm = () => {
     const [default_crust, set_default_crust] = useState(null)
     const [crustList, set_crust_list] = useState([{'ingredient_name':''}])
 
-    const AddMenu = async () => {
+    const AddMenu = async ({lang}) => {
         let formField = new FormData()
 
         formField.append('menu_item', menu_item)
@@ -108,8 +110,11 @@ const AddMenuForm = () => {
     }
 
     return (
+        <Translator
+            from='en' to={lang} googleApiKey={apiKey}>
         <div className="container">
             <div className="form-group">
+                <b><Translate>Enter Item Name</Translate></b>
                 <input
                     type="text"
                     className="form-control form-control-lg"
@@ -120,14 +125,16 @@ const AddMenuForm = () => {
                 />
             </div>
             <div className="form-group">
+                <b><Translate>Select Item Type</Translate></b>
                 <TextField label="Select Item Type" select value={item_type} onChange={handleTypeChange} fullWidth>
-                    <MenuItem value='BASE_PIZZA'>Base Pizza</MenuItem>
-                    <MenuItem value='PRESET_PIZZA'>Preset Pizza</MenuItem>
-                    <MenuItem value='DRINK'>Drink</MenuItem>
-                    <MenuItem value='CRUST'>Crust</MenuItem>
+                    <MenuItem value='BASE_PIZZA'><Translate>Pizza</Translate></MenuItem>
+                    <MenuItem value='PRESET_PIZZA'><Translate>Preset Pizza</Translate></MenuItem>
+                    <MenuItem value='DRINK'><Translate>Drink</Translate></MenuItem>
+                    <MenuItem value='CRUST'><Translate>Crust</Translate></MenuItem>
                 </TextField>
             </div>
             <div className="form-group">
+                <b><Translate>Enter Item Price</Translate></b>
                 <input
                     type="number"
                     className="form-control form-control-lg"
@@ -138,64 +145,73 @@ const AddMenuForm = () => {
                 />
             </div>
             <div className="form-group">
+                <b><Translate> Select Topping One</Translate></b>
                 <TextField label="Select Topping One" select value={topping1} onChange={handleTop1Change} fullWidth>
                     {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                        <MenuItem value={ingredient.ingredient_name}><Translate>{ingredient.ingredient_name}</Translate></MenuItem>
                     ))}
                 </TextField>
             </div>
             <div className="form-group">
+                <b><Translate> Select Topping Two</Translate></b>
                 <TextField label="Select Topping Two" select value={topping2} onChange={handleTop2Change} fullWidth>
                     {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                        <MenuItem value={ingredient.ingredient_name}><Translate>{ingredient.ingredient_name}</Translate></MenuItem>
                     ))}
                 </TextField>
             </div>
             <div className="form-group">
+                <b><Translate> Select Topping Three</Translate></b>
                 <TextField label="Select Topping Three" select value={topping3} onChange={handleTop3Change} fullWidth>
                     {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                        <MenuItem value={ingredient.ingredient_name}><Translate>{ingredient.ingredient_name}</Translate></MenuItem>
                     ))}
                 </TextField>
             </div>
             <div className="form-group">
+                <b><Translate> Select Topping Four</Translate></b>
                 <TextField label="Select Topping Four" select value={topping4} onChange={handleTop4Change} fullWidth>
                     {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                        <MenuItem value={ingredient.ingredient_name}><Translate>{ingredient.ingredient_name}</Translate></MenuItem>
                     ))}
                 </TextField>
             </div>
             <div className="form-group">
+                <b><Translate>Select Item Sauce</Translate></b>
                 <TextField label="Select Sauce" select value={sauce} onChange={handleSauceChange} fullWidth>
                     {sauceList.map(sauce => (
-                        <MenuItem value={sauce.ingredient_name}>{sauce.ingredient_name}</MenuItem>
+                        <MenuItem value={sauce.ingredient_name}><Translate>{sauce.ingredient_name}</Translate></MenuItem>
                     ))}
                 </TextField>
             </div>
             <div className="form-group">
+                <b><Translate>Select Item Drizzle</Translate></b>
                 <TextField label="Select Drizzle" select value={drizzle} onChange={handleDrizzleChange} fullWidth>
                     {drizzleList.map(drizzle => (
-                        <MenuItem value={drizzle.ingredient_name}>{drizzle.ingredient_name}</MenuItem>
+                        <MenuItem value={drizzle.ingredient_name}><Translate>{drizzle.ingredient_name}</Translate></MenuItem>
                     ))}
                 </TextField>
             </div>
             <div className="form-group">
+                <b><Translate>Select Item Cheese</Translate></b>
                 <TextField label="Select Cheese" select value={cheese_type} onChange={handleCheeseChange} fullWidth>
                     {cheeseList.map(cheese_type => (
-                        <MenuItem value={cheese_type.ingredient_name}>{cheese_type.ingredient_name}</MenuItem>
+                        <MenuItem value={cheese_type.ingredient_name}><Translate>{cheese_type.ingredient_name}</Translate></MenuItem>
                     ))}
                 </TextField>
             </div>
             <div className="form-group">
+                <b><Translate>Select Item Crust</Translate></b>
                 <TextField label="Select Crust" select value={default_crust} onChange={handleCrustChange} fullWidth>
                     {crustList.map(default_crust => (
-                        <MenuItem value={default_crust.ingredient_name}>{default_crust.ingredient_name}</MenuItem>
+                        <MenuItem value={default_crust.ingredient_name}><Translate>{default_crust.ingredient_name}</Translate></MenuItem>
                     ))}
                 </TextField>
             </div>
-            <button onClick={AddMenu} className="btn btn-primary btn-block">Add Menu Item</button>
+            <button onClick={AddMenu} className="btn btn-primary btn-block"><Translate>Add Menu Item</Translate></button>
 
         </div>
+        </Translator>
     )
 }
 

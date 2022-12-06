@@ -53,7 +53,7 @@ export function MenuBar({ setLang }) {
                                 <Dropdown.Item eventKey="hi">हिन्दी</Dropdown.Item>
                                 <Dropdown.Item eventKey="vi">Tiếng Việt</Dropdown.Item>
                                 <Dropdown.Item eventKey="tl">Filipino</Dropdown.Item>
-                                <Dropdown.Item eventKey="ko">Korean</Dropdown.Item>
+                                <Dropdown.Item eventKey="ko">한국어</Dropdown.Item>
                                 <Dropdown.Item eventKey="de">Deutsch</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>

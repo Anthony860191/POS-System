@@ -4,7 +4,7 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-function MenuManager({ lang }) {
+function MenuManager({ lang, mode }) {
     // ComponentDidMount is used to
     // execute the code
     const [DataisLoaded, setData] = useState();

@@ -7,7 +7,7 @@ import { wait } from "@testing-library/user-event/dist/utils";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-function CrustManager({ lang }) {
+function CrustManager({ lang, mode }) {
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
 

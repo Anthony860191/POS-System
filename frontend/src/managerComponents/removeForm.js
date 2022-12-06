@@ -6,7 +6,7 @@ import {MenuItem, TextField} from "@mui/material";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-const RemoveMenuForm = ({lang}) => {
+const RemoveMenuForm = ({lang, mode}) => {
 
     useEffect(() => {
         const fetchIngredients = async () => {

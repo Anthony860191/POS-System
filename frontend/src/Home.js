@@ -4,7 +4,7 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-const Home = ({ lang }) => {
+const Home = ({ lang, mode }) => {
     return (
         <Translator
             from='en'

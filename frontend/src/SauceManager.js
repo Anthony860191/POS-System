@@ -5,7 +5,7 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-function SauceManager({ lang }) {
+function SauceManager({ lang, mode }) {
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
 

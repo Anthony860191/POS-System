@@ -6,7 +6,7 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-function AddIngrForm({ lang }) {
+function AddIngrForm({ lang, mode }) {
 
     let navigate = useNavigate();
     const { id } = useParams();

@@ -12,6 +12,7 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 function App() {
   const [lang, setLang] = useState();
+  const [mode, setMode] = useState();
 
   return (
     <Translator

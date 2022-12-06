@@ -41,7 +41,7 @@ export default function Login({ lang, setToken }) {
                         onFailure={onFailure}
                         cookiePolicy={'single_host_origin'}
                         //For testing comment out isSignedIn
-                        //isSignedIn={true}
+                        isSignedIn={true}
                     >
                         <Translate>Login with your company provided Gmail account</Translate>
                     </GoogleLogin>

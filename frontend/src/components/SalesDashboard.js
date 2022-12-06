@@ -106,9 +106,9 @@ class SalesDashboard extends React.Component {
      * @param {*} props Any property values to pass into parent. 
      * @param {string} lang Language code to use for Google Translate. Defaults to "en". 
      */
-    constructor(props, lang = "en", theme = "dark", token = "") {
+    constructor(props, lang="en", token = "") {
         super(props);
-        this.theme = theme;
+        this.theme = props.mode;
         this.lang = lang;
         this.clientId = clientId;
 
@@ -329,7 +329,7 @@ class SalesDashboard extends React.Component {
             let iStatus = 0;
 
             let recAmount = 0;
-            console.log(targetAmount, data[i]["amount_now"], data[i]["ingr_name"]);
+            //console.log(targetAmount, data[i]["amount_now"], data[i]["ingr_name"]);
             if (data[i]["amount_now"] === 0) {
                 recAmount = targetAmount;
             }
@@ -342,7 +342,7 @@ class SalesDashboard extends React.Component {
                 recAmount = (data[i]["amount_now"] - targetAmount) * 1.2;
                 iStatus = 1;
             }
-            console.log(recAmount);
+        //    console.log(recAmount);
             let row = { id: i, ingr_name: data[i]['ingr_name'], stock: data[i]["stock"], percentage_used: data[i]["percentage_used"], rec_amount: recAmount, status: iStatus };
             rows.push(row);
 

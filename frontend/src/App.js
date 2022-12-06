@@ -28,6 +28,7 @@ function App() {
           <Route path='/Order' element={<Customer lang={lang} mode={mode} />} />
           <Route path= '/Server' element = {<Server lang = {lang} mode={mode}/>}/>
           <Route path='/Manager' element={<Manager lang={lang} mode={mode}/>} />
+          <Route path='/SalesDashboard' element={<SalesDashboard  mode={mode} lang={lang}/>} />
         </Routes>
       </BrowserRouter>
     </Translator>

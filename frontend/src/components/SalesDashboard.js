@@ -24,13 +24,20 @@ class SalesDashboard extends React.Component {
     constructor(props, lang = "en") {
         super(props);
         this.lang = lang;
+        let curr = new Date(); // get current date
+        let first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+        let last = first - 7; // last day is the first day + 6
+        let startDate = new Date(curr.setDate(first));
+        startDate = "" + (startDate.getFullYear()) + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
+        let endDate = new Date(curr.setDate(last));
+        endDate = "" + (endDate.getFullYear()) + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
         this.state = {
             dailySales: [],
             loadedDailyData: false,
             value: "2022-1-1",
             ingrReport: [],
-            startDate: "2022-9-1",
-            endDate: "2022-9-9",
+            startDate: endDate,
+            endDate: startDate,
             lastWeeksSales: 0.0,
             loadedLastWeekSales: false,
             lastWeeksTotalPizzas: 0,
@@ -75,14 +82,16 @@ class SalesDashboard extends React.Component {
             })
     }
     /**
-     * 
-     * @param {any} x value to convert to string 
+     * Helper function to standardize large numbers. 
+     * @param {any} x numerical to convert to string 
      * @returns comma separated value
      */
     numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-
+    /**
+     * Sets last weeks pizza counts. 
+     */
     setLastWeeksPizzaCounts()
     {
         axios.get(`http://localhost:8000/pizza_counts/`)
@@ -229,37 +238,44 @@ class SalesDashboard extends React.Component {
                         <Grid item xs={3}>
                         <Card sx={{ minWidth: 275, display: "inline-block" }}>
                             <CardContent>
+                            <div align="center">
                                 <Typography sx={{ fontSize: 25 }} gutterBottom>
                                     Last 7 Days of Revenue
                                 </Typography>
                                 <Typography sx={{ fontSize: 40 }} gutterBottom>
                                     ${lastWeeksSales}
                                 </Typography>
+                                </div>
                             </CardContent>
                         </Card>
                         <Card sx={{ minWidth: 275, display: "inline-block"}}>
-                           
+                        
                             <CardContent>
+                            <div align="center">
                                 <Typography sx={{ fontSize: 25 }} gutterBottom>
                                     Number of Pizzas Sold Since Last Week
                                 </Typography>
                                 <Typography sx={{ fontSize: 40 }} gutterBottom>
                                     {lastWeeksTotalPizzas}
                                 </Typography>
+                                </div>
                             </CardContent>
                         </Card>
                         <Card sx={{ minWidth: 275, display: "inline-block", margin: "auto" }}>
                             <CardContent>
+                                <div align="center">
                                 <Typography sx={{ fontSize: 25 }} gutterBottom>
                                     Most Popular Pizza
                                 </Typography>
                                 <Typography sx={{ fontSize: 40 }} gutterBottom>
                                     {popularPizza[0]} 
                                 </Typography>
+                                </div>
                             </CardContent>
                         </Card>
                         </Grid></Grid>
                 </div>
+                <br></br>
                 <h1> Daily Sales Tracker</h1>
                 <br></br>
                 <h2>Daily Sales Over Time</h2>
@@ -286,6 +302,11 @@ class SalesDashboard extends React.Component {
 
                 </canvas>
 
+               
+
+                <h2>Breakdown By Item</h2>
+
+                <h1>Ingredient Tracker</h1>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DesktopDatePicker
                         label={<Translate>View Ingredient Usage Since</Translate>}
@@ -295,10 +316,6 @@ class SalesDashboard extends React.Component {
                         onChange={this.handleChange}
                         renderInput={(params) => <TextField {...params} />}
                     /> </LocalizationProvider>
-
-                <h2>Daily Sales by Item</h2>
-
-                <h1>Ingredient Tracker</h1>
                 <div style={{ height: 400, width: '100%' }}>
 
                     <DataGrid columns={this.excessColumns} rows={excessRows}></DataGrid>

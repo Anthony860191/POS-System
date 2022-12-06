@@ -19,5 +19,7 @@ urlpatterns = [
     path('price', views.PriceView.as_view(), name='price'),
     path('available_ingredients', views.AvailableIngredientsView.as_view(), name='available_ingredients'),
     path('daily_sales_total/',views.DailySalesDataView.as_view(), name='daily_sales_total'),
-    path('ingredient_excess_report/', views.IngredientUsageReport.as_view(), name='ingredient_usage_report')
+    path('ingredient_excess_report/', views.IngredientUsageReport.as_view(), name='ingredient_usage_report'),
+    path('last_week_sales/',views.LastWeekSalesView.as_view(), name='last_week_sales'),
+    path('pizza_counts/',views.LastWeekItemCounts.as_view(), name='pizza_counts'),
 ]

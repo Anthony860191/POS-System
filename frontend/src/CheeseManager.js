@@ -4,7 +4,7 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-function CheeseManager({ lang }) {
+function CheeseManager({ lang, mode }) {
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
 

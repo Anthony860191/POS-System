@@ -19,7 +19,7 @@ import { Translator, Translate } from 'react-auto-translate';
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 
-function ManagerTabs({ lang }) {
+function ManagerTabs({ lang, mode }) {
     const [toggleState, setToggleState] = useState(1);
     const [buttonPopup, setButtonPopup] = useState(false);
     const [name, setName] = useState("");

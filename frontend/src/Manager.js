@@ -9,7 +9,7 @@ import Login from './Login';
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
-const Manager = ({ lang }) => {
+const Manager = ({ lang, mode }) => {
 
   const [token, setToken] = useState();
 
@@ -26,7 +26,7 @@ const Manager = ({ lang }) => {
   }
 
   return (
-    <>
+    <div className="Manager">
       <Translator
         from='en'
         to={lang}
@@ -43,13 +43,11 @@ const Manager = ({ lang }) => {
           </center>
         </div>
       </Translator >
-      <div className="Manager">
-        <center>
-          <Tabs lang={lang} />
-        </center>
-       
-      </div>
-    </>
+      <center>
+        <Tabs lang={lang} mode={mode}/>
+      </center>
+
+    </div>
   );
 }
 

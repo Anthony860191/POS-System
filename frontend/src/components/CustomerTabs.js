@@ -57,7 +57,7 @@ const successButtons = createTheme({
  * @param {json} param0 
  * @returns 
  */
-function CustomerTabs({ lang }) {
+function CustomerTabs({ lang, mode }) {
     const [toggleState, setToggleState] = useState(1); // function to switch between tabs
     const [paymentPopup, setPaymentPopup]= useState(false); // function to open the payment popup
     const [name, setName] = useState(""); // function to set the customers name

@@ -70,7 +70,6 @@ function CrustManager({ lang }) {
     }
 
     return (
-        //  <div className="content-tabs">
         <Translator
             from='en'
             to={lang}
@@ -117,7 +116,6 @@ function CrustManager({ lang }) {
 
             </table>
         </Translator>
-        // </div>
     );
 }
 

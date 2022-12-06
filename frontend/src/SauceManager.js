@@ -2,8 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Translator, Translate } from 'react-auto-translate';
 
-import { useNavigate } from 'react-router-dom';
-import { wait } from "@testing-library/user-event/dist/utils";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
@@ -70,7 +68,6 @@ function SauceManager({ lang }) {
     }
 
     return (
-        //  <div className="content-tabs">
         <Translator
             from='en'
             to={lang}
@@ -117,7 +114,6 @@ function SauceManager({ lang }) {
 
             </table>
         </Translator>
-        // </div>
     );
 }
 

@@ -1,2 +1,1 @@
-web: gunicorn --pythonpath backend spinapi.wsgi:spinapi
-web: npm start --prefix frontend
+web: gunicorn spinnstonepizza.wsgi --log-file -

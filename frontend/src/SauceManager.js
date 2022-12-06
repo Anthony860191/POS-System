@@ -15,6 +15,10 @@ function SauceManager({ lang }) {
         axios.get("http://localhost:8000/ingredients/?ingr_type=SAUCE")
             .then(res => {
                 setItems(res.data);
+                for (var i = 0; i < items.length; i++) {
+                    var changedIngr = "changed";
+                    items.members.viewers[changedIngr] = false;
+                }
                 setData(true);
             })
     }, []);
@@ -26,36 +30,38 @@ function SauceManager({ lang }) {
             googleApiKey={apiKey}
         >
             <div>
-                <h1> <Translate>Please wait some time....</Translate> </h1>
+                <h1><Translate>Please wait some time....</Translate></h1>
             </div>
         </Translator>);
 
     const AlterIngredients = async () => {
-        for (var i = 0; i < items.length; i++) {
+        for (let i = 0; i < items.length; i++) {
 
             const item = items.at(i);
-            console.log(items.at(i));
-            let formField = new FormData();
-            formField.append('ingredient_name', item.ingredient_name);
-            formField.append('quantity', item.quantity);
-            formField.append('units', item.units);
-            formField.append('ingr_type', item.ingr_type);
-            formField.append('usage_value', item.usage_value);
+            if (item.changed === true) {
+                console.log(item);
+                let formField = new FormData();
+                formField.append('ingredient_name', item.ingredient_name);
+                formField.append('quantity', item.quantity);
+                formField.append('units', item.units);
+                formField.append('ingr_type', item.ingr_type);
+                formField.append('usage_value', item.usage_value);
 
-            await axios({
-                method: 'put',
-                url: 'http://localhost:8000/ingredients/' + item.ingredient_name + '/',
-                data: formField
-            }).then((response) => {
-                if (response.status === 200) {
-                    console.log(response);
-                } else {
-                    alert("Bad Request!");
-                    console.log(response);
-                }
-            })
+                await axios({
+                    method: 'put',
+                    url: 'http://localhost:8000/ingredients/' + item.ingredient_name + '/',
+                    data: formField
+                }).then((response) => {
+                    if (response.status === 200) {
+                        console.log(response);
+                    } else {
+                        alert("Bad Request!");
+                        console.log(response);
+                    }
+                })
+            }
         }
-        window.location.reload(false);
+        window.confirm("Order Submitted!");
     }
 
     const reverseChanges = (e) => {
@@ -74,7 +80,7 @@ function SauceManager({ lang }) {
                 <tr>
                     <th><Translate>Name</Translate></th>
 
-                    <th><Translate>Alter Amount (litres)</Translate></th>
+                    <th><Translate>Alter Amount (lbs)</Translate></th>
                 </tr>
                 {
                     items.map((item, index) => (
@@ -87,7 +93,10 @@ function SauceManager({ lang }) {
                                 defaultValue={item.quantity}
                                 placeholder={item.quantity}
                                 name="alterInventoryAmt"
-                                onChange={(e) => items.at(index).quantity = e.target.value}
+                                onChange={(e) => {
+                                    items.at(index).quantity = e.target.value;
+                                    items.at(index).changed = true
+                                }}
                             />
                         </tr>
                     ))

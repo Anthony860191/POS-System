@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 
 from .constants import DB_HOST, DB_NAME, GET_PRICE_QUERY, SELECT_FROM_AVAILABLE_TOPPINGS, parse_sql_argument
 from .serializers import DailySalesTotalSerializer, IngredientUsageSerializer, LastWeekSalesSerializer, OrderSerializer, PizzaCountsSerializer, PizzaSerializer, IngredientSerializer, MenuSerializer, PriceSerializer, \
-    AvailableIngredientsSerializer
+    AvailableIngredientsSerializer, SalesBreakdownSerializer
 from .models import Pizzas, Orders, Ingredients, Menu
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -149,4 +149,17 @@ class LastWeekItemCounts(views.APIView):
         conn.close()
         json_obj = [entry for entry in df.T.to_dict().values()]
         results = PizzaCountsSerializer(json_obj, many=True).data
+        return response.Response(results)
+class SalesBreakDownView(views.APIView):
+    def get(self, request):
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+        
+        conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
+        df = pd.read_sql(f"SELECT * FROM get_sales_report('{start_date}','{end_date}');", conn)
+
+        conn.close()
+        json_obj = [entry for entry in df.T.to_dict().values()]
+    
+        results = SalesBreakdownSerializer(json_obj, many=True).data
         return response.Response(results)

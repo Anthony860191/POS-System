@@ -22,4 +22,6 @@ urlpatterns = [
     path('ingredient_excess_report/', views.IngredientUsageReport.as_view(), name='ingredient_usage_report'),
     path('last_week_sales/',views.LastWeekSalesView.as_view(), name='last_week_sales'),
     path('pizza_counts/',views.LastWeekItemCounts.as_view(), name='pizza_counts'),
+    path('sales_breakdown/', views.SalesBreakDownView.as_view(), name='sales_breakdown')
+    
 ]

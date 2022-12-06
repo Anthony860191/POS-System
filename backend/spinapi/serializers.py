@@ -60,3 +60,9 @@ class LastWeekSalesSerializer(serializers.Serializer):
 class PizzaCountsSerializer(serializers.Serializer):
     pizza_type = serializers.CharField(max_length=100)
     amount_purchased = serializers.IntegerField()
+
+class SalesBreakdownSerializer(serializers.Serializer):
+    pizzatype = serializers.CharField(max_length=100)
+    crusttype = serializers.CharField(max_length=100)
+    salescost = serializers.DecimalField(max_digits=1000, decimal_places=2)
+    

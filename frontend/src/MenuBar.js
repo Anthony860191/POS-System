@@ -6,6 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+/**
+ * @author Oliver Carver
+ * Navigation and options bar for the website
+ * @param {useState} setMode - useState to set the theme mode for the website
+ * @param {useState} setLang - useState to set the language for the website 
+ * @returns Menu bar for the website
+ */
+
 export function MenuBar({ setLang, setMode }) {
     //Here we have a separate state for menu langauge, since passing in lang from app
     //makes it to where the language from other components do not update on state change

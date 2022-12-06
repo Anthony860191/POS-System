@@ -10,7 +10,14 @@ import { Translator } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+/**
+ * @author Oliver Carver
+ * App function for the website
+ * @returns Entire routed website
+ */
+
 function App() {
+  // Use states to keep track of language and them
   const [lang, setLang] = useState();
   const [mode, setMode] = useState('light');
 

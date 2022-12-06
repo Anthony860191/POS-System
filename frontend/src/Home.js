@@ -3,6 +3,13 @@ import MyMap from "./GoogleMaps"
 import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+/**
+ * @author Oliver Carver
+ * Home page for the website
+ * @param {string} lang - The language the web page needs to be using 
+ * @param {string} mode - The theme mode for CSS styling
+ * @returns HTML home page
+ */
 
 const Home = ({ lang, mode }) => {
     return (

@@ -9,10 +9,10 @@ import SauceManager from "../SauceManager";
 import DrizzleManager from "../DrizzleManager";
 import CheeseManager from "../CheeseManager";
 import CrustManager from "../CrustManager";
-
 import MenuManager from "./Menu"
 import AddIngrForm from "./AddForm";
 import AddMenuForm from "./AddMenu";
+import RemoveMenuForm from "./removeForm";
 
 import { Translator, Translate } from 'react-auto-translate';
 
@@ -193,6 +193,9 @@ function ManagerTabs({ lang }) {
                         <h2><Translate lang={lang}>Add Menu Item</Translate></h2>
                         <hr />
                         <AddMenuForm lang={lang}></AddMenuForm>
+                        <hr />
+                        <h2><Translate lang={lang}>Remove Menu Item</Translate></h2>
+                        <RemoveMenuForm lang={lang}></RemoveMenuForm>
                     </div>
                 </div>
             </div>

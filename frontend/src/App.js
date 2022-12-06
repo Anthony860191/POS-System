@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { MenuBar } from "./MenuBar";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Customer from "./Customer";
+import Server from "./Server";
 import Manager from "./Manager";
 import Home from "./Home";
 import SalesDashboard from './components/SalesDashboard';
@@ -12,6 +13,7 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 function App() {
   const [lang, setLang] = useState();
+  const [mode, setMode] = useState();
 
   return (
     <Translator
@@ -26,6 +28,7 @@ function App() {
           <Route path='/SalesDashboard' element={<SalesDashboard lang={lang}/>} />
           <Route path='/' element={<Home lang={lang} />} />
           <Route path='/Order' element={<Customer lang={lang} />} />
+          <Route path= '/Server' element = {<Server lang = {lang}/>}/>
           <Route path='/Manager' element={<Manager lang={lang} />} />
 
         </Routes>

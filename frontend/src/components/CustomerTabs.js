@@ -52,6 +52,11 @@ const successButtons = createTheme({
   },
 });
 
+/**
+ * 
+ * @param {json} param0 
+ * @returns 
+ */
 function CustomerTabs({ lang }) {
     const [toggleState, setToggleState] = useState(1); // function to switch between tabs
     const [paymentPopup, setPaymentPopup]= useState(false); // function to open the payment popup
@@ -87,6 +92,7 @@ function CustomerTabs({ lang }) {
     const cheeseOptions = [];
     const toppingsOptions = [];
     const drizzleOptions = [];
+    const drinkOptions = [];
 
     // get the different types of customization options
     for(let i = 0; i < ingredients.length; i++) {
@@ -100,6 +106,8 @@ function CustomerTabs({ lang }) {
         toppingsOptions.push(ingredients[i].ingredient_name);
       } else if (ingredients[i].ingr_type === "DRIZZLE") {
         drizzleOptions.push(ingredients[i].ingredient_name);
+      } else if (ingredients[i].ingr_type === "DRINK") {
+        drinkOptions.push(ingredients[i].ingredient_name);
       }
     }
   
@@ -141,7 +149,7 @@ function CustomerTabs({ lang }) {
     const paymentPopupHandleClick = async() => {
       console.log(sauce, crust, cheese, toppings);
       setPaymentPopup(true);
-      const response = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=`);
+      const response = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=${drink}`);
       const result = await response.json();
       if(result.price != null) {
         setDisplayPrice(totalPrice + parseFloat(result.price)); // obtain the total price of the order to display it
@@ -159,6 +167,7 @@ function CustomerTabs({ lang }) {
       setCheese("");
       setToppings([]);
       setDrizzle("");
+      setDrink("");
       setTotalPrice(0);
       setDisplayPrice(0);
       setName("");
@@ -181,6 +190,7 @@ function CustomerTabs({ lang }) {
       setCheese("");
       setToppings([]);
       setDrizzle("");
+      setDrink("");
     }
 
     let [totalPrice, setTotalPrice] = useState(0) // variable to store the total price of the order
@@ -192,7 +202,7 @@ function CustomerTabs({ lang }) {
       const current = new Date();
       const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
       
-      const responsePrice = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=`);
+      const responsePrice = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=${drink}`);
       const resultPrice = await responsePrice.json();
       totalPrice += parseFloat(resultPrice.price); // store the price obtained as a number in the price variable      
       
@@ -236,7 +246,7 @@ function CustomerTabs({ lang }) {
         "crust": crust,
         "sauce": sauce,
         "drizzle": drizzle,
-        "drink": "",
+        "drink": drink,
         "topping1": toppings.length < 1 ? null : toppings[0],
         "topping2": toppings.length < 2 ? null : toppings[1],
         "topping3": toppings.length < 3 ? null : toppings[2],
@@ -252,6 +262,7 @@ function CustomerTabs({ lang }) {
     setCheese("");
     setToppings([]);
     setDrizzle("");
+    setDrink("");
     setTotalPrice(0);
     setName("");
   };
@@ -261,8 +272,11 @@ function CustomerTabs({ lang }) {
 
   // notify when pizza has been added to the order
   const addPizzaHandleClick = async () => {
+    if(pizzaType === "") {
+      return;
+    }
     setPizzaNotification(true);
-    const responsePrice = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=`);
+    const responsePrice = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=${drink}`);
     const resultPrice = await responsePrice.json();
 
     const responseId = await fetch(`${url}orders/?latest=true`);
@@ -275,7 +289,7 @@ function CustomerTabs({ lang }) {
       "crust": crust,
       "sauce": sauce,
       "drizzle": drizzle,
-      "drink": "",
+      "drink": drink,
       "topping1": toppings.length < 1 ? null : toppings[0],
       "topping2": toppings.length < 2 ? null : toppings[1],
       "topping3": toppings.length < 3 ? null : toppings[2],
@@ -291,7 +305,9 @@ function CustomerTabs({ lang }) {
     setCheese("");
     setToppings([]);
     setDrizzle("");
+    setDrink("");
     setTotalPrice(totalPrice + parseFloat(resultPrice.price));
+    setToggleState(1);
   };
     const [pizzaType, setPizzaType] = React.useState("");
     const customPizzaClick = (pizza) => {
@@ -349,6 +365,12 @@ function CustomerTabs({ lang }) {
   const [drizzle, setDrizzle] = React.useState("");
   const drizzleHandleClick = (event, drizzleType) => {
     setDrizzle(drizzleType);
+    setTimeout(() => setToggleState(7), 200);
+  };
+
+  const [drink, setDrink] = React.useState("");
+  const drinkHandleClick = (event, drinkType) => {
+    setDrink(drinkType);
   };
 
   const customizeTabs = [];
@@ -395,6 +417,12 @@ function CustomerTabs({ lang }) {
             onClick={() => toggleTab(6)}
           >
             <Translate>Drizzle</Translate>
+          </button>
+          <button
+            className={toggleState === 7 ? "tabs active-tabs" : "tabs"}
+            onClick={() => toggleTab(7)}
+          >
+            <Translate>Drink</Translate>
           </button>
         </div>
 
@@ -497,10 +525,27 @@ function CustomerTabs({ lang }) {
                 ))}
           </StyledToggleButtonGroup>
         </div>
+        <div
+          className={toggleState === 7 ? "content  active-content" : "content"}
+        >
+          <h2>Select your Drink</h2>
+          <hr />
+          <StyledToggleButtonGroup
+            value = {drink}
+            exclusive
+            onChange={drinkHandleClick}
+            aria-label = "drink selection"
+            >
+              {drinkOptions && drinkOptions.map (itemName => (
+                <ToggleButton value = {itemName} aria-label={itemName}><Translate>{itemName}</Translate></ToggleButton>
+              ))}
+          </StyledToggleButtonGroup>
+        </div>
       </div>
       <div>
-        <p>Current Pizza: {pizzaType}</p>
-        <p>Crust: {crust} Sauce: {sauce} Cheese: {cheese} Toppings: {toppings.join(", ")} Drizzle: {drizzle}</p>
+        <p><strong>Current Pizza:</strong> {pizzaType}</p>
+        <p><strong>Crust:</strong> {crust} <strong>Sauce:</strong> {sauce} <strong>Cheese:</strong> {cheese} <strong>Toppings:</strong> {toppings.join(", ")} <strong>Drizzle:</strong> {drizzle}</p>
+        <p><strong>Drink:</strong> {drink}</p>
         <ButtonGroup size = "large" sx = {{m:1}}>
           <Button variant="contained" theme = {successButtons} onClick={addPizzaHandleClick}><Translate>Add Pizza</Translate></Button>
           <Snackbar open={pizzaNotifaction} autoHideDuration={3000} onClose={handleClose}>
@@ -508,9 +553,9 @@ function CustomerTabs({ lang }) {
               Pizza Added
             </Alert>
           </Snackbar>
-          <Button variant="contained" theme = {successButtons} onClick={paymentPopupHandleClick}><Translate>Complete Order</Translate></Button>
+          <Button variant="contained" theme = {successButtons} onClick={paymentPopupHandleClick}><Translate>Edit/Complete Order</Translate></Button>
           <Snackbar open={completeNotifcation} autoHideDuration={3000} onClose={handleClose}>
-            <Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: green[600y]}}>
+            <Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: green[600]}}>
               Order Completed
             </Alert>
           </Snackbar>
@@ -538,12 +583,12 @@ function CustomerTabs({ lang }) {
             {allOrders.map((pizza, index) => {
               return (
                 <li key={pizza.pizza_type}>
-                  <span>{JSON.parse(allOrders[index]).pizza_type}</span>
+                  <span><Translate>{JSON.parse(allOrders[index]).pizza_type}</Translate></span>
                   <button onClick={() => deleteByIndex(index)}> <DeleteIcon style={{ color: "red" }} /> </button>
                 </li>
               )
             })}
-            {pizzaType != "" &&
+            {pizzaType !== "" &&
               <li key={pizzaType}>
                   <span>{pizzaType}</span>
                   <button onClick={deleteCurrentPizza}> <DeleteIcon style ={{ color: "red" }}/> </button>

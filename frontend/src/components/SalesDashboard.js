@@ -6,24 +6,27 @@ import { CardContent, TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DataGrid } from '@mui/x-data-grid';
-import { Translate } from 'react-auto-translate';
+import { Translator, Translate } from 'react-auto-translate';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Login from '../Login';
+import { GoogleLogout } from 'react-google-login';
 
-
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
+    palette: {
+        mode: 'dark',
+    },
 });
 const lightTheme = createTheme({
     palette: {
-      mode: 'light',
+        mode: 'light',
     },
-  });
+});
 /**
  * SalesDashboard Component in charge of displaying inventory and sales data.
  */
@@ -35,16 +38,16 @@ class SalesDashboard extends React.Component {
      * @param {*} props Any property values to pass into parent. 
      * @param {string} lang Language code to use for Google Translate. Defaults to "en". 
      */
-    constructor(props, lang = "en", theme="light") {
+    constructor(props, lang = "en", theme = "light", token = "") {
         super(props);
-        this.theme = theme; 
+        this.theme = theme;
         this.lang = lang;
-        if(this.theme === "dark")
-        {
+        this.clientId = clientId;
+
+        if (this.theme === "dark") {
             Chart.defaults.color = "#ffffff";
         }
-        else
-        {
+        else {
             Chart.defaults.color = "#000000";
         }
         let curr = new Date(); // get current date
@@ -56,13 +59,16 @@ class SalesDashboard extends React.Component {
         endDate = "" + (endDate.getFullYear()) + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
         this.state = {
             dailySales: [],
+            isLogin: false,
             loadedDailyData: false,
             value: "2022-1-1",
             ingrReport: [],
+            token: token,
             startDate: endDate,
             endDate: startDate,
             lastWeeksSales: 0.0,
             loadedLastWeekSales: false,
+            loadedExcess: false, 
             lastWeeksTotalPizzas: 0,
             loadedLastWeeksPizzas: false,
             popularPizza: ["", 0],
@@ -75,7 +81,7 @@ class SalesDashboard extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.updateEndDate = this.updateEndDate.bind(this);
         this.updateStartDate = this.updateStartDate.bind(this);
-
+        this.logout = this.logout.bind(this);
         this.excessColumns = [
             { field: 'ingr_name', headerName: <Translate>Ingredient</Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', renderCell: (params) => { return <Translate> {params.value}</Translate>; } },
             { field: 'stock', headerName: <Translate>Current Stock Used</Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', type: "number" },
@@ -92,6 +98,10 @@ class SalesDashboard extends React.Component {
     handleChange(newValue) {
         this.setState({ value: newValue }, this.getIngredientReport);
     }
+    logout() {
+
+        this.setState({ isLogin: false, token: '' });
+    }
     /**
      * Gets daily sales data from startDate and endDate.
      * @returns void
@@ -105,7 +115,7 @@ class SalesDashboard extends React.Component {
         axios.get(`http://localhost:8000/daily_sales_total/?start_date=${startDate}&end_date=${endDate}`)
             .then(res => {
                 const res_data = res.data;
-                this.setState({ dailySales: res_data, loadedDailyData: true });
+                this.setState({ dailySales: res_data, loadedExcess: true });
             })
     }
     /**
@@ -165,13 +175,11 @@ class SalesDashboard extends React.Component {
     updateStartDate(newValue) {
         this.setState({ startDate: newValue }, this.getDailySalesData);
     }
-    getTheme()
-    {
-        if(this.theme === "light")
-        {
+    getTheme() {
+        if (this.theme === "light") {
             return lightTheme;
         }
-        return darkTheme; 
+        return darkTheme;
     }
     /**
      * Updates end date for daily sales data range. 
@@ -241,33 +249,31 @@ class SalesDashboard extends React.Component {
         let keys = [];
         let labelID = "";
         let salesData = [];
-        
+
         for (var i = 0; i < responseData.length; i++) {
             let item_type = responseData[i]["crusttype"] + " " + responseData[i]["pizzatype"];
-        
+
             keys.push(item_type);
             salesData.push(responseData[i]["salescost"]);
         }
         return { labels: keys, datasets: [{ label: labelID, data: salesData }] };
 
     }
-    getOptions()
-    {
-        if(this.theme === "dark")
-        {
+    getOptions() {
+        if (this.theme === "dark") {
             return {
                 scales: {
                     y: {
-                      grid: {
-                        color: 'white'
-                      }
+                        grid: {
+                            color: 'white'
+                        }
                     },
                     x: {
-                      grid: {
-                        color: 'white'
-                      }
+                        grid: {
+                            color: 'white'
+                        }
                     }
-                  }
+                }
             };
         }
         return {};
@@ -279,20 +285,43 @@ class SalesDashboard extends React.Component {
     render() {
         let selectTheme = this.getTheme();
         let graphOptions = this.getOptions();
-        const { breakDownData, loadedBreakdown, popularPizza, loadedLastWeeksPizzas, lastWeeksTotalPizzas, dailySales, loadedDailyData, value, ingrReport, startDate, endDate, loadedLastWeekSales, lastWeeksSales } = this.state;
-        if (!(loadedDailyData && loadedLastWeekSales && loadedLastWeeksPizzas && loadedBreakdown)) {
+
+        const {loadedExcess, isLogin, breakDownData, loadedBreakdown, popularPizza, loadedLastWeeksPizzas, lastWeeksTotalPizzas, dailySales, loadedDailyData, value, ingrReport, startDate, endDate, loadedLastWeekSales, lastWeeksSales } = this.state;
+        if (!isLogin) {
             return (
-               
-            <div>  <ThemeProvider theme={darkTheme}>Loading Sales Dashboard...
-          
-                <canvas id="dailysalestotal" height={"50%"}>
+                <>
+                    <Login lang={this.lang} setToken={(newToken) => this.setState({ token: newToken, isLogin: true })} />
+                    <canvas id="dailysalestotal" height={"50%"}>
 
-                </canvas>
+                    </canvas>
 
-                <canvas id="breakdownchart" height={"50%"}>
+                    <canvas id="breakdownchart" height={"50%"}>
 
-                </canvas></ThemeProvider>
-            </div>)
+                    </canvas>
+                </>
+            );
+        }
+        if (!(loadedDailyData && loadedLastWeekSales && loadedLastWeeksPizzas && loadedBreakdown && loadedExcess)) {
+            return (
+                <div className="Logout">
+                    <center>
+                        <GoogleLogout
+                            clientId={clientId}
+                            onLogoutSuccess={this.logout}
+                        >
+                            <Translate>Logout</Translate>
+                        </GoogleLogout>
+                    </center>
+                    <div>  <ThemeProvider theme={darkTheme}>Loading Sales Dashboard...
+
+                        <canvas id="dailysalestotal" height={"50%"}>
+
+                        </canvas>
+
+                        <canvas id="breakdownchart" height={"50%"}>
+
+                        </canvas></ThemeProvider>
+                    </div> </div>)
         }
         else {
             if (this.dailySalesLineChart != null) {
@@ -305,13 +334,13 @@ class SalesDashboard extends React.Component {
 
             let excessRows = this.getIngredientReportRows(ingrReport);
             let breakPie = this.getSalesBreakdownData(breakDownData);
-           
+
             this.breakDownChart = new Chart(
                 document.getElementById("breakdownchart"),
                 {
                     type: 'pie',
                     data: breakPie,
-                    options:{responsive: true}
+                    options: { responsive: true }
                 },
             );
             this.dailySalesLineChart = new Chart(
@@ -328,118 +357,140 @@ class SalesDashboard extends React.Component {
                         ]
                     },
                     options:
-                    graphOptions
+                        graphOptions
                 }
             );
-        
+
             return (<div>
-                 <ThemeProvider theme={selectTheme}>
-                    <CssBaseline/>
-                <br></br>
-                <h1 style={{textAlign:"center"}}><Translate>Weekly Summary</Translate></h1>
-                <div>
-                    <Grid
-                        container
-                        spacing={20}
-                        direction="column"
-                        alignItems="center"
-                        justify="center"
-                        justifyContent="center"
+                <Translator
+                    from='en'
+                    to={this.lang}
+                    googleApiKey={apiKey}
+                >
+                        
+                        
+
+                    <ThemeProvider theme={selectTheme}>
+                        <CssBaseline />
+                        <br></br>
+
+                        <h1 style={{ textAlign: "center" }}><Translate>Weekly Summary</Translate></h1>
+                        <div>
+                            <Grid
+                                container
+                                spacing={20}
+                                direction="column"
+                                alignItems="center"
+                                justify="center"
+                                justifyContent="center"
 
 
-                    >
-                        <Grid item xs={3}>
-                            <Card sx={{ minWidth: 275, display: "inline-block" }}>
-                                <CardContent>
-                                    <div align="center">
-                                        <Typography sx={{ fontSize: 25 }} gutterBottom>
-                                            Last 7 Days of Revenue
-                                        </Typography>
-                                        <Typography sx={{ fontSize: 40 }} gutterBottom>
-                                            ${lastWeeksSales}
-                                        </Typography>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                            <Card sx={{ minWidth: 275, display: "inline-block" }}>
+                            >
+                                <Grid item xs={3}>
+                                    <Card sx={{ minWidth: 275, display: "inline-block" }}>
+                                        <CardContent>
+                                            <div align="center">
+                                                <Typography sx={{ fontSize: 25 }} gutterBottom>
+                                                    <Translate> Last 7 Days of Revenue </Translate>
+                                                </Typography>
+                                                <Typography sx={{ fontSize: 40 }} gutterBottom>
+                                                    ${lastWeeksSales}
+                                                </Typography>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                    <Card sx={{ minWidth: 275, display: "inline-block" }}>
 
-                                <CardContent>
-                                    <div align="center">
-                                        <Typography sx={{ fontSize: 25 }} gutterBottom>
-                                            Number of Pizzas Sold Since Last Week
-                                        </Typography>
-                                        <Typography sx={{ fontSize: 40 }} gutterBottom>
-                                            {lastWeeksTotalPizzas}
-                                        </Typography>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                            <Card sx={{ minWidth: 275, display: "inline-block", margin: "auto" }}>
-                                <CardContent>
-                                    <div align="center">
-                                        <Typography sx={{ fontSize: 25 }} gutterBottom>
-                                            Most Popular Pizza
-                                        </Typography>
-                                        <Typography sx={{ fontSize: 40 }} gutterBottom>
-                                            {popularPizza[0]}
-                                        </Typography>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </Grid></Grid>
+                                        <CardContent>
+                                            <div align="center">
+                                                <Typography sx={{ fontSize: 25 }} gutterBottom>
+                                                    <Translate> Number of Pizzas Sold Since Last Week </Translate>
+                                                </Typography>
+                                                <Typography sx={{ fontSize: 40 }} gutterBottom>
+                                                    {lastWeeksTotalPizzas}
+                                                </Typography>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                    <Card sx={{ minWidth: 275, display: "inline-block", margin: "auto" }}>
+                                        <CardContent>
+                                            <div align="center">
+                                                <Typography sx={{ fontSize: 25 }} gutterBottom>
+                                                    <Translate>   Most Popular Pizza  </Translate>
+                                                </Typography>
+                                                <Typography sx={{ fontSize: 40 }} gutterBottom>
+                                                    {popularPizza[0]}
+                                                </Typography>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </Grid></Grid>
+                        </div>
+                        <br></br>
+                        <h1 style={{ textAlign: "center" }}> <Translate>Daily Sales Tracker</Translate></h1>
+                        <br></br>
+                        <h2><Translate>Daily Sales Over Time</Translate></h2>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DesktopDatePicker
+                                label="Start Date"
+                                inputFormat="YYYY-MM-DD"
+                                value={startDate}
+                                defaultValue={'2022-01-01'}
+                                onChange={this.updateStartDate}
+                                renderInput={(params) => <TextField {...params} />}
+                            /> </LocalizationProvider>
+
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DesktopDatePicker
+                                label="End Date"
+                                inputFormat="YYYY-MM-DD"
+                                value={endDate}
+                                defaultValue={'2022-01-01'}
+                                onChange={this.updateEndDate}
+                                renderInput={(params) => <TextField {...params} />}
+                            /> </LocalizationProvider>
+                        <canvas id="dailysalestotal" height={"50%"}>
+
+                        </canvas>
+
+
+
+                        <h2><Translate>Breakdown By Item</Translate></h2>
+                        <div style={{ width: '25%', margin: 'auto' }}>
+                            <canvas id="breakdownchart" height={"25%"} width={"25%"}>   </canvas>
+                        </div>
+                        <br></br>
+
+                        <h1 style={{ textAlign: "center" }}><Translate>Ingredient Tracker</Translate></h1>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+
+
+                            <DesktopDatePicker
+                                label={<Translate>View Ingredient Usage Since</Translate>}
+                                inputFormat="YYYY-MM-DD"
+                                value={value}
+                                defaultValue={'2022-01-01'}
+                                onChange={this.handleChange}
+                                renderInput={(params) => <TextField {...params} />}
+                            /> </LocalizationProvider>
+                        <div style={{ height: 400, width: '100%' }}>
+
+                            <DataGrid columns={this.excessColumns} rows={excessRows}></DataGrid>
+                        </div>
+                        <center>
+                <div class="Logout">
+                    <GoogleLogout
+                        clientId={clientId}
+                        onLogoutSuccess={this.logout}>
+                       <Translate> Logout</Translate>
+                    </GoogleLogout>
                 </div>
-                <br></br>
-                <h1 style={{textAlign:"center"}}> <Translate>Daily Sales Tracker</Translate></h1>
-                <br></br>
-                <h2><Translate>Daily Sales Over Time</Translate></h2>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DesktopDatePicker
-                        label="Start Date"
-                        inputFormat="YYYY-MM-DD"
-                        value={startDate}
-                        defaultValue={'2022-01-01'}
-                        onChange={this.updateStartDate}
-                        renderInput={(params) => <TextField {...params} />}
-                    /> </LocalizationProvider>
+                </center>
+                    </ThemeProvider>
+                   
+                </Translator>
 
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DesktopDatePicker
-                        label="End Date"
-                        inputFormat="YYYY-MM-DD"
-                        value={endDate}
-                        defaultValue={'2022-01-01'}
-                        onChange={this.updateEndDate}
-                        renderInput={(params) => <TextField {...params} />}
-                    /> </LocalizationProvider>
-                <canvas id="dailysalestotal" height={"50%"}>
-
-                </canvas>
-
-
-
-                <h2><Translate>Breakdown By Item</Translate></h2>
-                <div style={{width: '25%', margin: 'auto'}}>
-                <canvas id="breakdownchart" height={"25%"} width={"25%"}>   </canvas>
-                </div>
-                <br></br>
-             
-                <h1 style={{textAlign:"center"}}><Translate>Ingredient Tracker</Translate></h1>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-
-                     
-                    <DesktopDatePicker
-                        label={<Translate>View Ingredient Usage Since</Translate>}
-                        inputFormat="YYYY-MM-DD"
-                        value={value}
-                        defaultValue={'2022-01-01'}
-                        onChange={this.handleChange}
-                        renderInput={(params) => <TextField {...params} />}
-                    /> </LocalizationProvider>
-                <div style={{ height: 400, width: '100%' }}>
-
-                    <DataGrid columns={this.excessColumns} rows={excessRows}></DataGrid>
-                </div>
-                </ThemeProvider>
+               
             </div>
 
 

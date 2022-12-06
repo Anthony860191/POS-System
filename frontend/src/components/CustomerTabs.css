@@ -64,6 +64,13 @@
     background-color: white;
   }
 
+  #darkButton {
+    border: none;
+    font-size: 22px;
+    font-weight: bold;
+    color: whitesmoke ;
+  }
+
   .completeOrder {
     background-color: rgb(151, 228, 112);
     color: black;
@@ -102,5 +109,8 @@
     height: 100%;
   }
   .active-content {
+    display: block;
+  }
+  .active-content-dark {
     display: block;
   }

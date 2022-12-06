@@ -16,6 +16,8 @@ import {green} from '@mui/material/colors';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+const dark = 'dark';
+
 const ToggleButton = styled(MuiToggleButton) ({
   paddingTop: "50px",
   paddingBottom: "50px",
@@ -380,46 +382,53 @@ function CustomerTabs({ lang }) {
       to={lang}
       googleApiKey={apiKey}
     >
-      <div className="container">
+      <div className={dark === 'dark' ? "container-dark" : "container"}>
         <div className="bloc-tabs">
           <button
-            className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 1 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(1)}
           >
             <Translate>Pizza Type</Translate>
           </button>
           <button
-            className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 2 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(2)}
           >
             <Translate>Crust</Translate>
           </button>
           <button
-            className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 3 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(3)}
           >
             <Translate>Sauce</Translate>
           </button>
           <button
-            className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 4 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(4)}
           >
             <Translate>Cheese</Translate>
           </button>
           <button
-            className={toggleState === 5 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 5 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(5)}
           >
             <Translate>Toppings</Translate>
           </button>
           <button
-            className={toggleState === 6 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 6 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(6)}
           >
             <Translate>Drizzle</Translate>
           </button>
           <button
-            className={toggleState === 7 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 7 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(7)}
           >
             <Translate>Drink</Translate>
@@ -428,7 +437,7 @@ function CustomerTabs({ lang }) {
 
       <div className="content-tabs">
       <div
-          className={toggleState === 1 ? "content  active-content" : "content"}
+          className={toggleState === 1 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
           <h2>Select your Pizza</h2>
           <hr />
@@ -440,7 +449,7 @@ function CustomerTabs({ lang }) {
           ))}
         </div>
         <div
-          className={toggleState === 2 ? "content  active-content" : "content"}
+          className={toggleState === 2 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
           <h2>Select your Crust</h2>
           <hr />
@@ -457,7 +466,7 @@ function CustomerTabs({ lang }) {
         </div>
 
         <div
-          className={toggleState === 3 ? "content  active-content" : "content"}
+          className={toggleState === 3 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
           <h2>Select your Sauce</h2>
           <hr />
@@ -474,7 +483,7 @@ function CustomerTabs({ lang }) {
         </div>
 
         <div
-          className={toggleState === 4 ? "content  active-content" : "content"}
+          className={toggleState === 4 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
           <h2>Select your Cheese</h2>
           <hr />
@@ -490,7 +499,7 @@ function CustomerTabs({ lang }) {
           </StyledToggleButtonGroup>
         </div>
         <div
-          className={toggleState === 5 ? "content  active-content" : "content"}
+          className={toggleState === 5 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
           <h2>Select your Topping(s)</h2>
           <hr />
@@ -510,7 +519,7 @@ function CustomerTabs({ lang }) {
           </Snackbar>
         </div>
         <div
-          className={toggleState === 6 ? "content  active-content" : "content"}
+          className={toggleState === 6 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
           <h2>Select your Drizzle</h2>
           <hr />
@@ -526,7 +535,7 @@ function CustomerTabs({ lang }) {
           </StyledToggleButtonGroup>
         </div>
         <div
-          className={toggleState === 7 ? "content  active-content" : "content"}
+          className={toggleState === 7 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
           <h2>Select your Drink</h2>
           <hr />
@@ -543,11 +552,11 @@ function CustomerTabs({ lang }) {
         </div>
       </div>
       <div>
-        <p><strong>Current Pizza:</strong> {pizzaType}</p>
-        <p><strong>Crust:</strong> {crust} <strong>Sauce:</strong> {sauce} <strong>Cheese:</strong> {cheese} <strong>Toppings:</strong> {toppings.join(", ")} <strong>Drizzle:</strong> {drizzle}</p>
-        <p><strong>Drink:</strong> {drink}</p>
+        <p id = {dark === 'dark' ? "darkP" : ""}><strong>Current Pizza:</strong> {pizzaType}</p>
+        <p id = {dark === 'dark' ? "darkP" : ""}><strong>Crust:</strong> {crust} <strong>Sauce:</strong> {sauce} <strong>Cheese:</strong> {cheese} <strong>Toppings:</strong> {toppings.join(", ")} <strong>Drizzle:</strong> {drizzle}</p>
+        <p id = {dark === 'dark' ? "darkP" : ""}><strong>Drink:</strong> {drink}</p>
         <ButtonGroup size = "large" sx = {{m:1}}>
-          <Button variant="contained" theme = {successButtons} onClick={addPizzaHandleClick}><Translate>Add Pizza</Translate></Button>
+          <Button variant="contained" theme = {successButtons} onClick={addPizzaHandleClick}><Translate>Add Item</Translate></Button>
           <Snackbar open={pizzaNotifaction} autoHideDuration={3000} onClose={handleClose}>
             <Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: green[600]}}>
               Pizza Added

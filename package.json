@@ -6,6 +6,7 @@
   "name": "spinnstonepizza",
   "version": "0.0.1",
   "scripts": {
+    "start":"npm start",
     "postinstall": "npm install --prefix frontend"
   }
 }

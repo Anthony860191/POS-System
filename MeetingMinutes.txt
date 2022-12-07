@@ -1,0 +1,8 @@
+Meeting 1 Minutes:
+We discussed our current research plans for the project in terms of accessibility and integrating the Google Translation API. We also discussed what each of the team members would be responsible for in the short term, and communicated our implementation plans to the other team members.
+
+Meeting 2 minutes:
+This meeting, we discussed why the font scaling was not implemented, and how it either broke or altered the layout of our application or made half of the text unreadable. Then, we discussed what other changes could be made to make the product easier to use, and settled on code optimization to make the application more responsive. Then, we discussed the progress for other features, like the dashboards tab and Google Translate API integration. We identified functionalities that were missing from the product and delegated the tasks after this, and ended the meeting. 
+
+Meeting 3 minutes:
+Tested and deployed meetings. 

@@ -1,0 +1,11 @@
+menu_item,item_type,price,topping1,topping2,topping3,topping4,sauce,drizzle,cheese_type,default_crust
+1 Topping,BASE_PIZZA,7.79,,,,,,,,
+2-4 Topping,BASE_PIZZA,8.99,,,,,,,,
+Bottled Drink,DRINK,2.45,,,,,,,,
+Fountain Drink,DRINK,2.45,,,,,,,,
+Cauliflower,CRUST,2.99,,,,,,,,
+Regular,CRUST,0,,,,,,,,
+Cheese,PRESET_PIZZA,6.79,,,,,Zesty Red,,House-Blend,Regular
+Pepperoni,PRESET_PIZZA,6.79,Pepperoni,,,,Zesty Red,,House-Blend,Regular
+Santa Special,PRESET_PIZZA,8.99,Black Olives,Mushrooms,Banana Peppers,Onions,Zesty Red,Bbq Sauce,House-Blend,Cauliflower
+Pumpkin Spice Pizza,PRESET_PIZZA,10,Banana Peppers,Black Olives,Green Peppers,Jalapenos,Zesty Red,Ranch,Parmensan,Cauliflower

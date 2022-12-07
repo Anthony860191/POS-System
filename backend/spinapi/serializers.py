@@ -44,3 +44,25 @@ class AvailableIngredientsSerializer(serializers.Serializer):
 class DailySalesTotalSerializer(serializers.Serializer):
     order_date = serializers.CharField(max_length=100)
     sales_total = serializers.DecimalField(max_digits=1000, decimal_places=2)
+
+class DailySalesTotalSerializerByDate(serializers.Serializer):
+    order_date = serializers.CharField(max_length=100)
+    sales_total = serializers.DecimalField(max_digits=1000, decimal_places=2)
+class IngredientUsageSerializer(serializers.Serializer):
+    ingr_name = serializers.CharField(max_length=100)
+    stock = serializers.DecimalField(max_digits=1000, decimal_places=2)
+    percentage_used = serializers.DecimalField(max_digits=1000, decimal_places=2)
+    amount_now = serializers.DecimalField(max_digits=1000, decimal_places=2)
+
+class LastWeekSalesSerializer(serializers.Serializer):
+    last_week_total = serializers.DecimalField(max_digits=1000, decimal_places=2)
+
+class PizzaCountsSerializer(serializers.Serializer):
+    pizza_type = serializers.CharField(max_length=100)
+    amount_purchased = serializers.IntegerField()
+
+class SalesBreakdownSerializer(serializers.Serializer):
+    pizzatype = serializers.CharField(max_length=100)
+    crusttype = serializers.CharField(max_length=100)
+    salescost = serializers.DecimalField(max_digits=1000, decimal_places=2)
+    

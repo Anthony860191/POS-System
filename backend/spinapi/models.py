@@ -1,10 +1,6 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
+"""
+Django models are Python classes for each table in the database.
+"""
 from django.db import models
 
 
@@ -123,7 +119,13 @@ class DjangoSession(models.Model):
 
 
 class Ingredients(models.Model):
+    """
+    The Ingredient class represents each individual ingredient that goes into a pizza.
+    Attributes:
+
+    """
     ingredient_name = models.CharField(primary_key=True, max_length=100)
+    """models.CharField: name of ingredient"""
     quantity = models.DecimalField(max_digits=65535, decimal_places=2, blank=True, null=True)
     units = models.CharField(max_length=100, blank=True, null=True)
     ingr_type = models.CharField(max_length=100, blank=True, null=True)

@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath backend python manage.py runserver
+web: python backend/manage.py runserver

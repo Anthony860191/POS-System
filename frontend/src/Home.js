@@ -24,16 +24,19 @@ const Home = ({ lang , mode}) => {
                 <center>
                     <h1>Spin 'N Stone Pizza</h1>
                     <p>
+                        <Translate>
                         Welcome to Spin 'N Stone Pizza, located in the MSC at Texas A&M University! As Aggies, we are proud to offer delicious,
                         hand-crafted pizzas made with the freshest ingredients. Our dough is made fresh daily, and we top it with the finest meats,
-                        vegetables, and cheeses. 
+                        vegetables, and cheeses. </Translate>
                         <br />
-                        At Spin 'N Stone Pizza, we believe that great pizza is all about the details. Our skilled pizza
+                        <Translate>At Spin 'N Stone Pizza, we believe that great pizza is all about the details. Our skilled pizza
                         makers take the time to carefully craft each and every pie to perfection, ensuring that every bite is packed with flavor.
-                        You can enjoy your pizza on the go – perfect for a quick meal between classes or to enjoy in the food court! 
+                        You can enjoy your pizza on the go – perfect for a quick meal between classes or to enjoy in the food court! </Translate>
                         <br />
+                        <Translate>
                         We are proud to be a part of the A&M community, and we love serving our fellow Aggies. Come visit us at Spin 'N Stone Pizza 
                         and taste the difference for yourself. We look forward to serving you!
+                        </Translate>
                     </p>
                     <div>
                         <MyMap />

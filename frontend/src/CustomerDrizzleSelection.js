@@ -4,6 +4,11 @@ import Button from "@mui/material/Button";
 const drizzleHandleClick = () => {
     alert("Selected Drizzle");
   };
+
+/**
+ * Creates a form that allows for the customer to select the drizzle for their pizza.
+ * @constructor
+ */
 class CustomerDrizzleSelection extends React.Component {
 
     // Constructor 

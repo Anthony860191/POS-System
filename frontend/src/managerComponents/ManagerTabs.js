@@ -1,8 +1,5 @@
 import { useState } from "react";
 import "./ManagerTabs.css";
-import Popup from '../components/Popup';
-import { TextField } from "@mui/material";
-import Button from "@mui/material/Button";
 import VegetableManager from "../VegetableManager";
 import MeatManager from "../MeatManager";
 import SauceManager from "../SauceManager";
@@ -13,7 +10,6 @@ import MenuManager from "./Menu"
 import AddIngrForm from "./AddForm";
 import AddMenuForm from "./AddMenu";
 import RemoveMenuForm from "./removeForm";
-
 import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -23,9 +19,9 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * @author Joshua Hillis
  * @author Anthony Mercado
  * Creates a form with tabs that hosts all the other aspects of the manager's view.
- * @constructor
  * @param {string} lang - The language for the text to be in.
  * @param {string} mode - The toggle for dark / light mode.
+ * @return {document} ManagerTabs
  */
 function ManagerTabs({ lang, mode }) {
     const [toggleState, setToggleState] = useState(1);

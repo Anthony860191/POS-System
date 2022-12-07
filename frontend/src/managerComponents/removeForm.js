@@ -47,7 +47,7 @@ const RemoveMenuForm = ({lang, mode}) => {
         })
     }
 
-    const handleMenuChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleMenuChange = (event) => {
         set_menu_item(event.target.value);
     }
 

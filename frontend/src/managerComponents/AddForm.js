@@ -48,11 +48,11 @@ function AddIngrForm({ lang, mode }) {
         })
     }
 
-    const handleUnitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleUnitChange = (event) => {
         set_units(event.target.value);
     }
 
-    const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTypeChange = (event) => {
         set_ingr_type(event.target.value);
     }
 

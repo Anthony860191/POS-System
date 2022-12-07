@@ -1,4 +1,32 @@
-import axios from 'axios';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: OrderMenu.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: OrderMenu.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import Button from "@mui/material/Button";
 import {json, useNavigate, useParams} from 'react-router-dom';
@@ -71,7 +99,7 @@ const OrderMenuForm = ({ lang }) => {
     const [quantity, set_quantity] = useState(1); // variable to store the amount of pizzas being orderd
     const [allOrders, setAllOrders] = useState([]); // variable to store all of the pizzas
 
-    for (let i = 0; i < pizzaList.length; i++) {
+    for (let i = 0; i &lt; pizzaList.length; i++) {
         if (pizzaList[i].item_type === "BASE_PIZZA") {
             basePizzas.push(pizzaList[i]);
         } else if (pizzaList[i].item_type === "PRESET_PIZZA") {
@@ -88,7 +116,7 @@ const OrderMenuForm = ({ lang }) => {
         const responseId = await fetch(`${url}/orders/?latest=true`);
         const resultId = await responseId.json();
 
-        const responsePrice = await fetch(`${url}/price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`);
+        const responsePrice = await fetch(`${url}/price?pizzatype=${item_type}&amp;crusttype=${default_crust}&amp;drinktype=${drink}`);
         const resultPrice = await responsePrice.json();
 
         var pizzaOrder = {
@@ -107,7 +135,7 @@ const OrderMenuForm = ({ lang }) => {
         }
         var jsonPizzaOrder = JSON.stringify(pizzaOrder);
 
-        for(let i = 0; i < quantity; i++) {
+        for(let i = 0; i &lt; quantity; i++) {
             allOrders.push(jsonPizzaOrder);
             set_totalPrice(totalPrice + parseFloat(resultPrice.price));
         }
@@ -126,10 +154,10 @@ const OrderMenuForm = ({ lang }) => {
     }
 
     const AddMenu = async () => {
-        if (item_type === '' && allOrders.length === 0) {
+        if (item_type === '' &amp;&amp; allOrders.length === 0) {
             return;
         }
-        const responsePrice = await fetch(`${url}/price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`);
+        const responsePrice = await fetch(`${url}/price?pizzatype=${item_type}&amp;crusttype=${default_crust}&amp;drinktype=${drink}`);
         const resultPrice = await responsePrice.json();
         
         const current = new Date();
@@ -154,7 +182,7 @@ const OrderMenuForm = ({ lang }) => {
         }
         var jsonPizzaOrder = JSON.stringify(pizzaOrder);
 
-        for(let i = 0; i < quantity; i++) {
+        for(let i = 0; i &lt; quantity; i++) {
             allOrders.push(jsonPizzaOrder);
             set_totalPrice(totalPrice + parseFloat(resultPrice.price));
         }
@@ -234,9 +262,9 @@ const OrderMenuForm = ({ lang }) => {
     }
 
     return (
-        <div className="container">
-            <div className="form-group">
-                <input
+        &lt;div className="container">
+            &lt;div className="form-group">
+                &lt;input
                     type="text"
                     className="form-control form-control-lg"
                     placeholder="Enter Name for Order"
@@ -244,88 +272,88 @@ const OrderMenuForm = ({ lang }) => {
                     value={name}
                     onChange={(e) => set_name(e.target.value)}
                 />
-            </div>
-            <div className="form-group">
-                <TextField label="Select Pizza Type" select value={item_type} onChange={handleTypeChange} fullWidth>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Pizza Type" select value={item_type} onChange={handleTypeChange} fullWidth>
                     {basePizzas.map(item => (
-                        <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
+                        &lt;MenuItem value={item.menu_item}>{item.menu_item}&lt;/MenuItem>
                     ))}
                     {presetPizzas.map(item => (
-                        <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
+                        &lt;MenuItem value={item.menu_item}>{item.menu_item}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Topping One" select value={topping1} onChange={handleTop1Change} fullWidth>
-                    <MenuItem value=''>Remove Topping</MenuItem>
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Topping One" select value={topping1} onChange={handleTop1Change} fullWidth>
+                    &lt;MenuItem value=''>Remove Topping&lt;/MenuItem>
                     {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                        &lt;MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Topping Two" select value={topping2} onChange={handleTop2Change} fullWidth>
-                    <MenuItem value=''>Remove Topping</MenuItem>
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Topping Two" select value={topping2} onChange={handleTop2Change} fullWidth>
+                    &lt;MenuItem value=''>Remove Topping&lt;/MenuItem>
                     {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                        &lt;MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Topping Three" select value={topping3} onChange={handleTop3Change} fullWidth>
-                    <MenuItem value=''>Remove Topping</MenuItem>
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Topping Three" select value={topping3} onChange={handleTop3Change} fullWidth>
+                    &lt;MenuItem value=''>Remove Topping&lt;/MenuItem>
                     {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                        &lt;MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Topping Four" select value={topping4} onChange={handleTop4Change} fullWidth>
-                    <MenuItem value=''>Remove Topping</MenuItem>
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Topping Four" select value={topping4} onChange={handleTop4Change} fullWidth>
+                    &lt;MenuItem value=''>Remove Topping&lt;/MenuItem>
                     {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                        &lt;MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Sauce" select value={sauce} onChange={handleSauceChange} fullWidth>
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Sauce" select value={sauce} onChange={handleSauceChange} fullWidth>
                     {sauceList.map(sauce => (
-                        <MenuItem value={sauce.ingredient_name}>{sauce.ingredient_name}</MenuItem>
+                        &lt;MenuItem value={sauce.ingredient_name}>{sauce.ingredient_name}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Drizzle" select value={drizzle} onChange={handleDrizzleChange} fullWidth>
-                    <MenuItem value=''>No Drizzle</MenuItem>
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Drizzle" select value={drizzle} onChange={handleDrizzleChange} fullWidth>
+                    &lt;MenuItem value=''>No Drizzle&lt;/MenuItem>
                     {drizzleList.map(drizzle => (
-                        <MenuItem value={drizzle.ingredient_name}>{drizzle.ingredient_name}</MenuItem>
+                        &lt;MenuItem value={drizzle.ingredient_name}>{drizzle.ingredient_name}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Cheese" select value={cheese_type} onChange={handleCheeseChange} fullWidth>
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Cheese" select value={cheese_type} onChange={handleCheeseChange} fullWidth>
                     {cheeseList.map(cheese_type => (
-                        <MenuItem value={cheese_type.ingredient_name}>{cheese_type.ingredient_name}</MenuItem>
+                        &lt;MenuItem value={cheese_type.ingredient_name}>{cheese_type.ingredient_name}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Crust" select value={default_crust} onChange={handleCrustChange} fullWidth>
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Crust" select value={default_crust} onChange={handleCrustChange} fullWidth>
                     {crustList.map(default_crust => (
-                        <MenuItem value={default_crust.ingredient_name}>{default_crust.ingredient_name}</MenuItem>
+                        &lt;MenuItem value={default_crust.ingredient_name}>{default_crust.ingredient_name}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Drink" select value={drink} onChange={handleDrinkChange} fullWidth>
-                    <MenuItem value=''>No Drink</MenuItem>
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div className="form-group">
+                &lt;TextField label="Select Drink" select value={drink} onChange={handleDrinkChange} fullWidth>
+                    &lt;MenuItem value=''>No Drink&lt;/MenuItem>
                     {drinks.map(item => (
-                        <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
+                        &lt;MenuItem value={item.menu_item}>{item.menu_item}&lt;/MenuItem>
                     ))}
-                </TextField>
-            </div>
-            <div classname = "form-group">
-                <input
+                &lt;/TextField>
+            &lt;/div>
+            &lt;div classname = "form-group">
+                &lt;input
                     type="number"
                     className="form-control form-control-lg"
                     id="quantity"
@@ -334,14 +362,36 @@ const OrderMenuForm = ({ lang }) => {
                     name="alterQuantityAmt"
                     onChange={(e) => set_quantity(e.target.value)}
                 />
-            </div>
-            <br></br>
-            <button onClick={AddPizza} className="btn btn-success btn-block">Add Item</button>
-            <br></br>
-            <button onClick={AddMenu} className="btn btn-primary btn-block">Place Order</button>
+            &lt;/div>
+            &lt;br>&lt;/br>
+            &lt;button onClick={AddPizza} className="btn btn-success btn-block">Add Item&lt;/button>
+            &lt;br>&lt;/br>
+            &lt;button onClick={AddMenu} className="btn btn-primary btn-block">Place Order&lt;/button>
 
-        </div>
+        &lt;/div>
     )
 }
 
-export default OrderMenuForm;
+export default OrderMenuForm;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="OrderMenuForm.html">OrderMenuForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:38:58 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

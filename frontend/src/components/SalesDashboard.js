@@ -22,7 +22,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import WarningIcon from '@mui/icons-material/Warning';
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+const apiRoot = process.env.API_ROOT;
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
@@ -216,8 +216,8 @@ class SalesDashboard extends React.Component {
         if (startDate.length === 0 || endDate.length === 0) {
             return;
         }
-        //  console.log("In here: ", `http://localhost:8000/ingredient_excess_report/?date=${value}`);
-        axios.get(`http://localhost:8000/daily_sales_total/?start_date=${startDate}&end_date=${endDate}`)
+        //  console.log("In here: ", `${apiRoot}ingredient_excess_report/?date=${value}`);
+        axios.get(`${apiRoot}daily_sales_total/?start_date=${startDate}&end_date=${endDate}`)
             .then(res => {
                 const res_data = res.data;
                 this.setState({ dailySales: res_data, loadedExcess: true });
@@ -236,7 +236,7 @@ class SalesDashboard extends React.Component {
      */
     setSalesBreakdownData() {
         const { startDate, endDate } = this.state;
-        axios.get(`http://localhost:8000/sales_breakdown/?start_date=${startDate}&end_date=${endDate}`)
+        axios.get(`${apiRoot}sales_breakdown/?start_date=${startDate}&end_date=${endDate}`)
             .then(res => {
                 const res_data = res.data;
                 this.setState({ breakDownData: res_data, loadedBreakdown: true });
@@ -247,7 +247,7 @@ class SalesDashboard extends React.Component {
      * Sets last weeks pizza counts. 
      */
     setLastWeeksPizzaCounts() {
-        axios.get(`http://localhost:8000/pizza_counts/`)
+        axios.get(`${apiRoot}pizza_counts/`)
             .then(res => {
                 const res_data = res.data;
                 let totalCounts = 0;
@@ -267,7 +267,7 @@ class SalesDashboard extends React.Component {
      * sets LastWeeksSales from API.
      */
     setLastWeeksSales() {
-        axios.get(`http://localhost:8000/last_week_sales/`)
+        axios.get(`${apiRoot}last_week_sales/`)
             .then(res => {
                 const res_data = res.data;
                 this.setState({ lastWeeksSales: this.numberWithCommas(res_data["last_week_total"]), loadedLastWeekSales: true });
@@ -300,8 +300,8 @@ class SalesDashboard extends React.Component {
      */
     getIngredientReport() {
         const { value } = this.state;
-        //  console.log("In here: ", `http://localhost:8000/ingredient_excess_report/?date=${value}`);
-        axios.get(`http://localhost:8000/ingredient_excess_report/?date=${value}`)
+        //  console.log("In here: ", `${apiRoot}ingredient_excess_report/?date=${value}`);
+        axios.get(`${apiRoot}ingredient_excess_report/?date=${value}`)
             .then(res => {
                 const res_data = res.data;
                 this.setState({ ingrReport: res_data, loadedDailyData: true });
@@ -356,7 +356,7 @@ class SalesDashboard extends React.Component {
      */
     componentDidMount() {
         /*
-        axios.get("http://localhost:8000/daily_sales_total/")
+        axios.get("${apiRoot}daily_sales_total/")
             .then(res => {
                 const res_data = res.data;
                 this.setState({ dailySales: res_data, loadedDailyData: true });

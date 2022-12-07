@@ -3,6 +3,11 @@ import { GoogleMap, MarkerF, InfoWindowF, useJsApiLoader } from '@react-google-m
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+/**
+ * @author Oliver Carver
+ * Function for Google Maps embed on home page
+ * @returns Google maps embed
+ */
 export default function MyMap() {
     const containerStyle = {
         width: '400px',

@@ -53,9 +53,11 @@ const successButtons = createTheme({
 });
 
 /**
- * 
- * @param {json} param0 
- * @returns 
+ * @author Anthony Mercado
+ * Creates a page that controls all the tabs and components for the customer's view
+ * @param {json} param0
+ * @param {string} mode - The toggle for dark / light mode.
+ * @returns {document} CustomerTabs
  */
 function CustomerTabs({ lang, mode }) {
     const dark = mode;
@@ -70,7 +72,7 @@ function CustomerTabs({ lang, mode }) {
     const [ingredients, setIngredients] = useState([]); // variable to store the ingredients fetched from the database
     const [menuItems, setMenuItems] = useState([]); // variable to store the the menu items available
     const [maxToppings, setMaxToppings] = useState(0);
-    const url = 'http://localhost:8000/';
+    const url = 'http://localhost:8000/api/';
     
     useEffect(() => {
       Promise.all([

@@ -5,6 +5,11 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+/**
+ * @author Anthony Mercado
+ * Creates a popup window to prompt the user with.
+ * @constructor
+ */
 function Popup(props) {
     const dark = props.dark;
     return (props.trigger) ? (

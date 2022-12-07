@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: AddForm.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: AddForm.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios';
+import React, { useState } from 'react';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { useNavigate, useParams } from 'react-router-dom';
+import { Translator, Translate } from 'react-auto-translate';
+
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+
+/**
+ * Creates a table that allows the user to set parameters and add an ingredient.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ * @return {document} AddIngrForm
+ */
+function AddIngrForm({ lang, mode }) {
+
+    let navigate = useNavigate();
+    const { id } = useParams();
+
+    const [ingredient_name, set_ingr_name] = useState(null)
+    const [quantity, set_quantity] = useState(null)
+    const [units, set_units] = useState('')
+    const [ingr_type, set_ingr_type] = useState(null)
+    const [usage_value, set_usage_value] = useState(null)
+
+    // Checks which ingredients were altered, and pushes the changes to the database
+    const AddIngr = async () => {
+        let formField = new FormData()
+
+        formField.append('ingredient_name', ingredient_name)
+        formField.append('quantity', quantity)
+        formField.append('units', units)
+        formField.append('ingr_type', ingr_type)
+        formField.append('usage_value', usage_value)
+
+        console.log(formField)
+
+
+        await axios({
+            method: 'post',
+            url: 'http://localhost:8000/ingredients/',
+            data: formField
+        }).then(response => {
+            console.log(response.data);
+            window.location.reload(false);
+            navigate('/manager');
+        })
+    }
+
+    const handleUnitChange = (event) => {
+        set_units(event.target.value);
+    }
+
+    const handleTypeChange = (event) => {
+        set_ingr_type(event.target.value);
+    }
+
+    return (
+        &lt;Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+            &lt;table>
+                &lt;tr>
+                    &lt;th>&lt;Translate>Add Ingredient&lt;/Translate>&lt;/th>
+                &lt;/tr>
+                &lt;tr>
+                    &lt;div className="form-group">
+                        &lt;b>&lt;Translate>Enter Ingredient Name&lt;/Translate>&lt;/b>
+                        &lt;input
+                            type="text"
+                            className="form-control form-control-lg"
+                            placeholder="Enter Ingredient Name"
+                            name="ingredient_name"
+                            value={ingredient_name}
+                            onChange={(e) => set_ingr_name(e.target.value)}
+                        />
+                    &lt;/div>
+                &lt;/tr>
+                &lt;tr>
+                    &lt;div className="form-group">
+                        &lt;b>&lt;Translate>Enter Quantity&lt;/Translate>&lt;/b>
+                        &lt;input
+                            type="number"
+                            className="form-control form-control-lg"
+                            placeholder="Enter Quantity"
+                            name="quantity"
+                            value={quantity}
+                            onChange={(e) => set_quantity(e.target.value)}
+                        />
+                    &lt;/div>
+                &lt;/tr>
+                &lt;tr>
+                    &lt;div className="form-group">
+                    &lt;b>&lt;Translate>Select Unit&lt;/Translate>&lt;/b>
+                        &lt;TextField label="Select Unit" select value={units} onChange={handleUnitChange} fullWidth>
+                            &lt;MenuItem value='lbs'>&lt;Translate>lbs&lt;/Translate>&lt;/MenuItem>
+                            &lt;MenuItem value='liters'>&lt;Translate>liters&lt;/Translate>&lt;/MenuItem>
+                        &lt;/TextField>
+                    &lt;/div>
+                &lt;/tr>
+                &lt;tr>
+                    &lt;div className="form-group">
+                    &lt;b>&lt;Translate>Select Ingredient Type&lt;/Translate>&lt;/b>
+                        &lt;TextField label="Select Ingredient Type" select value={ingr_type} onChange={handleTypeChange}
+                            fullWidth>
+                            &lt;MenuItem value='VEGGIES'>&lt;Translate>Vegetable&lt;/Translate>&lt;/MenuItem>
+                            &lt;MenuItem value='MEAT'>&lt;Translate>Meat&lt;/Translate>&lt;/MenuItem>
+                            &lt;MenuItem value='SAUCE'>&lt;Translate>Sauce&lt;/Translate>&lt;/MenuItem>
+                            &lt;MenuItem value='DRIZZLE'>&lt;Translate>Drizzle&lt;/Translate>&lt;/MenuItem>
+                            &lt;MenuItem value='CHEESE'>&lt;Translate>Cheese&lt;/Translate>&lt;/MenuItem>
+                            &lt;MenuItem value='CRUST'>&lt;Translate>Crust&lt;/Translate>&lt;/MenuItem>
+                        &lt;/TextField>
+                    &lt;/div>
+                &lt;/tr>
+                &lt;tr>
+                    &lt;div className="form-group">
+                        &lt;b>&lt;Translate>Enter Usage Value&lt;/Translate>&lt;/b>
+                        &lt;input
+                            type="number"
+                            className="form-control form-control-lg"
+                            placeholder="Enter Usage Value"
+                            name="usage_value"
+                            value={usage_value}
+                            onChange={(e) => set_usage_value(e.target.value)}
+                        />
+                    &lt;/div>
+                &lt;/tr>
+                &lt;tr>
+                    &lt;button onClick={AddIngr} className="btn btn-primary btn-block">&lt;Translate>Add Ingredient&lt;/Translate>&lt;/button>
+                &lt;/tr>
+            &lt;/table>
+        &lt;/Translator>
+    )
+}
+
+export default AddIngrForm;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddIngrForm.html">AddIngrForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:24:36 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

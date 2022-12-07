@@ -7,7 +7,13 @@ import { wait } from "@testing-library/user-event/dist/utils";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-function CrustManager({ lang }) {
+/**
+ * Creates a table that allows the user to set inventory amount and add items to the crust category.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ */
+function CrustManager({ lang, mode }) {
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
 
@@ -23,6 +29,7 @@ function CrustManager({ lang }) {
             })
     }, []);
 
+    // Check if data is loaded
     if (!DataisLoaded) return (
         <Translator
             from='en'
@@ -34,6 +41,7 @@ function CrustManager({ lang }) {
             </div>
         </Translator>);
 
+    // POST changes if the ingredient has been altered
     const AlterIngredients = async () => {
         for (let i = 0; i < items.length; i++) {
 

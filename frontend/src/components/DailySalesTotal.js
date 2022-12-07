@@ -2,7 +2,11 @@ import axios from 'axios';
 import React from 'react';
 import Chart from 'chart.js/auto';
 
-
+/**
+ * @author Shantanu Thorat
+ * Creates a page that displays the daily sales data.
+ * @class
+ */
 class DailySalesTotal extends React.Component {
 
     // Constructor 

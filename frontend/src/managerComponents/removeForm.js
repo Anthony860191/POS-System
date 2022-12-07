@@ -6,8 +6,16 @@ import {MenuItem, TextField} from "@mui/material";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+/**
+ * @author Joshua Hillis
+ * Creates a table that allows the user to remove a menu item from the menu.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ */
 const RemoveMenuForm = ({lang, mode}) => {
     const dark = mode;
+    // fetch list of menu items from the database for the user to select
     useEffect(() => {
         const fetchIngredients = async () => {
             const menuResponse = await fetch('http://localhost:8000/menu');
@@ -39,7 +47,7 @@ const RemoveMenuForm = ({lang, mode}) => {
         })
     }
 
-    const handleMenuChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleMenuChange = (event) => {
         set_menu_item(event.target.value);
     }
 

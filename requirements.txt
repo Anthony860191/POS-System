@@ -1,0 +1,9 @@
+psycopg2
+Django
+pandas
+psycopg2
+djangorestframework
+python-decouple
+django-cors-headers
+gunicorn
+whitenoise

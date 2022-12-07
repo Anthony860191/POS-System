@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: CheeseManager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: CheeseManager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Translator, Translate } from 'react-auto-translate';
+
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+
+/**
+ * @author Joshua Hillis
+ * Creates a table that allows the user to set inventory amount and add items to the cheese category.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ */
+function CheeseManager({ lang, mode }) {
+    const [DataisLoaded, setData] = useState();
+    const [items, setItems] = useState([]);
+
+    // Pull all the ingredients from the cheese category
+    useEffect(() => {
+        axios.get("http://localhost:8000/ingredients/?ingr_type=CHEESE")
+            .then(res => {
+                setItems(res.data);
+                for (var i = 0; i &lt; items.length; i++) {
+                    var changedIngr = "changed";
+                    items.members.viewers[changedIngr] = false;
+                }
+                setData(true);
+            })
+    }, []);
+
+    // Check if data is loaded
+    if (!DataisLoaded) return (
+        &lt;Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+            &lt;div>
+                &lt;h1>&lt;Translate>Please wait some time....&lt;/Translate>&lt;/h1>
+            &lt;/div>
+        &lt;/Translator>);
+
+    // POST changes if the ingredient has been altered
+    const AlterIngredients = async () => {
+        for (let i = 0; i &lt; items.length; i++) {
+
+            const item = items.at(i);
+            if (item.changed === true) {
+                console.log(item);
+                let formField = new FormData();
+                formField.append('ingredient_name', item.ingredient_name);
+                formField.append('quantity', item.quantity);
+                formField.append('units', item.units);
+                formField.append('ingr_type', item.ingr_type);
+                formField.append('usage_value', item.usage_value);
+
+                await axios({
+                    method: 'put',
+                    url: 'http://localhost:8000/ingredients/' + item.ingredient_name + '/',
+                    data: formField
+                }).then((response) => {
+                    if (response.status === 200) {
+                        console.log(response);
+                    } else {
+                        alert("Bad Request!");
+                        console.log(response);
+                    }
+                })
+            }
+        }
+        window.confirm("Order Submitted!");
+    }
+
+    const reverseChanges = (e) => {
+        e.preventDefault();
+        window.location.reload(false);
+    }
+
+    return (
+        &lt;Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+            &lt;table>
+                &lt;tr>
+                    &lt;th>&lt;Translate>Name&lt;/Translate>&lt;/th>
+
+                    &lt;th>&lt;Translate>Alter Amount (lbs)&lt;/Translate>&lt;/th>
+                &lt;/tr>
+                {
+                    items.map((item, index) => (
+                        &lt;tr>
+                            &lt;td>&lt;Translate>{item.ingredient_name}&lt;/Translate>&lt;/td>
+                            &lt;input
+                                type="number"
+                                className="form-control form-control-lg"
+                                id={item.ingredient_name}
+                                defaultValue={item.quantity}
+                                placeholder={item.quantity}
+                                name="alterInventoryAmt"
+                                onChange={(e) => {
+                                    items.at(index).quantity = e.target.value;
+                                    items.at(index).changed = true
+                                }}
+                            />
+                        &lt;/tr>
+                    ))
+                }
+                &lt;tr>
+                    &lt;td colSpan={2}>
+                        &lt;button id="changeBtn" onClick={AlterIngredients} className="btn btn-primary btn-block">&lt;Translate>Alter Inventory Amount&lt;/Translate>
+                        &lt;/button>
+                    &lt;/td>
+                &lt;/tr>
+                &lt;tr>
+                    &lt;td colSpan={2}>
+                        &lt;button id="revChangeBtn" onClick={reverseChanges} className="btn btn-primary btn-block">
+                            &lt;Translate>Reverse Changes&lt;/Translate>
+                        &lt;/button>
+                    &lt;/td>
+                &lt;/tr>
+
+            &lt;/table>
+        &lt;/Translator>
+    );
+}
+
+export default CheeseManager;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CheeseManager.html">CheeseManager</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:39:13 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

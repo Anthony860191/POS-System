@@ -24,7 +24,7 @@ class CustomerCheeseSelection extends React.Component {
     // ComponentDidMount is used to
     // execute the code 
     componentDidMount() {
-        axios.get("http://localhost:8000/ingredients/?ingr_type=CHEESE")
+        axios.get("http://localhost:8000/api/ingredients/?ingr_type=CHEESE")
             .then(res => {
                 const res_data = res.data;
                 this.setState({ items: res_data, DataisLoaded: true });

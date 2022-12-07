@@ -17,25 +17,25 @@ const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
  */
 
 const OrderMenuForm = ({ lang, mode }) => {
-    const url = 'http://localhost:8000/api';
+    const url = 'http://localhost:8000/api/';
     const dark = mode;
 
     // Obtain a list of all the separate ingredient types
     useEffect(() => {
         const fetchIngredients = async () => {
-            const PizzaReponse = await fetch(`${url}/menu`);
+            const PizzaReponse = await fetch(`${url}menu`);
             const pizzaData = await PizzaReponse.json();
-            const VegResponse = await fetch(`${url}/ingredients/?ingr_type=VEGGIES`);
+            const VegResponse = await fetch(`${url}ingredients/?ingr_type=VEGGIES`);
             const vegData = await VegResponse.json();
-            const MeatResponse = await fetch(`${url}/ingredients/?ingr_type=MEAT`);
+            const MeatResponse = await fetch(`${url}ingredients/?ingr_type=MEAT`);
             const meatData = await MeatResponse.json();
-            const SauceResponse = await fetch(`${url}/ingredients/?ingr_type=SAUCE`);
+            const SauceResponse = await fetch(`${url}ingredients/?ingr_type=SAUCE`);
             const sauceData = await SauceResponse.json();
-            const DrizzleResponse = await fetch(`${url}/ingredients/?ingr_type=DRIZZLE`);
+            const DrizzleResponse = await fetch(`${url}ingredients/?ingr_type=DRIZZLE`);
             const drizzleData = await DrizzleResponse.json();
-            const CheeseResponse = await fetch(`${url}/ingredients/?ingr_type=CHEESE`);
+            const CheeseResponse = await fetch(`${url}ingredients/?ingr_type=CHEESE`);
             const cheeseData = await CheeseResponse.json();
-            const CrustResponse = await fetch(`${url}/ingredients/?ingr_type=CRUST`);
+            const CrustResponse = await fetch(`${url}ingredients/?ingr_type=CRUST`);
             const crustData = await CrustResponse.json();
             var ingredientData = [...vegData, ...meatData];
 
@@ -91,10 +91,10 @@ const OrderMenuForm = ({ lang, mode }) => {
         if (item_type === '') {
             return;
         }
-        const responseId = await fetch(`${url}/orders/?latest=true`);
+        const responseId = await fetch(`${url}orders/?latest=true`);
         const resultId = await responseId.json();
 
-        const responsePrice = await fetch(`${url}/price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`);
+        const responsePrice = await fetch(`${url}price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`);
         const resultPrice = await responsePrice.json();
 
         var pizzaOrder = {
@@ -135,13 +135,13 @@ const OrderMenuForm = ({ lang, mode }) => {
         if (item_type === '' && allOrders.length === 0) {
             return;
         }
-        const responsePrice = await fetch(`${url}/price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`);
+        const responsePrice = await fetch(`${url}price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`);
         const resultPrice = await responsePrice.json();
         
         const current = new Date();
         const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
 
-        const responseId = await fetch(`${url}/orders/?latest=true`);
+        const responseId = await fetch(`${url}orders/?latest=true`);
         const resultId = await responseId.json();
 
         var pizzaOrder = {

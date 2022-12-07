@@ -11,6 +11,7 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * @constructor
  * @param {string} lang - The language for the text to be in.
  * @param {string} mode - The toggle for dark / light mode.
+ * @return {document} AddIngrForm
  */
 function AddIngrForm({ lang, mode }) {
 

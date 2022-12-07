@@ -1,4 +1,32 @@
-import * as React from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: CustomerTabs.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: CustomerTabs.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as React from 'react';
 import { useEffect, useState } from "react";
 import "./CustomerTabs.css";
 import Popup from './Popup';
@@ -20,7 +48,7 @@ const ToggleButton = styled(MuiToggleButton) ({
   paddingTop: "50px",
   paddingBottom: "50px",
   color: "black",
-  "&.Mui-selected, &.Mui-selected:hover": {
+  "&amp;.Mui-selected, &amp;.Mui-selected:hover": {
     color: "white",
     backgroundColor: "#1976d2",
   }
@@ -31,13 +59,13 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup) (({theme}) => ({
   display: "grid",
   gridTemplateColumns: "auto auto auto auto",
   gridGap: "10px",
-  '& .MuiToggleButtonGroup-grouped': {
+  '&amp; .MuiToggleButtonGroup-grouped': {
     margin: theme.spacing(0.5),
-    '&:not(:first-of-type)': {
+    '&amp;:not(:first-of-type)': {
       borderLeft: `1.5px solid ${theme.palette.action.selected}`,
       borderRadius: theme.shape.borderRadius,
     },
-    '&:first-of-type': {
+    '&amp;:first-of-type': {
       borderRadius: theme.shape.borderRadius,
     }
   },
@@ -97,7 +125,7 @@ function CustomerTabs({ lang, mode }) {
     const drinkOptions = [];
 
     // get the different types of customization options
-    for(let i = 0; i < ingredients.length; i++) {
+    for(let i = 0; i &lt; ingredients.length; i++) {
       if (ingredients[i].ingr_type === "CRUST") {
         crustOptions.push(ingredients[i].ingredient_name);
       } else if (ingredients[i].ingr_type === "SAUCE") {
@@ -118,7 +146,7 @@ function CustomerTabs({ lang, mode }) {
   const basePizzas = [];
   const presetPizzas = [];
 
-  for (let i = 0; i < menuItems.length; i++) {
+  for (let i = 0; i &lt; menuItems.length; i++) {
     if (menuItems[i].item_type === "BASE_PIZZA") {
       basePizzas.push(menuItems[i].menu_item);
     } else if (menuItems[i].item_type === "PRESET_PIZZA") {
@@ -126,7 +154,7 @@ function CustomerTabs({ lang, mode }) {
     }
   }
     const Alert = React.forwardRef(function Alert(props, ref) {
-      return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+      return &lt;MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
   
     // close snackbar notifications
@@ -151,7 +179,7 @@ function CustomerTabs({ lang, mode }) {
     const paymentPopupHandleClick = async() => {
       console.log(sauce, crust, cheese, toppings);
       setPaymentPopup(true);
-      const response = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=${drink}`);
+      const response = await fetch(`${url}price?pizzatype=${pizzaType}&amp;crusttype=${crust}&amp;drinktype=${drink}`);
       const result = await response.json();
       if(result.price != null) {
         setDisplayPrice(totalPrice + parseFloat(result.price)); // obtain the total price of the order to display it
@@ -204,7 +232,7 @@ function CustomerTabs({ lang, mode }) {
       const current = new Date();
       const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
       
-      const responsePrice = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=${drink}`);
+      const responsePrice = await fetch(`${url}price?pizzatype=${pizzaType}&amp;crusttype=${crust}&amp;drinktype=${drink}`);
       const resultPrice = await responsePrice.json();
       totalPrice += parseFloat(resultPrice.price); // store the price obtained as a number in the price variable      
       
@@ -249,10 +277,10 @@ function CustomerTabs({ lang, mode }) {
         "sauce": sauce,
         "drizzle": drizzle,
         "drink": drink,
-        "topping1": toppings.length < 1 ? null : toppings[0],
-        "topping2": toppings.length < 2 ? null : toppings[1],
-        "topping3": toppings.length < 3 ? null : toppings[2],
-        "topping4": toppings.length < 4 ? null : toppings[3],
+        "topping1": toppings.length &lt; 1 ? null : toppings[0],
+        "topping2": toppings.length &lt; 2 ? null : toppings[1],
+        "topping3": toppings.length &lt; 3 ? null : toppings[2],
+        "topping4": toppings.length &lt; 4 ? null : toppings[3],
         "price": parseFloat(resultPrice.price)
       })
     });
@@ -278,7 +306,7 @@ function CustomerTabs({ lang, mode }) {
       return;
     }
     setPizzaNotification(true);
-    const responsePrice = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=${drink}`);
+    const responsePrice = await fetch(`${url}price?pizzatype=${pizzaType}&amp;crusttype=${crust}&amp;drinktype=${drink}`);
     const resultPrice = await responsePrice.json();
 
     const responseId = await fetch(`${url}orders/?latest=true`);
@@ -292,10 +320,10 @@ function CustomerTabs({ lang, mode }) {
       "sauce": sauce,
       "drizzle": drizzle,
       "drink": drink,
-      "topping1": toppings.length < 1 ? null : toppings[0],
-      "topping2": toppings.length < 2 ? null : toppings[1],
-      "topping3": toppings.length < 3 ? null : toppings[2],
-      "topping4": toppings.length < 4 ? null : toppings[3],
+      "topping1": toppings.length &lt; 1 ? null : toppings[0],
+      "topping2": toppings.length &lt; 2 ? null : toppings[1],
+      "topping3": toppings.length &lt; 3 ? null : toppings[2],
+      "topping4": toppings.length &lt; 4 ? null : toppings[3],
       "price": parseFloat(resultPrice.price)
     }
 
@@ -357,7 +385,7 @@ function CustomerTabs({ lang, mode }) {
 
     const [toppings, setToppings] = React.useState([]);
     const toppingHandleClick = (event, toppingType) => {
-      if(toppingType.length <= maxToppings) {
+      if(toppingType.length &lt;= maxToppings) {
         setToppings(toppingType);
       } else {
         setToppingNotification(true); 
@@ -377,201 +405,201 @@ function CustomerTabs({ lang, mode }) {
 
   const customizeTabs = [];
   customizeTabs.push(
-    <Translator
+    &lt;Translator
       from='en'
       to={lang}
       googleApiKey={apiKey}
     >
-      <div className="container">
-        <div className="bloc-tabs">
-          <button
+      &lt;div className="container">
+        &lt;div className="bloc-tabs">
+          &lt;button
             className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(1)}
           >
-            <Translate>Pizza Type</Translate>
-          </button>
-          <button
+            &lt;Translate>Pizza Type&lt;/Translate>
+          &lt;/button>
+          &lt;button
             className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(2)}
           >
-            <Translate>Crust</Translate>
-          </button>
-          <button
+            &lt;Translate>Crust&lt;/Translate>
+          &lt;/button>
+          &lt;button
             className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(3)}
           >
-            <Translate>Sauce</Translate>
-          </button>
-          <button
+            &lt;Translate>Sauce&lt;/Translate>
+          &lt;/button>
+          &lt;button
             className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(4)}
           >
-            <Translate>Cheese</Translate>
-          </button>
-          <button
+            &lt;Translate>Cheese&lt;/Translate>
+          &lt;/button>
+          &lt;button
             className={toggleState === 5 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(5)}
           >
-            <Translate>Toppings</Translate>
-          </button>
-          <button
+            &lt;Translate>Toppings&lt;/Translate>
+          &lt;/button>
+          &lt;button
             className={toggleState === 6 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(6)}
           >
-            <Translate>Drizzle</Translate>
-          </button>
-          <button
+            &lt;Translate>Drizzle&lt;/Translate>
+          &lt;/button>
+          &lt;button
             className={toggleState === 7 ? "tabs active-tabs" : "tabs"}
             onClick={() => toggleTab(7)}
           >
-            <Translate>Drink</Translate>
-          </button>
-        </div>
+            &lt;Translate>Drink&lt;/Translate>
+          &lt;/button>
+        &lt;/div>
 
-      <div className="content-tabs">
-      <div
+      &lt;div className="content-tabs">
+      &lt;div
           className={toggleState === 1 ? "content  active-content" : "content"}
         >
-          <h2>Select your Pizza</h2>
-          <hr />
-          {basePizzas && basePizzas.map (itemName => (
-            <Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => customPizzaClick(itemName)} ><Translate>{itemName}</Translate></Button>
+          &lt;h2>Select your Pizza&lt;/h2>
+          &lt;hr />
+          {basePizzas &amp;&amp; basePizzas.map (itemName => (
+            &lt;Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => customPizzaClick(itemName)} >&lt;Translate>{itemName}&lt;/Translate>&lt;/Button>
           ))}
-          {presetPizzas && presetPizzas.map (itemName => (
-            <Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => presetPizzaClick(itemName)} ><Translate>{itemName.menu_item}</Translate></Button>
+          {presetPizzas &amp;&amp; presetPizzas.map (itemName => (
+            &lt;Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => presetPizzaClick(itemName)} >&lt;Translate>{itemName.menu_item}&lt;/Translate>&lt;/Button>
           ))}
-        </div>
-        <div
+        &lt;/div>
+        &lt;div
           className={toggleState === 2 ? "content  active-content" : "content"}
         >
-          <h2>Select your Crust</h2>
-          <hr />
-          <StyledToggleButtonGroup
+          &lt;h2>Select your Crust&lt;/h2>
+          &lt;hr />
+          &lt;StyledToggleButtonGroup
             value = {crust}
             exclusive
             onChange={crustHandleClick}
             aria-label = "crust selection"
             >
-              {crustOptions && crustOptions.map (itemName => (
-                <ToggleButton value = {itemName} aria-label={itemName}><Translate>{itemName}</Translate></ToggleButton>
+              {crustOptions &amp;&amp; crustOptions.map (itemName => (
+                &lt;ToggleButton value = {itemName} aria-label={itemName}>&lt;Translate>{itemName}&lt;/Translate>&lt;/ToggleButton>
                 ))}
-          </StyledToggleButtonGroup>
-        </div>
+          &lt;/StyledToggleButtonGroup>
+        &lt;/div>
 
-        <div
+        &lt;div
           className={toggleState === 3 ? "content  active-content" : "content"}
         >
-          <h2>Select your Sauce</h2>
-          <hr />
-          <StyledToggleButtonGroup
+          &lt;h2>Select your Sauce&lt;/h2>
+          &lt;hr />
+          &lt;StyledToggleButtonGroup
             value = {sauce}
             exclusive
             onChange={sauceHandleClick}
             aria-label = "sauce selection"
             >
-              {sauceOptions && sauceOptions.map (itemName => (
-                <ToggleButton value = {itemName} aria-label={itemName}><Translate>{itemName}</Translate></ToggleButton>
+              {sauceOptions &amp;&amp; sauceOptions.map (itemName => (
+                &lt;ToggleButton value = {itemName} aria-label={itemName}>&lt;Translate>{itemName}&lt;/Translate>&lt;/ToggleButton>
                 ))}
-          </StyledToggleButtonGroup>
-        </div>
+          &lt;/StyledToggleButtonGroup>
+        &lt;/div>
 
-        <div
+        &lt;div
           className={toggleState === 4 ? "content  active-content" : "content"}
         >
-          <h2>Select your Cheese</h2>
-          <hr />
-          <StyledToggleButtonGroup
+          &lt;h2>Select your Cheese&lt;/h2>
+          &lt;hr />
+          &lt;StyledToggleButtonGroup
             value = {cheese}
             exclusive
             onChange={cheeseHandleClick}
             aria-label = "cheese selection"
             >
-              {cheeseOptions && cheeseOptions.map (itemName => (
-                <ToggleButton value = {itemName} aria-label={itemName}><Translate>{itemName}</Translate></ToggleButton>
+              {cheeseOptions &amp;&amp; cheeseOptions.map (itemName => (
+                &lt;ToggleButton value = {itemName} aria-label={itemName}>&lt;Translate>{itemName}&lt;/Translate>&lt;/ToggleButton>
                 ))}
-          </StyledToggleButtonGroup>
-        </div>
-        <div
+          &lt;/StyledToggleButtonGroup>
+        &lt;/div>
+        &lt;div
           className={toggleState === 5 ? "content  active-content" : "content"}
         >
-          <h2>Select your Topping(s)</h2>
-          <hr />
-          <StyledToggleButtonGroup
+          &lt;h2>Select your Topping(s)&lt;/h2>
+          &lt;hr />
+          &lt;StyledToggleButtonGroup
             value = {toppings}
             onChange={toppingHandleClick}
             aria-label = "topping selection"
             >
-              {toppingsOptions && toppingsOptions.map (itemName => (
-                <ToggleButton value = {itemName} aria-label={itemName}><Translate>{itemName}</Translate></ToggleButton>
+              {toppingsOptions &amp;&amp; toppingsOptions.map (itemName => (
+                &lt;ToggleButton value = {itemName} aria-label={itemName}>&lt;Translate>{itemName}&lt;/Translate>&lt;/ToggleButton>
                 ))}
-          </StyledToggleButtonGroup>
-          <Snackbar open={toppingNotification} autoHideDuration={3000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="info" sx={{ width: '100%'}}>
+          &lt;/StyledToggleButtonGroup>
+          &lt;Snackbar open={toppingNotification} autoHideDuration={3000} onClose={handleClose}>
+            &lt;Alert onClose={handleClose} severity="info" sx={{ width: '100%'}}>
               Can't Select More Toppings
-            </Alert>
-          </Snackbar>
-        </div>
-        <div
+            &lt;/Alert>
+          &lt;/Snackbar>
+        &lt;/div>
+        &lt;div
           className={toggleState === 6 ? "content  active-content" : "content"}
         >
-          <h2>Select your Drizzle</h2>
-          <hr />
-          <StyledToggleButtonGroup
+          &lt;h2>Select your Drizzle&lt;/h2>
+          &lt;hr />
+          &lt;StyledToggleButtonGroup
             value = {drizzle}
             exclusive
             onChange={drizzleHandleClick}
             aria-label = "drizzle selection"
             >
-              {drizzleOptions && drizzleOptions.map (itemName => (
-                <ToggleButton value = {itemName} aria-label={itemName}><Translate>{itemName}</Translate></ToggleButton>
+              {drizzleOptions &amp;&amp; drizzleOptions.map (itemName => (
+                &lt;ToggleButton value = {itemName} aria-label={itemName}>&lt;Translate>{itemName}&lt;/Translate>&lt;/ToggleButton>
                 ))}
-          </StyledToggleButtonGroup>
-        </div>
-        <div
+          &lt;/StyledToggleButtonGroup>
+        &lt;/div>
+        &lt;div
           className={toggleState === 7 ? "content  active-content" : "content"}
         >
-          <h2>Select your Drink</h2>
-          <hr />
-          <StyledToggleButtonGroup
+          &lt;h2>Select your Drink&lt;/h2>
+          &lt;hr />
+          &lt;StyledToggleButtonGroup
             value = {drink}
             exclusive
             onChange={drinkHandleClick}
             aria-label = "drink selection"
             >
-              {drinkOptions && drinkOptions.map (itemName => (
-                <ToggleButton value = {itemName} aria-label={itemName}><Translate>{itemName}</Translate></ToggleButton>
+              {drinkOptions &amp;&amp; drinkOptions.map (itemName => (
+                &lt;ToggleButton value = {itemName} aria-label={itemName}>&lt;Translate>{itemName}&lt;/Translate>&lt;/ToggleButton>
               ))}
-          </StyledToggleButtonGroup>
-        </div>
-      </div>
-      <div>
-        <p><strong>Current Pizza:</strong> {pizzaType}</p>
-        <p><strong>Crust:</strong> {crust} <strong>Sauce:</strong> {sauce} <strong>Cheese:</strong> {cheese} <strong>Toppings:</strong> {toppings.join(", ")} <strong>Drizzle:</strong> {drizzle}</p>
-        <p><strong>Drink:</strong> {drink}</p>
-        <ButtonGroup size = "large" sx = {{m:1}}>
-          <Button variant="contained" theme = {successButtons} onClick={addPizzaHandleClick}><Translate>Add Pizza</Translate></Button>
-          <Snackbar open={pizzaNotifaction} autoHideDuration={3000} onClose={handleClose}>
-            <Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: green[600]}}>
+          &lt;/StyledToggleButtonGroup>
+        &lt;/div>
+      &lt;/div>
+      &lt;div>
+        &lt;p>&lt;strong>Current Pizza:&lt;/strong> {pizzaType}&lt;/p>
+        &lt;p>&lt;strong>Crust:&lt;/strong> {crust} &lt;strong>Sauce:&lt;/strong> {sauce} &lt;strong>Cheese:&lt;/strong> {cheese} &lt;strong>Toppings:&lt;/strong> {toppings.join(", ")} &lt;strong>Drizzle:&lt;/strong> {drizzle}&lt;/p>
+        &lt;p>&lt;strong>Drink:&lt;/strong> {drink}&lt;/p>
+        &lt;ButtonGroup size = "large" sx = {{m:1}}>
+          &lt;Button variant="contained" theme = {successButtons} onClick={addPizzaHandleClick}>&lt;Translate>Add Pizza&lt;/Translate>&lt;/Button>
+          &lt;Snackbar open={pizzaNotifaction} autoHideDuration={3000} onClose={handleClose}>
+            &lt;Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: green[600]}}>
               Pizza Added
-            </Alert>
-          </Snackbar>
-          <Button variant="contained" theme = {successButtons} onClick={paymentPopupHandleClick}><Translate>Edit/Complete Order</Translate></Button>
-          <Snackbar open={completeNotifcation} autoHideDuration={3000} onClose={handleClose}>
-            <Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: green[600]}}>
+            &lt;/Alert>
+          &lt;/Snackbar>
+          &lt;Button variant="contained" theme = {successButtons} onClick={paymentPopupHandleClick}>&lt;Translate>Edit/Complete Order&lt;/Translate>&lt;/Button>
+          &lt;Snackbar open={completeNotifcation} autoHideDuration={3000} onClose={handleClose}>
+            &lt;Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: green[600]}}>
               Order Completed
-            </Alert>
-          </Snackbar>
-          <Button variant="contained" color = "error" onClick={cancelHandleClick}><Translate>Cancel Order</Translate></Button>
-          <Snackbar open={cancelNotification} autoHideDuration={3000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="error" sx={{ width: '100%'}}>
+            &lt;/Alert>
+          &lt;/Snackbar>
+          &lt;Button variant="contained" color = "error" onClick={cancelHandleClick}>&lt;Translate>Cancel Order&lt;/Translate>&lt;/Button>
+          &lt;Snackbar open={cancelNotification} autoHideDuration={3000} onClose={handleClose}>
+            &lt;Alert onClose={handleClose} severity="error" sx={{ width: '100%'}}>
               Order Deleted
-            </Alert>
-          </Snackbar>
-        </ButtonGroup>
-      </div>
-      <Popup lang = {lang} trigger = {paymentPopup} setTrigger = {setPaymentPopup}>
-          <h3><Translate>Complete Order</Translate></h3>
-          <TextField 
+            &lt;/Alert>
+          &lt;/Snackbar>
+        &lt;/ButtonGroup>
+      &lt;/div>
+      &lt;Popup lang = {lang} trigger = {paymentPopup} setTrigger = {setPaymentPopup}>
+          &lt;h3>&lt;Translate>Complete Order&lt;/Translate>&lt;/h3>
+          &lt;TextField 
             sx = {{mt: 2,  mb: 2}}
             id = "nameField"
             value = {name}
@@ -580,39 +608,61 @@ function CustomerTabs({ lang, mode }) {
               setName(e.target.value);
             }}
           />
-          <h3><Translate>Total Price: {displayPrice.toFixed(2)}</Translate></h3>
-          <ul>
+          &lt;h3>&lt;Translate>Total Price: {displayPrice.toFixed(2)}&lt;/Translate>&lt;/h3>
+          &lt;ul>
             {allOrders.map((pizza, index) => {
               return (
-                <li key={pizza.pizza_type}>
-                  <span><Translate>{JSON.parse(allOrders[index]).pizza_type}</Translate></span>
-                  <button onClick={() => deleteByIndex(index)}> <DeleteIcon style={{ color: "red" }} /> </button>
-                </li>
+                &lt;li key={pizza.pizza_type}>
+                  &lt;span>&lt;Translate>{JSON.parse(allOrders[index]).pizza_type}&lt;/Translate>&lt;/span>
+                  &lt;button onClick={() => deleteByIndex(index)}> &lt;DeleteIcon style={{ color: "red" }} /> &lt;/button>
+                &lt;/li>
               )
             })}
-            {pizzaType !== "" &&
-              <li key={pizzaType}>
-                  <span>{pizzaType}</span>
-                  <button onClick={deleteCurrentPizza}> <DeleteIcon style ={{ color: "red" }}/> </button>
-              </li>
+            {pizzaType !== "" &amp;&amp;
+              &lt;li key={pizzaType}>
+                  &lt;span>{pizzaType}&lt;/span>
+                  &lt;button onClick={deleteCurrentPizza}> &lt;DeleteIcon style ={{ color: "red" }}/> &lt;/button>
+              &lt;/li>
             }
-          </ul>
-          <div>
-            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("CREDIT CARD")}> <Translate>Credit Card</Translate></Button>
-            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("DEBIT CARD")}> <Translate>Debit Card</Translate></Button>
-            <Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("MEAL SWIPE")}> <Translate>Meal Swipes</Translate></Button>
-          </div>
-          <Button variant="contained" theme={successButtons} sx={{ m: 1 }} onClick={() => placeOrder()}> <Translate>Place Order</Translate></Button>
-        </Popup>
-      </div>
-    </Translator>
+          &lt;/ul>
+          &lt;div>
+            &lt;Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("CREDIT CARD")}> &lt;Translate>Credit Card&lt;/Translate>&lt;/Button>
+            &lt;Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("DEBIT CARD")}> &lt;Translate>Debit Card&lt;/Translate>&lt;/Button>
+            &lt;Button variant="contained" sx={{ m: 1 }} onClick={() => setPaymentType("MEAL SWIPE")}> &lt;Translate>Meal Swipes&lt;/Translate>&lt;/Button>
+          &lt;/div>
+          &lt;Button variant="contained" theme={successButtons} sx={{ m: 1 }} onClick={() => placeOrder()}> &lt;Translate>Place Order&lt;/Translate>&lt;/Button>
+        &lt;/Popup>
+      &lt;/div>
+    &lt;/Translator>
   );
 
   return (
-    <div>
+    &lt;div>
       {customizeTabs}
-    </div>
+    &lt;/div>
   )
 }
 
-export default CustomerTabs;
+export default CustomerTabs;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CustomerTabs">CustomerTabs</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:10:25 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

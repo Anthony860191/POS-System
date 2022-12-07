@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.shortcuts import render
+def render_react(request):
+    return render(request, "index.html")
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('spinapi.urls'))
+    path('api/', include('spinapi.urls')),
+    path('', render_react)
 ]

@@ -72,7 +72,7 @@ function CustomerTabs({ lang, mode }) {
     const [ingredients, setIngredients] = useState([]); // variable to store the ingredients fetched from the database
     const [menuItems, setMenuItems] = useState([]); // variable to store the the menu items available
     const [maxToppings, setMaxToppings] = useState(0);
-    const url = 'http://localhost:8000/api/';
+    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
     
     useEffect(() => {
       Promise.all([

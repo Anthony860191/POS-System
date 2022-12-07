@@ -39,7 +39,7 @@ const RemoveMenuForm = ({lang, mode}) => {
         let formField = new FormData();
         await axios({
             method: 'delete',
-            url: url + 'menu/' + menu_item,
+                    url: `${url}menu/${menu_item}`,
             data: formField
         }).then(response => {
             console.log(response.data);

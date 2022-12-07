@@ -20,7 +20,7 @@ function MenuManager({ lang, mode }) {
 
     // Pull the menu items from the database to display
     useEffect(() => {
-        axios.get(url)
+        axios.get( `${url}menu/`)
             .then(res => {
                 setItems(res.data);
                 setData(true);

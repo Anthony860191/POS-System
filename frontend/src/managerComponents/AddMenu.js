@@ -14,7 +14,7 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * @param {string} mode - The toggle for dark / light mode.
  */
 const AddMenuForm = ({lang, mode}) => {
-    const url = 'http://localhost:8000/api/';
+    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
     const dark = mode;
     useEffect(() => {
 

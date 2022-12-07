@@ -16,7 +16,7 @@ function MenuManager({ lang, mode }) {
     // execute the code
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
-    const url = 'http://localhost:8000/api/';
+    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
 
     // Pull the menu items from the database to display
     useEffect(() => {

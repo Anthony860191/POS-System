@@ -23,7 +23,7 @@ function AddIngrForm({ lang, mode }) {
     const [units, set_units] = useState('')
     const [ingr_type, set_ingr_type] = useState(null)
     const [usage_value, set_usage_value] = useState(null)
-    const url = 'http://localhost:8000/api/';
+    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
 
 
     // Checks which ingredients were altered, and pushes the changes to the database

@@ -14,7 +14,7 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 function CheeseManager({ lang, mode }) {
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
-    const url = 'http://localhost:8000/api/';
+    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
 
     // Pull all the ingredients from the cheese category
     useEffect(() => {

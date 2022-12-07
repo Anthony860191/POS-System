@@ -8,7 +8,6 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * Function for Google Maps embed on home page
  * @returns Google maps embed
  */
-
 export default function MyMap() {
     const containerStyle = {
         width: '400px',

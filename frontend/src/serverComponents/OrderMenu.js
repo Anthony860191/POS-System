@@ -4,9 +4,17 @@ import Button from "@mui/material/Button";
 import {json, useNavigate, useParams} from 'react-router-dom';
 import {MenuItem, TextField} from "@mui/material";
 
+/**
+ * @author Anthony Mercado
+ * @author Joshua Hillis
+ * Creates a page that allows for the server to efficiently place orders with less considerations for accessibility.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ */
 const OrderMenuForm = ({ lang }) => {
     const url = 'http://localhost:8000';
 
+    // Obtain a list of all the separate ingredient types
     useEffect(() => {
         const fetchIngredients = async () => {
             const PizzaReponse = await fetch(`${url}/menu`);

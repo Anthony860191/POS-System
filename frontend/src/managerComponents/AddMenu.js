@@ -6,9 +6,18 @@ import {MenuItem, TextField} from "@mui/material";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+/**
+ * @author Joshua Hillis
+ * Creates a table that allows the user to set parameters and add a menu item to the menu.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ */
 const AddMenuForm = ({lang, mode}) => {
 
     useEffect(() => {
+
+        // Obtain a list of all the separate ingredient types to display in our drop-down lists
         const fetchIngredients = async () => {
             const VegResponse = await fetch('http://localhost:8000/ingredients/?ingr_type=VEGGIES');
             const vegData = await VegResponse.json();

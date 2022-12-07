@@ -19,6 +19,14 @@ import { Translator, Translate } from 'react-auto-translate';
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 
+/**
+ * @author Joshua Hillis
+ * @author Anthony Mercado
+ * Creates a form with tabs that hosts all the other aspects of the manager's view.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ */
 function ManagerTabs({ lang, mode }) {
     const [toggleState, setToggleState] = useState(1);
     const [buttonPopup, setButtonPopup] = useState(false);

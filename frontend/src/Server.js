@@ -7,10 +7,10 @@ import OrderMenuForm from './serverComponents/OrderMenu';
  * @param {string} mode - The theme mode for CSS styling
  * @returns Manager page
  */
-const Server = ({ lang }) => {
+const Server = ({ lang, mode }) => {
   return (
     <div className="Server">
-      <OrderMenuForm lang={lang} />
+      <OrderMenuForm lang={lang} mode = {mode} />
     </div>
   );
 }

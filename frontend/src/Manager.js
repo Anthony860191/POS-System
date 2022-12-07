@@ -57,7 +57,7 @@ const Manager = ({ lang, mode }) => {
       </center>
 
     </div>
-  );
+  )
 }
 
 export default Manager;

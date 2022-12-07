@@ -23,7 +23,8 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * @param {string} mode - The toggle for dark / light mode.
  * @return {document} ManagerTabs
  */
-function ManagerTabs({ lang, mode }) {
+function ManagerTabs({ lang, mode}) {
+    const dark = mode;
     const [toggleState, setToggleState] = useState(1);
     const [buttonPopup, setButtonPopup] = useState(false);
     const [name, setName] = useState("");
@@ -38,46 +39,53 @@ function ManagerTabs({ lang, mode }) {
             to={lang}
             googleApiKey={apiKey}
         >
-            <div className="container">
+            <div className={dark === 'dark' ? "container-dark" : "container"}>
                 <div className="bloc-tabs">
                     <button
-                        className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
+                        className={toggleState === 1 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+                        id = {dark === 'dark' ? "darkButton" : ""}
                         onClick={() => toggleTab(1)}
                     >
                         <Translate>Vegetables</Translate>
                     </button>
                     <button
-                        className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
+                        className={toggleState === 2 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+                        id = {dark === 'dark' ? "darkButton" : ""}
                         onClick={() => toggleTab(2)}
                     >
                         <Translate>Meats</Translate>
                     </button>
                     <button
-                        className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
+                        className={toggleState === 3 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+                        id = {dark === 'dark' ? "darkButton" : ""}
                         onClick={() => toggleTab(3)}
                     >
                         <Translate>Sauces</Translate>
                     </button>
                     <button
-                        className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
+                        className={toggleState === 4 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+                        id = {dark === 'dark' ? "darkButton" : ""}
                         onClick={() => toggleTab(4)}
                     >
                         <Translate>Drizzles</Translate>
                     </button>
                     <button
-                        className={toggleState === 5 ? "tabs active-tabs" : "tabs"}
+                        className={toggleState === 5 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+                        id = {dark === 'dark' ? "darkButton" : ""}
                         onClick={() => toggleTab(5)}
                     >
                         <Translate>Cheeses</Translate>
                     </button>
                     <button
-                        className={toggleState === 6 ? "tabs active-tabs" : "tabs"}
+                        className={toggleState === 6 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+                        id = {dark === 'dark' ? "darkButton" : ""}
                         onClick={() => toggleTab(6)}
                     >
                         <Translate>Crusts</Translate>
                     </button>
                     <button
-                        className={toggleState === 7 ? "tabs active-tabs" : "tabs"}
+                        className={toggleState === 7 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+                        id = {dark === 'dark' ? "darkButton" : ""}
                         onClick={() => toggleTab(7)}
                     >
                         <Translate>Menu</Translate>
@@ -86,9 +94,8 @@ function ManagerTabs({ lang, mode }) {
 
                 <div className="content-tabs">
                     <div
-                        className={toggleState === 1 ? "content  active-content" : "content"}
+                        className={toggleState === 1 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
                     >
-
                         <table>
                             <tr>
                                 <td>
@@ -103,7 +110,7 @@ function ManagerTabs({ lang, mode }) {
                     </div>
 
                     <div
-                        className={toggleState === 2 ? "content  active-content" : "content"}
+                        className={toggleState === 2 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
                     >
 
                         <table>
@@ -120,7 +127,7 @@ function ManagerTabs({ lang, mode }) {
                     </div>
 
                     <div
-                        className={toggleState === 3 ? "content  active-content" : "content"}
+                        className={toggleState === 3 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
                     >
 
                         <table>
@@ -137,7 +144,7 @@ function ManagerTabs({ lang, mode }) {
                     </div>
 
                     <div
-                        className={toggleState === 4 ? "content  active-content" : "content"}
+                        className={toggleState === 4 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
                     >
 
                         <table>
@@ -154,7 +161,7 @@ function ManagerTabs({ lang, mode }) {
                     </div>
 
                     <div
-                        className={toggleState === 5 ? "content  active-content" : "content"}
+                        className={toggleState === 5 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
                     >
 
                         <table>
@@ -172,7 +179,7 @@ function ManagerTabs({ lang, mode }) {
 
 
                     <div
-                        className={toggleState === 6 ? "content  active-content" : "content"}
+                        className={toggleState === 6 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
                     >
 
                         <table>
@@ -188,7 +195,7 @@ function ManagerTabs({ lang, mode }) {
 
                     </div>
                     <div
-                        className={toggleState === 7 ? "content  active-content" : "content"}
+                        className={toggleState === 7 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
                     >
                         <h2><Translate>Menu</Translate></h2>
                         <hr />
@@ -196,10 +203,10 @@ function ManagerTabs({ lang, mode }) {
                         <br></br>
                         <h2><Translate lang={lang}>Add Menu Item</Translate></h2>
                         <hr />
-                        <AddMenuForm lang={lang}></AddMenuForm>
+                        <AddMenuForm lang={lang} mode = {mode}></AddMenuForm>
                         <hr />
                         <h2><Translate lang={lang}>Remove Menu Item</Translate></h2>
-                        <RemoveMenuForm lang={lang}></RemoveMenuForm>
+                        <RemoveMenuForm lang={lang} mode = {mode}></RemoveMenuForm>
                     </div>
                 </div>
             </div>

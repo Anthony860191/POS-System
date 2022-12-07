@@ -14,7 +14,7 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * @param {string} mode - The toggle for dark / light mode.
  */
 const AddMenuForm = ({lang, mode}) => {
-
+    const dark = mode;
     useEffect(() => {
 
         // Obtain a list of all the separate ingredient types to display in our drop-down lists
@@ -121,7 +121,7 @@ const AddMenuForm = ({lang, mode}) => {
     return (
         <Translator
             from='en' to={lang} googleApiKey={apiKey}>
-        <div className="container">
+        <div className={dark === 'dark' ? "container-form-dark" : "container"}>
             <div className="form-group">
                 <b><Translate>Enter Item Name</Translate></b>
                 <input

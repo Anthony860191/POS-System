@@ -14,11 +14,12 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * @param {string} mode - The toggle for dark / light mode.
  */
 const RemoveMenuForm = ({lang, mode}) => {
+    const url = 'http://localhost:8000/api/'
     const dark = mode;
     // fetch list of menu items from the database for the user to select
     useEffect(() => {
         const fetchIngredients = async () => {
-            const menuResponse = await fetch('http://localhost:8000/menu');
+            const menuResponse = await fetch(`${url}menu/`);
             const menuData = await menuResponse.json();
 
             set_menu_list(menuData);
@@ -38,7 +39,7 @@ const RemoveMenuForm = ({lang, mode}) => {
         let formField = new FormData();
         await axios({
             method: 'delete',
-            url: 'http://localhost:8000/menu/' + menu_item,
+            url: url + 'menu/' + menu_item,
             data: formField
         }).then(response => {
             console.log(response.data);

@@ -1,7 +1,6 @@
-CREATE OR REPLACE FUNCTION get_ingredient_diff(ingr varchar, start_date date)
-    RETURNS NUMERIC
-    LANGUAGE plpgsql
-AS
+create or replace function get_starting_amount(ingr character varying, start_date date) returns numeric
+    language plpgsql
+as
 $$
 DECLARE
     starting_amount numeric;
@@ -30,13 +29,10 @@ BEGIN
     starting_amount := starting_amount +
                        (SELECT COUNT(*) FROM full_pizza_view WHERE order_date >= start_date AND drink = ingr);
     starting_amount := (starting_amount * usage_rate) + current_amount;
-    IF starting_amount != 0 AND current_amount != 0 THEN
-        RETURN (starting_amount - current_amount) / starting_amount * 100.0;
-    ELSIF current_amount = 0 THEN
-        RETURN 100.0;
-    ELSE
-        RETURN 0.00;
-    END IF;
+    RETURN starting_amount - current_amount;
 
 END;
 $$;
+
+alter function get_starting_amount(varchar, date) owner to csce315_904_thorat;
+

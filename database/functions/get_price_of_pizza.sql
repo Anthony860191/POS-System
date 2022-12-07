@@ -7,8 +7,12 @@ AS
         current_price numeric;
     BEGIN
         current_price := 0.00;
-        current_price := (SELECT price FROM menu WHERE pizzatype = menu_item);
-        current_price := current_price + (SELECT price FROM menu where crusttype = menu_item);
+        IF pizzatype IS NOT NULL OR pizzatype != '' THEN
+            current_price := (SELECT price FROM menu WHERE pizzatype = menu_item);
+        end if;
+        IF crusttype IS NOT NULL OR crusttype !=  '' THEN
+            current_price := current_price + (SELECT price FROM menu where crusttype = menu_item);
+        end if;
 
         IF drinktype != '' OR drinktype IS NOT NULL THEN
             current_price := current_price +  (SELECT price FROM menu where drinktype = menu_item);

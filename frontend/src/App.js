@@ -6,6 +6,7 @@ import Customer from "./Customer";
 import Server from "./Server";
 import Manager from "./Manager";
 import Home from "./Home";
+import SalesDashboard from './components/SalesDashboard';
 import { Translator } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -22,23 +23,22 @@ function App() {
   const [mode, setMode] = useState('light');
 
   return (
-    <div id = {mode === "dark" ? "darkBackground" : ""}>
-      <Translator
-        from='en'
-        to={lang}
-        googleApiKey={apiKey}
-      >
-        <BrowserRouter>
-          <MenuBar setLang={setLang} setMode = {setMode}/>
-          <Routes>
-            <Route path='/' element={<Home lang={lang} mode = {mode} />} />
-            <Route path='/Order' element={<Customer lang={lang} mode = {mode}/>} />
-            <Route path= '/Server' element = {<Server lang = {lang} mode = {mode}/>}/>
-            <Route path='/Manager' element={<Manager lang={lang} mode = {mode} />} />
-          </Routes>
-        </BrowserRouter>
-      </Translator>
-    </div>
+    <Translator
+      from='en'
+      to={lang}
+      googleApiKey={apiKey}
+    >
+      <BrowserRouter>
+        <MenuBar setLang={setLang} setMode={setMode}/>
+        <Routes>
+          <Route path='/' element={<Home lang={lang} mode={mode} />} />
+          <Route path='/Order' element={<Customer lang={lang} mode={mode} />} />
+          <Route path= '/Server' element = {<Server lang = {lang} mode={mode}/>}/>
+          <Route path='/Manager' element={<Manager lang={lang} mode={mode}/>} />
+          <Route path='/SalesDashboard' element={<SalesDashboard  mode={mode} lang={lang}/>} />
+        </Routes>
+      </BrowserRouter>
+    </Translator>
   );
 }
 

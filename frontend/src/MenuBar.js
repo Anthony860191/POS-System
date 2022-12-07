@@ -67,6 +67,9 @@ export function MenuBar({ setLang, setMode }) {
                         <Nav.Item>
                             <Nav.Link as={NavLink} to="/Manager" href="Manager"><Translate>Manager</Translate></Nav.Link>
                         </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link as={NavLink} to="/SalesDashboard" href="SalesDashboard"><Translate>Sales Dashboard</Translate></Nav.Link>
+                        </Nav.Item>
                         <Dropdown onSelect={handleSelect}>
                             <Dropdown.Toggle>
                                 <Translate>Language</Translate>

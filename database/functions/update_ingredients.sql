@@ -24,10 +24,10 @@ BEGIN
         SET quantity = quantity - usage_value
         WHERE ingredient_name = NEW.topping4;
     END IF; 
-    IF NEW.pizza_type = 'PEPPERONI' THEN
+    IF NEW.pizza_type = 'Pepperoni' THEN
         UPDATE ingredients
         SET quantity = quantity - usage_value
-        WHERE ingredient_name = 'PEPPERONI';
+        WHERE ingredient_name = 'Pepperoni';
     END IF; 
 
     IF NEW.sauce IS NOT NULL THEN 
@@ -49,6 +49,11 @@ BEGIN
         UPDATE ingredients
         SET quantity = quantity - usage_value
         WHERE ingredient_name = NEW.drink;
+    end if;
+    IF NEW.crust IS NOT NULL THEN
+        UPDATE ingredients
+        SET quantity = quantity - usage_value
+        WHERE ingredient_name = NEW.crust;
     end if;
     RETURN NEW;
     END; 

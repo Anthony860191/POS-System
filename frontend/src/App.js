@@ -22,21 +22,23 @@ function App() {
   const [mode, setMode] = useState('light');
 
   return (
-    <Translator
-      from='en'
-      to={lang}
-      googleApiKey={apiKey}
-    >
-      <BrowserRouter>
-        <MenuBar setLang={setLang} setMode={setMode}/>
-        <Routes>
-          <Route path='/' element={<Home lang={lang} mode={mode} />} />
-          <Route path='/Order' element={<Customer lang={lang} mode={mode} />} />
-          <Route path= '/Server' element = {<Server lang = {lang} mode={mode}/>}/>
-          <Route path='/Manager' element={<Manager lang={lang} mode={mode}/>} />
-        </Routes>
-      </BrowserRouter>
-    </Translator>
+    <div id = {mode === "dark" ? "darkBackground" : ""}>
+      <Translator
+        from='en'
+        to={lang}
+        googleApiKey={apiKey}
+      >
+        <BrowserRouter>
+          <MenuBar setLang={setLang} setMode = {setMode}/>
+          <Routes>
+            <Route path='/' element={<Home lang={lang} mode = {mode} />} />
+            <Route path='/Order' element={<Customer lang={lang} mode = {mode}/>} />
+            <Route path= '/Server' element = {<Server lang = {lang} mode = {mode}/>}/>
+            <Route path='/Manager' element={<Manager lang={lang} mode = {mode} />} />
+          </Routes>
+        </BrowserRouter>
+      </Translator>
+    </div>
   );
 }
 

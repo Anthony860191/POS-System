@@ -60,6 +60,7 @@ const successButtons = createTheme({
  * @returns {document} CustomerTabs
  */
 function CustomerTabs({ lang, mode }) {
+    const dark = mode;
     const [toggleState, setToggleState] = useState(1); // function to switch between tabs
     const [paymentPopup, setPaymentPopup]= useState(false); // function to open the payment popup
     const [name, setName] = useState(""); // function to set the customers name
@@ -71,7 +72,7 @@ function CustomerTabs({ lang, mode }) {
     const [ingredients, setIngredients] = useState([]); // variable to store the ingredients fetched from the database
     const [menuItems, setMenuItems] = useState([]); // variable to store the the menu items available
     const [maxToppings, setMaxToppings] = useState(0);
-    const url = 'http://localhost:8000/';
+    const url = 'http://localhost:8000/api/';
     
     useEffect(() => {
       Promise.all([
@@ -243,7 +244,7 @@ function CustomerTabs({ lang, mode }) {
       },
       body: JSON.stringify({
         "orderid": parseInt(resultId[0].id),
-        "pizza_type": pizzaType,
+        "pizza_type": pizzaType === "" ? null : pizzaType,
         "cheese_type": cheese,
         "crust": crust,
         "sauce": sauce,
@@ -274,10 +275,9 @@ function CustomerTabs({ lang, mode }) {
 
   // notify when pizza has been added to the order
   const addPizzaHandleClick = async () => {
-    if(pizzaType === "") {
+    if(pizzaType === "" && drink === "") {
       return;
     }
-    setPizzaNotification(true);
     const responsePrice = await fetch(`${url}price?pizzatype=${pizzaType}&crusttype=${crust}&drinktype=${drink}`);
     const resultPrice = await responsePrice.json();
 
@@ -286,7 +286,7 @@ function CustomerTabs({ lang, mode }) {
 
     var pizzaOrder = {
       "orderid": 1 + parseInt(resultId[0].id),
-      "pizza_type": pizzaType,
+      "pizza_type": pizzaType === "" ? null : pizzaType,
       "cheese_type": cheese,
       "crust": crust,
       "sauce": sauce,
@@ -301,6 +301,8 @@ function CustomerTabs({ lang, mode }) {
 
     var jsonPizzaOrder = JSON.stringify(pizzaOrder);
     allOrders.push(jsonPizzaOrder);
+    setPizzaNotification(true);
+    setToggleState(1);
     setPizzaType("");
     setCrust("");
     setSauce("");
@@ -309,7 +311,7 @@ function CustomerTabs({ lang, mode }) {
     setDrizzle("");
     setDrink("");
     setTotalPrice(totalPrice + parseFloat(resultPrice.price));
-    setToggleState(1);
+    
   };
     const [pizzaType, setPizzaType] = React.useState("");
     const customPizzaClick = (pizza) => {
@@ -382,46 +384,53 @@ function CustomerTabs({ lang, mode }) {
       to={lang}
       googleApiKey={apiKey}
     >
-      <div className="container">
+      <div className={dark === 'dark' ? "container-dark" : "container"}>
         <div className="bloc-tabs">
           <button
-            className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 1 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(1)}
           >
             <Translate>Pizza Type</Translate>
           </button>
           <button
-            className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 2 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(2)}
           >
             <Translate>Crust</Translate>
           </button>
           <button
-            className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 3 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(3)}
           >
             <Translate>Sauce</Translate>
           </button>
           <button
-            className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 4 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(4)}
           >
             <Translate>Cheese</Translate>
           </button>
           <button
-            className={toggleState === 5 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 5 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(5)}
           >
             <Translate>Toppings</Translate>
           </button>
           <button
-            className={toggleState === 6 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 6 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(6)}
           >
             <Translate>Drizzle</Translate>
           </button>
           <button
-            className={toggleState === 7 ? "tabs active-tabs" : "tabs"}
+            className={toggleState === 7 ? (dark === 'dark' ? "tabs active-tabs-dark" : "tabs active-tabs") : "tabs"} 
+            id = {dark === 'dark' ? "darkButton" : ""}
             onClick={() => toggleTab(7)}
           >
             <Translate>Drink</Translate>
@@ -430,9 +439,9 @@ function CustomerTabs({ lang, mode }) {
 
       <div className="content-tabs">
       <div
-          className={toggleState === 1 ? "content  active-content" : "content"}
+          className={toggleState === 1 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
-          <h2>Select your Pizza</h2>
+          <h2><Translate>Select your Pizza</Translate></h2>
           <hr />
           {basePizzas && basePizzas.map (itemName => (
             <Button variant="contained" sx= {{m: 1}} className = "ingredientButton" onClick={() => customPizzaClick(itemName)} ><Translate>{itemName}</Translate></Button>
@@ -442,9 +451,9 @@ function CustomerTabs({ lang, mode }) {
           ))}
         </div>
         <div
-          className={toggleState === 2 ? "content  active-content" : "content"}
+          className={toggleState === 2 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
-          <h2>Select your Crust</h2>
+          <h2><Translate>Select your Crust</Translate></h2>
           <hr />
           <StyledToggleButtonGroup
             value = {crust}
@@ -459,9 +468,9 @@ function CustomerTabs({ lang, mode }) {
         </div>
 
         <div
-          className={toggleState === 3 ? "content  active-content" : "content"}
+          className={toggleState === 3 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
-          <h2>Select your Sauce</h2>
+          <h2><Translate>Select your Sauce</Translate></h2>
           <hr />
           <StyledToggleButtonGroup
             value = {sauce}
@@ -476,9 +485,9 @@ function CustomerTabs({ lang, mode }) {
         </div>
 
         <div
-          className={toggleState === 4 ? "content  active-content" : "content"}
+          className={toggleState === 4 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
-          <h2>Select your Cheese</h2>
+          <h2><Translate>Select your Cheese</Translate></h2>
           <hr />
           <StyledToggleButtonGroup
             value = {cheese}
@@ -492,9 +501,9 @@ function CustomerTabs({ lang, mode }) {
           </StyledToggleButtonGroup>
         </div>
         <div
-          className={toggleState === 5 ? "content  active-content" : "content"}
+          className={toggleState === 5 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
-          <h2>Select your Topping(s)</h2>
+          <h2><Translate>Select your Topping(s)</Translate></h2>
           <hr />
           <StyledToggleButtonGroup
             value = {toppings}
@@ -512,9 +521,9 @@ function CustomerTabs({ lang, mode }) {
           </Snackbar>
         </div>
         <div
-          className={toggleState === 6 ? "content  active-content" : "content"}
+          className={toggleState === 6 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
-          <h2>Select your Drizzle</h2>
+          <h2><Translate>Select your Drizzle</Translate></h2>
           <hr />
           <StyledToggleButtonGroup
             value = {drizzle}
@@ -528,9 +537,9 @@ function CustomerTabs({ lang, mode }) {
           </StyledToggleButtonGroup>
         </div>
         <div
-          className={toggleState === 7 ? "content  active-content" : "content"}
+          className={toggleState === 7 ? (dark === 'dark' ? "content  active-content-dark" : "content active-content") : "content"}
         >
-          <h2>Select your Drink</h2>
+          <h2><Translate>Select your Drink</Translate></h2>
           <hr />
           <StyledToggleButtonGroup
             value = {drink}
@@ -545,31 +554,59 @@ function CustomerTabs({ lang, mode }) {
         </div>
       </div>
       <div>
-        <p><strong>Current Pizza:</strong> {pizzaType}</p>
-        <p><strong>Crust:</strong> {crust} <strong>Sauce:</strong> {sauce} <strong>Cheese:</strong> {cheese} <strong>Toppings:</strong> {toppings.join(", ")} <strong>Drizzle:</strong> {drizzle}</p>
-        <p><strong>Drink:</strong> {drink}</p>
+        <div className = "order-info">
+          <p><strong><Translate>Current Order:</Translate></strong></p>
+          <ul>
+            {(pizzaType !== "" || drink !== "") && 
+              <>
+                <span><strong><Translate>Pizza:</Translate></strong> <Translate>{pizzaType}</Translate></span>
+                <span><strong><Translate>Crust:</Translate></strong> <Translate>{crust}</Translate></span>
+                <span><strong><Translate>Sauce:</Translate></strong> <Translate>{sauce}</Translate></span> 
+                <span><strong><Translate>Cheese:</Translate></strong> <Translate>{cheese}</Translate></span> 
+                <span><strong><Translate>Toppings:</Translate></strong> <Translate>{toppings.join(", ")}</Translate></span>
+                <span><strong><Translate>Drizzle:</Translate></strong> <Translate>{drizzle}</Translate></span>
+                <span><strong><Translate>Drink:</Translate></strong> <Translate>{drink}</Translate></span>
+                <button className = "icon" onClick={deleteCurrentPizza}> <DeleteIcon style ={{ color: "red" }}/> </button>
+              </>
+            }
+            {allOrders.map((pizza, index) => {
+              return (
+                <li key={pizza.pizza_type}>
+                  <span><strong><Translate>Pizza:</Translate></strong> <Translate>{JSON.parse(pizza).pizza_type}</Translate></span>
+                  <span><strong><Translate>Crust:</Translate></strong> <Translate>{JSON.parse(pizza).crust}</Translate></span>
+                  <span><strong><Translate>Sauce:</Translate></strong> <Translate>{JSON.parse(pizza).sauce}</Translate></span> 
+                  <span><strong><Translate>Cheese:</Translate></strong> <Translate>{JSON.parse(pizza).cheese_type}</Translate></span> 
+                  <span><strong><Translate>Toppings:</Translate></strong> <Translate>{JSON.parse(pizza).topping1}</Translate></span>
+                  <span><strong><Translate>Drizzle:</Translate></strong> <Translate>{JSON.parse(pizza).drizzle}</Translate></span>
+                  <span><strong><Translate>Drink:</Translate></strong> <Translate>{JSON.parse(pizza).drink}</Translate></span>
+                  <button className = "icon" onClick={() => deleteByIndex(index)}> <DeleteIcon style={{ color: "red" }} /> </button>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
         <ButtonGroup size = "large" sx = {{m:1}}>
-          <Button variant="contained" theme = {successButtons} onClick={addPizzaHandleClick}><Translate>Add Pizza</Translate></Button>
+          <Button variant="contained" theme = {successButtons} onClick={addPizzaHandleClick}><Translate>Add Item</Translate></Button>
           <Snackbar open={pizzaNotifaction} autoHideDuration={3000} onClose={handleClose}>
             <Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: green[600]}}>
-              Pizza Added
+              <Translate> Item Added </Translate>
             </Alert>
           </Snackbar>
-          <Button variant="contained" theme = {successButtons} onClick={paymentPopupHandleClick}><Translate>Edit/Complete Order</Translate></Button>
+          <Button variant="contained" theme = {successButtons} onClick={paymentPopupHandleClick}><Translate>Complete Order</Translate></Button>
           <Snackbar open={completeNotifcation} autoHideDuration={3000} onClose={handleClose}>
             <Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: green[600]}}>
-              Order Completed
+              <Translate>Order Completed</Translate>
             </Alert>
           </Snackbar>
           <Button variant="contained" color = "error" onClick={cancelHandleClick}><Translate>Cancel Order</Translate></Button>
           <Snackbar open={cancelNotification} autoHideDuration={3000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error" sx={{ width: '100%'}}>
-              Order Deleted
+              <Translate>Order Deleted</Translate>
             </Alert>
           </Snackbar>
         </ButtonGroup>
       </div>
-      <Popup lang = {lang} trigger = {paymentPopup} setTrigger = {setPaymentPopup}>
+      <Popup lang = {lang} trigger = {paymentPopup} dark = {dark} setTrigger = {setPaymentPopup}>
           <h3><Translate>Complete Order</Translate></h3>
           <TextField 
             sx = {{mt: 2,  mb: 2}}
@@ -586,14 +623,16 @@ function CustomerTabs({ lang, mode }) {
               return (
                 <li key={pizza.pizza_type}>
                   <span><Translate>{JSON.parse(allOrders[index]).pizza_type}</Translate></span>
-                  <button onClick={() => deleteByIndex(index)}> <DeleteIcon style={{ color: "red" }} /> </button>
+                  {(JSON.parse(pizza).pizza_type !== "" && JSON.parse(pizza).drink)? <span><Translate> w/ {JSON.parse(pizza).drink}</Translate></span> : <span><Translate>{JSON.parse(pizza).drink  }</Translate></span>}
+                  <button className = "icon" onClick={() => deleteByIndex(index)}> <DeleteIcon style={{ color: "red" }} /> </button>
                 </li>
               )
             })}
-            {pizzaType !== "" &&
+            {(pizzaType !== "" || drink !== "") &&
               <li key={pizzaType}>
-                  <span>{pizzaType}</span>
-                  <button onClick={deleteCurrentPizza}> <DeleteIcon style ={{ color: "red" }}/> </button>
+                  <span><Translate>{pizzaType}</Translate></span>
+                  {(pizzaType !== "" && drink !== "")? <span><Translate> w/ {drink}</Translate></span> : <span><Translate>{drink}</Translate></span>}
+                  <button className = "icon" onClick={deleteCurrentPizza}> <DeleteIcon style ={{ color: "red" }}/> </button>
               </li>
             }
           </ul>

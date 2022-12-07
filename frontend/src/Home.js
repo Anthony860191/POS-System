@@ -1,5 +1,6 @@
 import React from 'react';
 import MyMap from "./GoogleMaps"
+import "./Home.css"
 import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -11,14 +12,15 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * @returns HTML home page
  */
 
-const Home = ({ lang, mode }) => {
+const Home = ({ lang , mode}) => {
+    const dark = mode;
     return (
         <Translator
             from='en'
             to={lang}
             googleApiKey={apiKey}
         >
-            <div className="Home">
+            <div className={dark === 'dark' ? "Home-dark" : ""}>
                 <center>
                     <h1>Spin 'N Stone Pizza</h1>
                     <p>

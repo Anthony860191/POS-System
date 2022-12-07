@@ -51,14 +51,16 @@ const Manager = ({ lang, mode }) => {
           </center>
         </div>
       </Translator >
-      <center>
-        <Tabs lang={lang} mode={mode}/>
-      </center>
-      <center>
-        <DailySalesTotal></DailySalesTotal>
-      </center>
+      <div className="Manager">
+        <center>
+          <Tabs lang={lang} mode = {mode}/>
+        </center>
+        <center>
+          <DailySalesTotal></DailySalesTotal>
+        </center>
+      </div>
     </div>
-  );
+  )
 }
 
 export default Manager;

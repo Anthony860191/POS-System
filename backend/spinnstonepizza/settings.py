@@ -26,7 +26,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["spin-n-stone-pos.herokuapp.com"]
+ALLOWED_HOSTS = ["spin-n-stone-pos.herokuapp.com", "localhost"]
 
 
 # Application definition

@@ -12,10 +12,10 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    width: 1400px;
+    
     height: auto;
     background: #f1f1f1;
-    margin: 50px auto 0;
+    margin: auto 0;
     word-break: break-all;
     border: 1px solid rgba(0, 0, 0, 0.274);
   }
@@ -64,6 +64,13 @@
     background-color: white;
   }
 
+  #darkButton {
+    border: none;
+    font-size: 22px;
+    font-weight: bold;
+    color: whitesmoke ;
+  }
+
   .completeOrder {
     background-color: rgb(151, 228, 112);
     color: black;
@@ -102,5 +109,8 @@
     height: 100%;
   }
   .active-content {
+    display: block;
+  }
+  .active-content-dark {
     display: block;
   }

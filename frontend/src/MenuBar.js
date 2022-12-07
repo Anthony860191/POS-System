@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { Translator, Translate } from 'react-auto-translate';
-import {Nav, Button, Container, Dropdown} from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { NavLink} from 'react-router-dom';
+import { Translator, Translate } from 'react-auto-translate';
+import Dropdown from 'react-bootstrap/Dropdown';
+import "./MenuBar.css";
+
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
@@ -19,22 +23,20 @@ export function MenuBar({ setLang, setMode }) {
     //makes it to where the language from other components do not update on state change
     const [menuLang, setMenuLang] = useState();
     const [menuMode, setMenuMode] = useState('light');
-    
+
     const handleSelect = eventKey => {
         setLang(eventKey);
         setMenuLang(eventKey);
     }
     const toggleTheme = () => {
-        if (menuMode === 'light') {
+        if (menuMode == 'light') {
             setMenuMode('dark');
             setMode('dark');
-            //console.log("mode is ", menuMode);
         } else {
             setMenuMode('light');
             setMode('light');
-            //console.log("mode is ", menuMode);
         }
-      }
+    }
     return (
         <>
             <Translator
@@ -42,7 +44,16 @@ export function MenuBar({ setLang, setMode }) {
                 to={menuLang}
                 googleApiKey={apiKey}
             >
-                <Container className="bg-white border-0">
+                <div className = "contained">
+                {/* 
+                    <Navbar bg={menuMode} variant={menuMode}>
+                        <Container>
+                            <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+                        </Container>
+                    </Navbar>
+                </Container>
+                <Container className={menuMode}>
+                */}
                     <Nav variant="pills">
                         <Nav.Item>
                             <Nav.Link as={NavLink} to="/" href="Home"><Translate>Home</Translate></Nav.Link>
@@ -75,9 +86,9 @@ export function MenuBar({ setLang, setMode }) {
                                 <Dropdown.Item eventKey="de">Deutsch</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Button onClick={toggleTheme}>Toggle Theme</Button>
+                        <Button onClick = {toggleTheme}>{menuMode === "light" ? "Dark Mode" : "Light Mode"}</Button>
                     </Nav>
-                </Container>
+                </div>
             </Translator>
         </>
     );

@@ -14,6 +14,7 @@ from .models import Pizzas, Orders, Ingredients, Menu
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 class PizzaViewSet(viewsets.ModelViewSet):
+    """Pizza views. Is not used by the API. """
     queryset = Pizzas.objects.all().order_by('id')
     serializer_class = PizzaSerializer
 
@@ -24,6 +25,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     
 
     def get_queryset(self):
+        """
+        Gets Orders View from database.
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+        """
         get_latest = self.request.query_params.get('latest')
         if get_latest:
             return Orders.objects.all().order_by('-id')[:1]
@@ -33,6 +41,13 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 
 class MenuViewSet(viewsets.ModelViewSet):
+    """
+        Gets Menu table view from database. 
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+     """
     queryset = Menu.objects.all().order_by('menu_item')
     serializer_class = MenuSerializer
 
@@ -43,6 +58,13 @@ class IngredientViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
+        """
+        Gets Ingredients View from database. Possible params are ingr_type and ingredient_name to filter on. 
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+        """
         # only one parameter allowed for now
 
         # extract queries
@@ -64,6 +86,13 @@ class IngredientViewSet(viewsets.ModelViewSet):
 class PriceView(views.APIView):
 
     def get(self, request):
+        """
+        Gets Price View from database.
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+        """
         # get arguments from request object
         pizzatype = request.GET.get('pizzatype')
         crusttype = request.GET.get('crusttype')
@@ -83,6 +112,13 @@ class PriceView(views.APIView):
 class AvailableIngredientsView(views.APIView):
 
     def get(self, request):
+        """
+        Gets Available Ingredients view from database.
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+        """
         # just get available ingredients
         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
         ingr_frame = pd.read_sql(SELECT_FROM_AVAILABLE_TOPPINGS, conn)
@@ -96,6 +132,13 @@ class AvailableIngredientsView(views.APIView):
 class DailySalesDataView(views.APIView):
 
     def get(self, request):
+        """
+        Gets daily sales data. 
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+        """
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         if(start_date is None):
@@ -121,7 +164,13 @@ class DailySalesDataView(views.APIView):
 
 class IngredientUsageReport(views.APIView):
     def get(self, request):
-
+        """
+        Gets Ingredients Usage report. Takes in a single date (date).
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+        """
         date = request.GET.get('date')
         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
         sql_date = parse_sql_argument(date)
@@ -133,8 +182,18 @@ class IngredientUsageReport(views.APIView):
         
 
 class LastWeekSalesView(views.APIView):
+    """
+    Last weeks sales view. 
+    """
 
     def get(self, request):
+        """
+        Gets Last Weeks Sales View from database.
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+        """
         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
         df = pd.read_sql("SELECT * FROM last_week_sales;", conn)
         conn.close()
@@ -143,7 +202,17 @@ class LastWeekSalesView(views.APIView):
         return response.Response(results)
 
 class LastWeekItemCounts(views.APIView):
+    """
+    Last Week Item counts view. Gets weekly menu  items purchased. 
+    """
     def get(self, request):
+        """
+        Gets Last Weeks Sales View from database.
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+        """
         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=config('DB_USER'), password=config('DB_PASSWORD'))
         df = pd.read_sql("SELECT * FROM pizza_counts;", conn)
         conn.close()
@@ -151,7 +220,17 @@ class LastWeekItemCounts(views.APIView):
         results = PizzaCountsSerializer(json_obj, many=True).data
         return response.Response(results)
 class SalesBreakDownView(views.APIView):
+    """
+    Sales breakdown View. 
+    """
     def get(self, request):
+        """
+        Gets Last Weeks Sales View from database.
+        :param request: request object
+        :type request: request object
+        :return: Serialized response
+        :rtype: JSON
+        """
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         

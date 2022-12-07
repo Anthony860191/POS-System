@@ -22,7 +22,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import WarningIcon from '@mui/icons-material/Warning';
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-const apiRoot = process.env.API_ROOT;
+const apiRoot = process.env.REACT_APP_API_ROOT;
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',

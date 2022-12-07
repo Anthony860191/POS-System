@@ -121,7 +121,6 @@ class DjangoSession(models.Model):
 class Ingredients(models.Model):
     """
     The Ingredient class represents each individual ingredient that goes into a pizza.
-    Attributes:
 
     """
     ingredient_name = models.CharField(primary_key=True, max_length=100)
@@ -138,6 +137,9 @@ class Ingredients(models.Model):
 
 
 class Menu(models.Model):
+    """
+    Menu table in database. 
+    """
     menu_item = models.CharField(primary_key=True, max_length=100)
     item_type = models.CharField(max_length=100, blank=True, null=True)
     price = models.DecimalField(max_digits=65535, decimal_places=2, blank=True, null=True)
@@ -157,6 +159,9 @@ class Menu(models.Model):
 
 
 class Orders(models.Model):
+    """
+    Orders table in database. 
+    """
     order_date = models.DateField(blank=True, null=True)
     price = models.DecimalField(max_digits=65535, decimal_places=2, blank=True, null=True)
     payment_type = models.CharField(max_length=100, blank=True, null=True)
@@ -169,6 +174,9 @@ class Orders(models.Model):
 
 
 class Pizzas(models.Model):
+    """
+    Pizza table in PostgreSQL.
+    """
     orderid = models.IntegerField()
     pizza_type = models.CharField(max_length=100, blank=True, null=True)
     cheese_type = models.CharField(max_length=100, blank=True, null=True)

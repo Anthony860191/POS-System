@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: MenuBar.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: MenuBar.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import { Translator, Translate } from 'react-auto-translate';
+import {Nav, Button, Container, Dropdown} from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+
+/**
+ * @author Oliver Carver
+ * Navigation and options bar for the website
+ * @param {useState} setMode - useState to set the theme mode for the website
+ * @param {useState} setLang - useState to set the language for the website 
+ * @returns Menu bar for the website
+ */
+
+export function MenuBar({ setLang, setMode }) {
+    //Here we have a separate state for menu langauge, since passing in lang from app
+    //makes it to where the language from other components do not update on state change
+    const [menuLang, setMenuLang] = useState();
+    const [menuMode, setMenuMode] = useState('light');
+    
+    const handleSelect = eventKey => {
+        setLang(eventKey);
+        setMenuLang(eventKey);
+    }
+    const toggleTheme = () => {
+        if (menuMode === 'light') {
+            setMenuMode('dark');
+            setMode('dark');
+            //console.log("mode is ", menuMode);
+        } else {
+            setMenuMode('light');
+            setMode('light');
+            //console.log("mode is ", menuMode);
+        }
+      }
+    return (
+        &lt;>
+            &lt;Translator
+                from='en'
+                to={menuLang}
+                googleApiKey={apiKey}
+            >
+                &lt;Container className="bg-white border-0">
+                    &lt;Nav variant="pills">
+                        &lt;Nav.Item>
+                            &lt;Nav.Link as={NavLink} to="/" href="Home">&lt;Translate>Home&lt;/Translate>&lt;/Nav.Link>
+                        &lt;/Nav.Item>
+                        &lt;Nav.Item>
+                            &lt;Nav.Link as={NavLink} to="/Order" href="/Order">&lt;Translate>Order&lt;/Translate>&lt;/Nav.Link>
+                        &lt;/Nav.Item>
+                        &lt;Nav.Item>
+                            &lt;Nav.Link as={NavLink} to="/Server" href="Server">&lt;Translate>Server&lt;/Translate>&lt;/Nav.Link>
+                        &lt;/Nav.Item>
+                        &lt;Nav.Item>
+                            &lt;Nav.Link as={NavLink} to="/Manager" href="Manager">&lt;Translate>Manager&lt;/Translate>&lt;/Nav.Link>
+                        &lt;/Nav.Item>
+                        &lt;Dropdown onSelect={handleSelect}>
+                            &lt;Dropdown.Toggle>
+                                &lt;Translate>Language&lt;/Translate>
+                            &lt;/Dropdown.Toggle>
+                            &lt;Dropdown.Menu>
+                                &lt;Dropdown.Item eventKey="en">English&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="es">Español&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="fr">Français&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="ja">日本語&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="zh-CN">中文简体&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="zh-TW">中文繁體&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="ar">عربي&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="hi">हिन्दी&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="vi">Tiếng Việt&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="tl">Filipino&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="ko">한국어&lt;/Dropdown.Item>
+                                &lt;Dropdown.Item eventKey="de">Deutsch&lt;/Dropdown.Item>
+                            &lt;/Dropdown.Menu>
+                        &lt;/Dropdown>
+                        &lt;Button onClick={toggleTheme}>Toggle Theme&lt;/Button>
+                    &lt;/Nav>
+                &lt;/Container>
+            &lt;/Translator>
+        &lt;/>
+    );
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#MenuBar">MenuBar</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:40:51 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

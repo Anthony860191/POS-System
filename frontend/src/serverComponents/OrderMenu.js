@@ -4,9 +4,17 @@ import Button from "@mui/material/Button";
 import {json, useNavigate, useParams} from 'react-router-dom';
 import {MenuItem, TextField} from "@mui/material";
 
+/**
+ * @author Anthony Mercado
+ * @author Joshua Hillis
+ * Creates a page that allows for the server to efficiently place orders with less considerations for accessibility.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ */
 const OrderMenuForm = ({ lang }) => {
     const url = 'http://localhost:8000';
 
+    // Obtain a list of all the separate ingredient types
     useEffect(() => {
         const fetchIngredients = async () => {
             const PizzaReponse = await fetch(`${url}/menu`);
@@ -194,34 +202,34 @@ const OrderMenuForm = ({ lang }) => {
         set_drink('');
     }
 
-    const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTypeChange = (event) => {
         set_item_type(event.target.value);
     }
-    const handleTop1Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTop1Change = (event) => {
         set_topping1(event.target.value);
     }
-    const handleTop2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTop2Change = (event) => {
         set_topping2(event.target.value);
     }
-    const handleTop3Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTop3Change = (event) => {
         set_topping3(event.target.value);
     }
-    const handleTop4Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTop4Change = (event) => {
         set_topping4(event.target.value);
     }
-    const handleSauceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSauceChange = (event) => {
         set_sauce(event.target.value);
     }
-    const handleDrizzleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDrizzleChange = (event) => {
         set_drizzle(event.target.value);
     }
-    const handleCheeseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCheeseChange = (event) => {
         set_cheese_type(event.target.value);
     }
-    const handleCrustChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCrustChange = (event) => {
         set_default_crust(event.target.value);
     }
-    const handleDrinkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDrinkChange = (event) => {
         set_drink(event.target.value);
     }
 

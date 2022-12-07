@@ -6,9 +6,18 @@ import {MenuItem, TextField} from "@mui/material";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+/**
+ * @author Joshua Hillis
+ * Creates a table that allows the user to set parameters and add a menu item to the menu.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ */
 const AddMenuForm = ({lang, mode}) => {
 
     useEffect(() => {
+
+        // Obtain a list of all the separate ingredient types to display in our drop-down lists
         const fetchIngredients = async () => {
             const VegResponse = await fetch('http://localhost:8000/ingredients/?ingr_type=VEGGIES');
             const vegData = await VegResponse.json();
@@ -81,31 +90,31 @@ const AddMenuForm = ({lang, mode}) => {
         })
     }
 
-    const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTypeChange = (event) => {
         set_item_type(event.target.value);
     }
-    const handleTop1Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTop1Change = (event) => {
         set_topping1(event.target.value);
     }
-    const handleTop2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTop2Change = (event) => {
         set_topping2(event.target.value);
     }
-    const handleTop3Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTop3Change = (event) => {
         set_topping3(event.target.value);
     }
-    const handleTop4Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTop4Change = (event) => {
         set_topping4(event.target.value);
     }
-    const handleSauceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSauceChange = (event) => {
         set_sauce(event.target.value);
     }
-    const handleDrizzleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDrizzleChange = (event) => {
         set_drizzle(event.target.value);
     }
-    const handleCheeseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCheeseChange = (event) => {
         set_cheese_type(event.target.value);
     }
-    const handleCrustChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCrustChange = (event) => {
         set_default_crust(event.target.value);
     }
 

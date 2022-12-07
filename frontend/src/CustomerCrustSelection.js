@@ -4,6 +4,11 @@ import Button from "@mui/material/Button";
 const crustHandleClick = () => {
     alert("Selected Crust");
 };
+
+/**
+ * Creates a form that allows for the customer to select the crust for their pizza.
+ * @constructor
+ */
 class CustomerCrustSelection extends React.Component {
 
     // Constructor 

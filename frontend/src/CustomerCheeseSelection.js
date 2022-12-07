@@ -5,6 +5,11 @@ const cheeseHandleClick = () => {
     alert("Selected Cheese");
   };
 
+/**
+ * @author Anthony Mercado
+ * Creates a form that allows for the customer to select the cheese for their pizza.
+ * @constructor
+ */
 class CustomerCheeseSelection extends React.Component {
 
     // Constructor 

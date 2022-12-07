@@ -4,6 +4,11 @@ import Button from "@mui/material/Button";
 const sauceHandleClick = () => {
     alert("Selected Sauce");
   };
+
+/**
+ * Creates a form that allows for the customer to select the sauce for their pizza.
+ * @constructor
+ */
 class CustomerSauceSelection extends React.Component {
 
     // Constructor 

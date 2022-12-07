@@ -2,6 +2,11 @@ import React from 'react'
 import "./Popup.css";
 import Button from "@mui/material/Button";
 
+/**
+ * @author Anthony Mercado
+ * Creates a popup window to prompt the user with.
+ * @constructor
+ */
 function Popup(props) {
     return (props.trigger) ? (
         <div className = "popup">

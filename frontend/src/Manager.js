@@ -9,6 +9,15 @@ import Login from './Login';
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
+/**
+ * @author Oliver Carver
+ * @author Joshua Hillis
+ * Manager page containing manager tabs
+ * @param {string} lang - The language the web page needs to be using 
+ * @param {string} mode - The theme mode for CSS styling
+ * @returns Manager page
+ */
+
 const Manager = ({ lang, mode }) => {
 
   const [token, setToken] = useState();

@@ -53,9 +53,11 @@ const successButtons = createTheme({
 });
 
 /**
- * 
- * @param {json} param0 
- * @returns 
+ * @author Anthony Mercado
+ * Creates a page that controls all the tabs and components for the customer's view
+ * @param {json} param0
+ * @param {string} mode - The toggle for dark / light mode.
+ * @returns {document} CustomerTabs
  */
 function CustomerTabs({ lang, mode }) {
     const [toggleState, setToggleState] = useState(1); // function to switch between tabs

@@ -7,6 +7,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
+/**
+ * @author Oliver Carver
+ * Login function that handles login functionality
+ * @param {string} lang - The language the web page needs to be using 
+ * @param {useState} setToken - useState to set login token
+ * @returns Login button
+ */
+
 export default function Login({ lang, setToken }) {
     useEffect(() => {
         const initClient = () => {

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ManagerTabs.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ManagerTabs.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState } from "react";
+import "./ManagerTabs.css";
+import VegetableManager from "../VegetableManager";
+import MeatManager from "../MeatManager";
+import SauceManager from "../SauceManager";
+import DrizzleManager from "../DrizzleManager";
+import CheeseManager from "../CheeseManager";
+import CrustManager from "../CrustManager";
+import MenuManager from "./Menu"
+import AddIngrForm from "./AddForm";
+import AddMenuForm from "./AddMenu";
+import RemoveMenuForm from "./removeForm";
+import { Translator, Translate } from 'react-auto-translate';
+
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+
+
+/**
+ * @author Joshua Hillis
+ * @author Anthony Mercado
+ * Creates a form with tabs that hosts all the other aspects of the manager's view.
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ * @return {document} ManagerTabs
+ */
+function ManagerTabs({ lang, mode }) {
+    const [toggleState, setToggleState] = useState(1);
+    const [buttonPopup, setButtonPopup] = useState(false);
+    const [name, setName] = useState("");
+
+    const toggleTab = (index) => {
+        setToggleState(index);
+    };
+
+    return (
+        &lt;Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+            &lt;div className="container">
+                &lt;div className="bloc-tabs">
+                    &lt;button
+                        className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
+                        onClick={() => toggleTab(1)}
+                    >
+                        &lt;Translate>Vegetables&lt;/Translate>
+                    &lt;/button>
+                    &lt;button
+                        className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
+                        onClick={() => toggleTab(2)}
+                    >
+                        &lt;Translate>Meats&lt;/Translate>
+                    &lt;/button>
+                    &lt;button
+                        className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
+                        onClick={() => toggleTab(3)}
+                    >
+                        &lt;Translate>Sauces&lt;/Translate>
+                    &lt;/button>
+                    &lt;button
+                        className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
+                        onClick={() => toggleTab(4)}
+                    >
+                        &lt;Translate>Drizzles&lt;/Translate>
+                    &lt;/button>
+                    &lt;button
+                        className={toggleState === 5 ? "tabs active-tabs" : "tabs"}
+                        onClick={() => toggleTab(5)}
+                    >
+                        &lt;Translate>Cheeses&lt;/Translate>
+                    &lt;/button>
+                    &lt;button
+                        className={toggleState === 6 ? "tabs active-tabs" : "tabs"}
+                        onClick={() => toggleTab(6)}
+                    >
+                        &lt;Translate>Crusts&lt;/Translate>
+                    &lt;/button>
+                    &lt;button
+                        className={toggleState === 7 ? "tabs active-tabs" : "tabs"}
+                        onClick={() => toggleTab(7)}
+                    >
+                        &lt;Translate>Menu&lt;/Translate>
+                    &lt;/button>
+                &lt;/div>
+
+                &lt;div className="content-tabs">
+                    &lt;div
+                        className={toggleState === 1 ? "content  active-content" : "content"}
+                    >
+
+                        &lt;table>
+                            &lt;tr>
+                                &lt;td>
+                                    &lt;VegetableManager lang={lang}>&lt;/VegetableManager>
+                                &lt;/td>
+                                &lt;td>
+                                    &lt;AddIngrForm lang={lang}>&lt;/AddIngrForm>
+                                &lt;/td>
+                            &lt;/tr>
+                        &lt;/table>
+
+                    &lt;/div>
+
+                    &lt;div
+                        className={toggleState === 2 ? "content  active-content" : "content"}
+                    >
+
+                        &lt;table>
+                            &lt;tr>
+                                &lt;td>
+                                    &lt;MeatManager lang={lang}>&lt;/MeatManager>
+                                &lt;/td>
+                                &lt;td>
+                                    &lt;AddIngrForm lang={lang}>&lt;/AddIngrForm>
+                                &lt;/td>
+                            &lt;/tr>
+                        &lt;/table>
+
+                    &lt;/div>
+
+                    &lt;div
+                        className={toggleState === 3 ? "content  active-content" : "content"}
+                    >
+
+                        &lt;table>
+                            &lt;tr>
+                                &lt;td>
+                                    &lt;SauceManager lang={lang}>&lt;/SauceManager>
+                                &lt;/td>
+                                &lt;td>
+                                    &lt;AddIngrForm lang={lang}>&lt;/AddIngrForm>
+                                &lt;/td>
+                            &lt;/tr>
+                        &lt;/table>
+
+                    &lt;/div>
+
+                    &lt;div
+                        className={toggleState === 4 ? "content  active-content" : "content"}
+                    >
+
+                        &lt;table>
+                            &lt;tr>
+                                &lt;td>
+                                    &lt;DrizzleManager lang={lang}>&lt;/DrizzleManager>
+                                &lt;/td>
+                                &lt;td>
+                                    &lt;AddIngrForm lang={lang}>&lt;/AddIngrForm>
+                                &lt;/td>
+                            &lt;/tr>
+                        &lt;/table>
+
+                    &lt;/div>
+
+                    &lt;div
+                        className={toggleState === 5 ? "content  active-content" : "content"}
+                    >
+
+                        &lt;table>
+                            &lt;tr>
+                                &lt;td>
+                                    &lt;CheeseManager lang={lang}>&lt;/CheeseManager>
+                                &lt;/td>
+                                &lt;td>
+                                    &lt;AddIngrForm lang={lang}>&lt;/AddIngrForm>
+                                &lt;/td>
+                            &lt;/tr>
+                        &lt;/table>
+
+                    &lt;/div>
+
+
+                    &lt;div
+                        className={toggleState === 6 ? "content  active-content" : "content"}
+                    >
+
+                        &lt;table>
+                            &lt;tr>
+                                &lt;td>
+                                    &lt;CrustManager lang={lang}>&lt;/CrustManager>
+                                &lt;/td>
+                                &lt;td>
+                                    &lt;AddIngrForm lang={lang}>&lt;/AddIngrForm>
+                                &lt;/td>
+                            &lt;/tr>
+                        &lt;/table>
+
+                    &lt;/div>
+                    &lt;div
+                        className={toggleState === 7 ? "content  active-content" : "content"}
+                    >
+                        &lt;h2>&lt;Translate>Menu&lt;/Translate>&lt;/h2>
+                        &lt;hr />
+                        &lt;MenuManager lang={lang}>&lt;/MenuManager>
+                        &lt;br>&lt;/br>
+                        &lt;h2>&lt;Translate lang={lang}>Add Menu Item&lt;/Translate>&lt;/h2>
+                        &lt;hr />
+                        &lt;AddMenuForm lang={lang}>&lt;/AddMenuForm>
+                        &lt;hr />
+                        &lt;h2>&lt;Translate lang={lang}>Remove Menu Item&lt;/Translate>&lt;/h2>
+                        &lt;RemoveMenuForm lang={lang}>&lt;/RemoveMenuForm>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        &lt;/Translator>
+    );
+}
+
+export default ManagerTabs;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ManagerTabs">ManagerTabs</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:37:13 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

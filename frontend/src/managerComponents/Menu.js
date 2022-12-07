@@ -4,12 +4,20 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+/**
+ * @author Joshua Hillis
+ * Creates a table that displays all the current menu items and their relevant parameters.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ */
 function MenuManager({ lang, mode }) {
     // ComponentDidMount is used to
     // execute the code
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
 
+    // Pull the menu items from the database to display
     useEffect(() => {
         axios.get("http://localhost:8000/menu/")
             .then(res => {

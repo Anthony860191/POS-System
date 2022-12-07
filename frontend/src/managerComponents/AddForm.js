@@ -6,6 +6,13 @@ import { Translator, Translate } from 'react-auto-translate';
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
+/**
+ * Creates a table that allows the user to set parameters and add an ingredient.
+ * @constructor
+ * @param {string} lang - The language for the text to be in.
+ * @param {string} mode - The toggle for dark / light mode.
+ * @return {document} AddIngrForm
+ */
 function AddIngrForm({ lang, mode }) {
 
     let navigate = useNavigate();
@@ -17,6 +24,7 @@ function AddIngrForm({ lang, mode }) {
     const [ingr_type, set_ingr_type] = useState(null)
     const [usage_value, set_usage_value] = useState(null)
 
+    // Checks which ingredients were altered, and pushes the changes to the database
     const AddIngr = async () => {
         let formField = new FormData()
 

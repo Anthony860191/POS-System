@@ -17,7 +17,7 @@ const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
  */
 
 const OrderMenuForm = ({ lang, mode }) => {
-    const url = 'http://localhost:8000/api/';
+    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
     const dark = mode;
 
     // Obtain a list of all the separate ingredient types

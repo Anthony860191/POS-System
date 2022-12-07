@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath backend spinapi.wsgi:app
+web: gunicorn --pythonpath backend spinnstonepizza.wsgi:app

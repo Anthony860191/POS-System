@@ -6,8 +6,8 @@ import {MenuItem, TextField} from "@mui/material";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-const RemoveMenuForm = ({lang}) => {
-
+const RemoveMenuForm = ({lang, mode}) => {
+    const dark = mode;
     useEffect(() => {
         const fetchIngredients = async () => {
             const menuResponse = await fetch('http://localhost:8000/menu');
@@ -46,7 +46,7 @@ const RemoveMenuForm = ({lang}) => {
     return (
         <Translator
             from='en' to={lang} googleApiKey={apiKey}>
-        <div className="container">
+        <div className={dark === 'dark' ? "container-form-dark" : "container"}>
             <div className="form-group">
                 <b><Translate>Select Menu Item to Remove</Translate></b>
                 <TextField label="Select Menu Item to Remove" select value={menu_item} onChange={handleMenuChange} fullWidth>

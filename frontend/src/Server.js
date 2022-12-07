@@ -1,9 +1,9 @@
 import OrderMenuForm from './serverComponents/OrderMenu';
 
-const Server = ({ lang }) => {
+const Server = ({ lang, mode }) => {
   return (
     <div className="Server">
-      <OrderMenuForm lang={lang} />
+      <OrderMenuForm lang={lang} mode = {mode} />
     </div>
   );
 }

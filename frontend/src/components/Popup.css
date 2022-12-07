@@ -24,3 +24,25 @@
     top: 16px;
     right: 16px;
 }
+
+.popup-inner-dark {
+    position: relative;
+    padding: 32px;
+    width: 100%;
+    max-width: 640px;
+    background-color: darkgray;
+    border-radius: 10px;
+}
+
+.popup-inner-dark .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+.popup-inner-dark .icon {
+    background-color: darkgray;
+}
+
+.popup-inner .icon {
+    background-color: white;
+}

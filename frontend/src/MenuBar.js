@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import { Translator, Translate } from 'react-auto-translate';
 import Dropdown from 'react-bootstrap/Dropdown';
+import "./MenuBar.css";
+
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
@@ -13,17 +14,20 @@ export function MenuBar({ setLang, setMode }) {
     //Here we have a separate state for menu langauge, since passing in lang from app
     //makes it to where the language from other components do not update on state change
     const [menuLang, setMenuLang] = useState();
-    const [menuMode, setMenuMode] = useState("dark");
-
-    const dark = "bg-dark border-0";
+    const [menuMode, setMenuMode] = useState('light');
 
     const handleSelect = eventKey => {
         setLang(eventKey);
         setMenuLang(eventKey);
     }
-    const handleMode = eventKey => {
-        setMode(eventKey);
-        setMenuMode(eventKey);
+    const toggleTheme = () => {
+        if (menuMode == 'light') {
+            setMenuMode('dark');
+            setMode('dark');
+        } else {
+            setMenuMode('light');
+            setMode('light');
+        }
     }
     return (
         <>
@@ -32,7 +36,7 @@ export function MenuBar({ setLang, setMode }) {
                 to={menuLang}
                 googleApiKey={apiKey}
             >
-                <Container className="bg-white border-0">
+                <div className = "contained">
                 {/* 
                     <Navbar bg={menuMode} variant={menuMode}>
                         <Container>
@@ -74,17 +78,9 @@ export function MenuBar({ setLang, setMode }) {
                                 <Dropdown.Item eventKey="de">Deutsch</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Dropdown onSelect={handleMode}>
-                            <Dropdown.Toggle>
-                                <Translate>Theme</Translate>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item eventKey="bg-light border-0">Light</Dropdown.Item>
-                                <Dropdown.Item eventKey="bg-dark border-0">Dark</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        <Button onClick = {toggleTheme}>{menuMode === "light" ? "Dark Mode" : "Light Mode"}</Button>
                     </Nav>
-                </Container>
+                </div>
             </Translator>
         </>
     );

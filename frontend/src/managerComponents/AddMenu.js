@@ -6,8 +6,8 @@ import {MenuItem, TextField} from "@mui/material";
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
-const AddMenuForm = ({lang}) => {
-
+const AddMenuForm = ({lang,  mode}) => {
+    const dark = mode;
     useEffect(() => {
         const fetchIngredients = async () => {
             const VegResponse = await fetch('http://localhost:8000/ingredients/?ingr_type=VEGGIES');
@@ -112,7 +112,7 @@ const AddMenuForm = ({lang}) => {
     return (
         <Translator
             from='en' to={lang} googleApiKey={apiKey}>
-        <div className="container">
+        <div className={dark === 'dark' ? "container-form-dark" : "container"}>
             <div className="form-group">
                 <b><Translate>Enter Item Name</Translate></b>
                 <input

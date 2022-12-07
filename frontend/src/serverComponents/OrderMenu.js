@@ -1,12 +1,16 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
+import { Translator, Translate } from 'react-auto-translate';
 import Button from "@mui/material/Button";
 import {json, useNavigate, useParams} from 'react-router-dom';
 import {MenuItem, TextField} from "@mui/material";
 
-const OrderMenuForm = ({ lang }) => {
-    const url = 'http://localhost:8000';
+const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
+const OrderMenuForm = ({ lang, mode }) => {
+    const url = 'http://localhost:8000';
+    const dark = mode;
     useEffect(() => {
         const fetchIngredients = async () => {
             const PizzaReponse = await fetch(`${url}/menu`);
@@ -132,16 +136,16 @@ const OrderMenuForm = ({ lang }) => {
 
         var pizzaOrder = {
             "orderid": 1 + parseInt(resultId[0].id),
-            "pizza_type": item_type,
+            "pizza_type": item_type === '' ? null : item_type,
             "cheese_type": cheese_type,
             "crust": default_crust,
             "sauce": sauce,
             "drizzle": drizzle,
             "drink": drink,
-            "topping1": topping1 === '' ? '' : topping1,
-            "topping2": topping2 === '' ? '' : topping2,
-            "topping3": topping3 === '' ? '' : topping3,
-            "topping4": topping4 === '' ? '' : topping4,
+            "topping1": topping1 === '' ? null : topping1,
+            "topping2": topping2 === '' ? null : topping2,
+            "topping3": topping3 === '' ? null : topping3,
+            "topping4": topping4 === '' ? null : topping4,
             "price": parseFloat(resultPrice.price)
         }
         var jsonPizzaOrder = JSON.stringify(pizzaOrder);
@@ -152,22 +156,23 @@ const OrderMenuForm = ({ lang }) => {
         }
 
         console.log(date, totalPrice, name);
-        /*await axios({
-            method: 'post',
-            url: `${url}/orders/`,
-            data: JSON.stringify({
-                "order_date": date, 
-                "price": totalPrice,
-                "payment_type": "card", 
-                "customer_name": name
-            })
-        }).then(response => {
-            console.log(response.data);
-            window.location.reload(false);
-            navigate('/server');
-        })*/
+        console.log (allOrders);
 
-        /*
+        fetch(`${url}/orders/`,  {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              "order_date": date, 
+              "price": totalPrice,
+              "payment_type": "Credit Card", 
+              "customer_name": name
+            })
+          });
+
+        
         fetch(`${url}/pizzas/`, {
             method: 'POST',
             headers: {
@@ -176,9 +181,7 @@ const OrderMenuForm = ({ lang }) => {
             },
             body: allOrders
         });
-    */
-
-        console.log (allOrders);
+    
 
         setAllOrders([]);
         set_name('');
@@ -226,113 +229,144 @@ const OrderMenuForm = ({ lang }) => {
     }
 
     return (
-        <div className="container">
-            <div className="form-group">
-                <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter Name for Order"
-                    name="name"
-                    value={name}
-                    onChange={(e) => set_name(e.target.value)}
-                />
-            </div>
-            <div className="form-group">
-                <TextField label="Select Pizza Type" select value={item_type} onChange={handleTypeChange} fullWidth>
-                    {basePizzas.map(item => (
-                        <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
-                    ))}
-                    {presetPizzas.map(item => (
-                        <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Topping One" select value={topping1} onChange={handleTop1Change} fullWidth>
-                    <MenuItem value=''>Remove Topping</MenuItem>
-                    {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Topping Two" select value={topping2} onChange={handleTop2Change} fullWidth>
-                    <MenuItem value=''>Remove Topping</MenuItem>
-                    {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Topping Three" select value={topping3} onChange={handleTop3Change} fullWidth>
-                    <MenuItem value=''>Remove Topping</MenuItem>
-                    {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Topping Four" select value={topping4} onChange={handleTop4Change} fullWidth>
-                    <MenuItem value=''>Remove Topping</MenuItem>
-                    {toppingList.map(ingredient => (
-                        <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Sauce" select value={sauce} onChange={handleSauceChange} fullWidth>
-                    {sauceList.map(sauce => (
-                        <MenuItem value={sauce.ingredient_name}>{sauce.ingredient_name}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Drizzle" select value={drizzle} onChange={handleDrizzleChange} fullWidth>
-                    <MenuItem value=''>No Drizzle</MenuItem>
-                    {drizzleList.map(drizzle => (
-                        <MenuItem value={drizzle.ingredient_name}>{drizzle.ingredient_name}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Cheese" select value={cheese_type} onChange={handleCheeseChange} fullWidth>
-                    {cheeseList.map(cheese_type => (
-                        <MenuItem value={cheese_type.ingredient_name}>{cheese_type.ingredient_name}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Crust" select value={default_crust} onChange={handleCrustChange} fullWidth>
-                    {crustList.map(default_crust => (
-                        <MenuItem value={default_crust.ingredient_name}>{default_crust.ingredient_name}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div className="form-group">
-                <TextField label="Select Drink" select value={drink} onChange={handleDrinkChange} fullWidth>
-                    <MenuItem value=''>No Drink</MenuItem>
-                    {drinks.map(item => (
-                        <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
-                    ))}
-                </TextField>
-            </div>
-            <div classname = "form-group">
-                <input
-                    type="number"
-                    className="form-control form-control-lg"
-                    id="quantity"
-                    defaultValue={quantity}
-                    placeholder={1}
-                    name="alterQuantityAmt"
-                    onChange={(e) => set_quantity(e.target.value)}
-                />
-            </div>
-            <br></br>
-            <button onClick={AddPizza} className="btn btn-success btn-block">Add Item</button>
-            <br></br>
-            <button onClick={AddMenu} className="btn btn-primary btn-block">Place Order</button>
-
+        <Translator
+            from='en'
+            to={lang}
+            googleApiKey={apiKey}
+        >
+        <div className={dark === 'dark' ? "container-form-dark" : "container"}>
+            <table>
+                <tr>
+                    <td>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                                <b><Translate> Enter Name for Order</Translate></b>
+                                <input
+                                    type="text"
+                                    className="form-control form-control-lg"
+                                    name="name"
+                                    value={name}
+                                    onChange={(e) => set_name(e.target.value)}
+                                />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td width = "50%">
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Pizza Type</Translate></b>
+                            <TextField label="Select Pizza Type" select value={item_type} onChange={handleTypeChange} fullWidth>
+                                {basePizzas.map(item => (
+                                    <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
+                                ))}
+                                {presetPizzas.map(item => (
+                                    <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Topping One</Translate></b>
+                            <TextField label="Select Topping One" select value={topping1} onChange={handleTop1Change} fullWidth>
+                                <MenuItem value=''>Remove Topping</MenuItem>
+                                {toppingList.map(ingredient => (
+                                    <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Topping Two</Translate></b>
+                            <TextField label="Select Topping Two" select value={topping2} onChange={handleTop2Change} fullWidth>
+                                <MenuItem value=''>Remove Topping</MenuItem>
+                                {toppingList.map(ingredient => (
+                                    <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Toppping Three</Translate></b>
+                            <TextField label="Select Topping Three" select value={topping3} onChange={handleTop3Change} fullWidth>
+                                <MenuItem value=''>Remove Topping</MenuItem>
+                                {toppingList.map(ingredient => (
+                                    <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Topping Four</Translate></b>
+                            <TextField label="Select Topping Four" select value={topping4} onChange={handleTop4Change} fullWidth>
+                                <MenuItem value=''>Remove Topping</MenuItem>
+                                {toppingList.map(ingredient => (
+                                    <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Sauce</Translate></b>
+                            <TextField label="Select Sauce" select value={sauce} onChange={handleSauceChange} fullWidth>
+                                {sauceList.map(sauce => (
+                                    <MenuItem value={sauce.ingredient_name}>{sauce.ingredient_name}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                    </td>
+                    <td width = "50%">
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Drizzle</Translate></b>
+                            <TextField label="Select Drizzle" select value={drizzle} onChange={handleDrizzleChange} fullWidth>
+                                <MenuItem value=''>No Drizzle</MenuItem>
+                                {drizzleList.map(drizzle => (
+                                    <MenuItem value={drizzle.ingredient_name}>{drizzle.ingredient_name}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Cheese</Translate></b>
+                            <TextField label="Select Cheese" select value={cheese_type} onChange={handleCheeseChange} fullWidth>
+                                {cheeseList.map(cheese_type => (
+                                    <MenuItem value={cheese_type.ingredient_name}>{cheese_type.ingredient_name}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Crust</Translate></b>
+                            <TextField label="Select Crust" select value={default_crust} onChange={handleCrustChange} fullWidth>
+                                {crustList.map(default_crust => (
+                                    <MenuItem value={default_crust.ingredient_name}>{default_crust.ingredient_name}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Drink</Translate></b>
+                            <TextField label="Select Drink" select value={drink} onChange={handleDrinkChange} fullWidth>
+                                <MenuItem value=''>No Drink</MenuItem>
+                                {drinks.map(item => (
+                                    <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
+                                ))}
+                            </TextField>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <input
+                                type="number"
+                                className="form-control form-control-lg"
+                                id="quantity"
+                                defaultValue={quantity}
+                                placeholder={1}
+                                name="alterQuantityAmt"
+                                onChange={(e) => set_quantity(e.target.value)}
+                            />
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <button onClick={AddPizza} className="btn btn-success btn-block">Add Item</button>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <button onClick={AddMenu} className="btn btn-success btn-block">Place Order</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
+        </Translator>
     )
 }
 

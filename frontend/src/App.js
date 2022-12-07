@@ -12,24 +12,26 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 function App() {
   const [lang, setLang] = useState();
-  const [mode, setMode] = useState();
+  const [mode, setMode] = useState('light');
 
   return (
-    <Translator
-      from='en'
-      to={lang}
-      googleApiKey={apiKey}
-    >
-      <BrowserRouter>
-        <MenuBar setLang={setLang} />
-        <Routes>
-          <Route path='/' element={<Home lang={lang} />} />
-          <Route path='/Order' element={<Customer lang={lang} />} />
-          <Route path= '/Server' element = {<Server lang = {lang}/>}/>
-          <Route path='/Manager' element={<Manager lang={lang} />} />
-        </Routes>
-      </BrowserRouter>
-    </Translator>
+    <div id = {mode === "dark" ? "darkBackground" : ""}>
+      <Translator
+        from='en'
+        to={lang}
+        googleApiKey={apiKey}
+      >
+        <BrowserRouter>
+          <MenuBar setLang={setLang} setMode = {setMode}/>
+          <Routes>
+            <Route path='/' element={<Home lang={lang} mode = {mode} />} />
+            <Route path='/Order' element={<Customer lang={lang} mode = {mode}/>} />
+            <Route path= '/Server' element = {<Server lang = {lang} mode = {mode}/>}/>
+            <Route path='/Manager' element={<Manager lang={lang} mode = {mode} />} />
+          </Routes>
+        </BrowserRouter>
+      </Translator>
+    </div>
   );
 }
 

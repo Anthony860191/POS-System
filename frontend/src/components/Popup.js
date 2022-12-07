@@ -6,6 +6,7 @@ import { Translator, Translate } from 'react-auto-translate';
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 function Popup(props) {
+    const dark = props.dark;
     return (props.trigger) ? (
         <Translator
             from='en'
@@ -13,7 +14,7 @@ function Popup(props) {
             googleApiKey={apiKey}
         >
             <div className="popup">
-                <div className="popup-inner">
+                <div className={dark === 'dark' ? "popup-inner-dark" : "popup-inner"}>
                     <Button
                         variant="contained"
                         color="error"

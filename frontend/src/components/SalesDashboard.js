@@ -21,8 +21,9 @@ import Chip from '@mui/material/Chip';
 import CheckIcon from '@mui/icons-material/Check';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import WarningIcon from '@mui/icons-material/Warning';
+axios.defaults.baseURL = 'http://localhost:8000/api/';
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-const apiRoot = process.env.API_ROOT;
+console.log(process.env.REACT_APP_API_ROOT);
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
@@ -106,13 +107,13 @@ class SalesDashboard extends React.Component {
      * @param {*} props Any property values to pass into parent. 
      * @param {string} lang Language code to use for Google Translate. Defaults to "en". 
      */
-    constructor(props, lang="en", token = "") {
+    constructor(props, mode = {mode}, lang="en", token = "") {
         super(props);
-        this.theme = props.mode;
+        this.theme = "light";
         this.lang = lang;
         this.clientId = clientId;
 
-        if (this.theme === "dark") {
+        if (mode === "dark") {
             Chart.defaults.color = "#ffffff";
         }
         else {
@@ -216,8 +217,8 @@ class SalesDashboard extends React.Component {
         if (startDate.length === 0 || endDate.length === 0) {
             return;
         }
-        //  console.log("In here: ", `${apiRoot}ingredient_excess_report/?date=${value}`);
-        axios.get(`${apiRoot}daily_sales_total/?start_date=${startDate}&end_date=${endDate}`)
+        console.log("In here: ", `ingredient_excess_report/?date=${endDate}`);
+        axios.get(`daily_sales_total/?start_date=${startDate}&end_date=${endDate}`)
             .then(res => {
                 const res_data = res.data;
                 this.setState({ dailySales: res_data, loadedExcess: true });
@@ -236,7 +237,7 @@ class SalesDashboard extends React.Component {
      */
     setSalesBreakdownData() {
         const { startDate, endDate } = this.state;
-        axios.get(`${apiRoot}sales_breakdown/?start_date=${startDate}&end_date=${endDate}`)
+        axios.get(`sales_breakdown/?start_date=${startDate}&end_date=${endDate}`)
             .then(res => {
                 const res_data = res.data;
                 this.setState({ breakDownData: res_data, loadedBreakdown: true });
@@ -247,7 +248,7 @@ class SalesDashboard extends React.Component {
      * Sets last weeks pizza counts. 
      */
     setLastWeeksPizzaCounts() {
-        axios.get(`${apiRoot}pizza_counts/`)
+        axios.get(`pizza_counts/`)
             .then(res => {
                 const res_data = res.data;
                 let totalCounts = 0;
@@ -267,7 +268,7 @@ class SalesDashboard extends React.Component {
      * sets LastWeeksSales from API.
      */
     setLastWeeksSales() {
-        axios.get(`${apiRoot}last_week_sales/`)
+        axios.get(`last_week_sales/`)
             .then(res => {
                 const res_data = res.data;
                 this.setState({ lastWeeksSales: this.numberWithCommas(res_data["last_week_total"]), loadedLastWeekSales: true });
@@ -300,8 +301,8 @@ class SalesDashboard extends React.Component {
      */
     getIngredientReport() {
         const { value } = this.state;
-        //  console.log("In here: ", `${apiRoot}ingredient_excess_report/?date=${value}`);
-        axios.get(`${apiRoot}ingredient_excess_report/?date=${value}`)
+        //  console.log("In here: ", `ingredient_excess_report/?date=${value}`);
+        axios.get(`ingredient_excess_report/?date=${value}`)
             .then(res => {
                 const res_data = res.data;
                 this.setState({ ingrReport: res_data, loadedDailyData: true });
@@ -356,7 +357,7 @@ class SalesDashboard extends React.Component {
      */
     componentDidMount() {
         /*
-        axios.get("${apiRoot}daily_sales_total/")
+        axios.get("daily_sales_total/")
             .then(res => {
                 const res_data = res.data;
                 this.setState({ dailySales: res_data, loadedDailyData: true });
@@ -520,7 +521,7 @@ class SalesDashboard extends React.Component {
                     <CssBaseline />
                     <br></br>
 
-                    <h1 style={{ textAlign: "center" }}><Translate>Weekly Summary</Translate></h1>
+                    <h1 style={{ textAlign: "center", marginTop:"100px"}}><Translate>Weekly Summary</Translate></h1>
                     <div>
                         <Grid
                             container

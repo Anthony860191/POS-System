@@ -10,4 +10,11 @@ SELECT_FROM_AVAILABLE_TOPPINGS = 'SELECT * FROM available_toppings;'
 # Helper functions
 
 def parse_sql_argument(param: str):
+    """
+     Converts string parameter and surrounds it by quotes.
+    :param param: string parameter to convert to SQL.
+    :type param: str
+    :return: NULL if param is None, else returns 'param'
+    :rtype: str
+    """
     return 'NULL' if param == None or param.strip() == '' else f"'{param}'" 

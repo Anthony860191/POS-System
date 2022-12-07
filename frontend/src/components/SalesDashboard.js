@@ -74,7 +74,7 @@ function getChip(params) {
 /**
  * 
  * @param {DataGrid} params 
- * @returns 
+ * @returns {document} getIcon
  */
 function getIcon(params) {
     let pc = Number(params.value);

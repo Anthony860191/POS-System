@@ -21,7 +21,7 @@ import Chip from '@mui/material/Chip';
 import CheckIcon from '@mui/icons-material/Check';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import WarningIcon from '@mui/icons-material/Warning';
-axios.defaults.baseURL = 'http://localhost:8000/api/';
+axios.defaults.baseURL = 'https://spin-n-stone-pos.herokuapp.com/api/';
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 console.log(process.env.REACT_APP_API_ROOT);
 const darkTheme = createTheme({

@@ -23,6 +23,8 @@ function AddIngrForm({ lang, mode }) {
     const [units, set_units] = useState('')
     const [ingr_type, set_ingr_type] = useState(null)
     const [usage_value, set_usage_value] = useState(null)
+    const url = 'http://localhost:8000/api/';
+
 
     // Checks which ingredients were altered, and pushes the changes to the database
     const AddIngr = async () => {
@@ -39,9 +41,10 @@ function AddIngrForm({ lang, mode }) {
 
         await axios({
             method: 'post',
-            url: 'http://localhost:8000/ingredients/',
+            url: url,
             data: formField
         }).then(response => {
+            window.confirm("Ingredient Added!");
             console.log(response.data);
             window.location.reload(false);
             navigate('/manager');

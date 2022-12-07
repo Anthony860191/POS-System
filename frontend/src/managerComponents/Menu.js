@@ -16,10 +16,11 @@ function MenuManager({ lang, mode }) {
     // execute the code
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
+    const url = 'http://localhost:8000/api/';
 
     // Pull the menu items from the database to display
     useEffect(() => {
-        axios.get("http://localhost:8000/menu/")
+        axios.get(url)
             .then(res => {
                 setItems(res.data);
                 setData(true);

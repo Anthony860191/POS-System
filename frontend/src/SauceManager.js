@@ -15,10 +15,11 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 function SauceManager({ lang, mode }) {
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
+    const url = 'http://localhost:8000/api/';
 
     // Pull all the ingredients from the cheese category
     useEffect(() => {
-        axios.get("http://localhost:8000/ingredients/?ingr_type=SAUCE")
+        axios.get(`${url}ingredients/?ingr_type=SAUCE`)
             .then(res => {
                 setItems(res.data);
                 for (var i = 0; i < items.length; i++) {
@@ -57,7 +58,7 @@ function SauceManager({ lang, mode }) {
 
                 await axios({
                     method: 'put',
-                    url: 'http://localhost:8000/ingredients/' + item.ingredient_name + '/',
+                    url: `${url}ingredients/${item.ingredient_name}/`,
                     data: formField
                 }).then((response) => {
                     if (response.status === 200) {

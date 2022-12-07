@@ -41,7 +41,7 @@ const Home = ({ lang , mode}) => {
                     <div>
                         <MyMap />
                     </div>
-                    <p>Come visit us at the MSC food court! Address provided in the map above</p>
+                    <p><Translate>Come visit us at the MSC food court! Address provided in the map above</Translate></p>
                 </center>
             </div>
         </Translator>

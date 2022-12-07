@@ -82,7 +82,7 @@ const AddMenuForm = ({lang, mode}) => {
 
         await axios({
             method: 'post',
-            url: 'http://localhost:8000/api/menu/',
+                    url: `${url}menu/`,
             data: formField
         }).then(response => {
             console.log(response.data);

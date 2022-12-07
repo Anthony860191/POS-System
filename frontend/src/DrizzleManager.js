@@ -56,7 +56,7 @@ function DrizzleManager({ lang, mode }) {
 
                 await axios({
                     method: 'put',
-                    url: url + 'ingredients/' + item.ingredient_name + '/',
+                    url: `${url}ingredients/${item.ingredient_name}/`,
                     data: formField
                 }).then((response) => {
                     if (response.status === 200) {

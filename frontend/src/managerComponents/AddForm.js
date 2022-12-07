@@ -41,7 +41,7 @@ function AddIngrForm({ lang, mode }) {
 
         await axios({
             method: 'post',
-            url: url,
+            url: `${url}ingredients/`,
             data: formField
         }).then(response => {
             window.confirm("Ingredient Added!");

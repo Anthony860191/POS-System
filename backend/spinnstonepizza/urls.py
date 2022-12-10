@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from django.conf import settings
+from django.conf.urls.static import static
 def render_react(request):
     return render(request, "index.html")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('spinapi.urls')),
     path('', render_react)
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

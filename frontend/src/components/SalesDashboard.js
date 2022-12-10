@@ -111,7 +111,7 @@ class SalesDashboard extends React.Component {
         this.theme = "light";
         this.lang = lang;
         this.clientId = clientId;
-
+        
         if (mode === "dark") {
             Chart.defaults.color = "#ffffff";
         }
@@ -119,6 +119,7 @@ class SalesDashboard extends React.Component {
             Chart.defaults.color = "#000000";
         }
         let curr = new Date(); // get current date
+        console.log("CurrentDate:", curr);
         let first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
         let last = first - 7; // last day is the first day + 6
         let startDate = new Date(curr.setDate(first));
@@ -372,6 +373,13 @@ class SalesDashboard extends React.Component {
 
     }
     componentWillUnmount () {
+        if (this.dailySalesLineChart != null) {
+            this.dailySalesLineChart.destroy();
+        }
+
+        if (this.breakDownChart != null) {
+            this.breakDownChart.destroy();
+        }
         this.axiosCancelSource.cancel('Axios request canceled.');
       }
     /**
@@ -516,6 +524,7 @@ class SalesDashboard extends React.Component {
                         graphOptions
                 }
             );
+            console.log(this.dailySalesLineChart);
             let dailyRows = this.getDailySalesRows();
 
             return (<div>

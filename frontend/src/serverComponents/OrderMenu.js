@@ -17,25 +17,26 @@ const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
  */
 
 const OrderMenuForm = ({ lang, mode }) => {
-    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
+    const url = process.env.REACT_APP_API_ROOT;
     const dark = mode;
 
     // Obtain a list of all the separate ingredient types
     useEffect(() => {
+        const controller = new AbortController();
         const fetchIngredients = async () => {
-            const PizzaReponse = await fetch(`${url}menu`);
+            const PizzaReponse = await fetch(`${url}menu`,{signal:controller.signal});
             const pizzaData = await PizzaReponse.json();
-            const VegResponse = await fetch(`${url}ingredients/?ingr_type=VEGGIES`);
+            const VegResponse = await fetch(`${url}ingredients/?ingr_type=VEGGIES`,{signal:controller.signal});
             const vegData = await VegResponse.json();
-            const MeatResponse = await fetch(`${url}ingredients/?ingr_type=MEAT`);
+            const MeatResponse = await fetch(`${url}ingredients/?ingr_type=MEAT`,{signal:controller.signal});
             const meatData = await MeatResponse.json();
-            const SauceResponse = await fetch(`${url}ingredients/?ingr_type=SAUCE`);
+            const SauceResponse = await fetch(`${url}ingredients/?ingr_type=SAUCE`,{signal:controller.signal});
             const sauceData = await SauceResponse.json();
-            const DrizzleResponse = await fetch(`${url}ingredients/?ingr_type=DRIZZLE`);
+            const DrizzleResponse = await fetch(`${url}ingredients/?ingr_type=DRIZZLE`,{signal:controller.signal});
             const drizzleData = await DrizzleResponse.json();
-            const CheeseResponse = await fetch(`${url}ingredients/?ingr_type=CHEESE`);
+            const CheeseResponse = await fetch(`${url}ingredients/?ingr_type=CHEESE`,{signal:controller.signal});
             const cheeseData = await CheeseResponse.json();
-            const CrustResponse = await fetch(`${url}ingredients/?ingr_type=CRUST`);
+            const CrustResponse = await fetch(`${url}ingredients/?ingr_type=CRUST`,{signal:controller.signal});
             const crustData = await CrustResponse.json();
             var ingredientData = [...vegData, ...meatData];
 
@@ -47,6 +48,10 @@ const OrderMenuForm = ({ lang, mode }) => {
             set_crust_list(crustData);
         };
         fetchIngredients();
+        return () =>
+        {
+            controller.abort();
+        }
     }, [])
 
     let navigate = useNavigate();

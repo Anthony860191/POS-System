@@ -14,11 +14,13 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 function VegetableManager({lang, mode}) {
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
-    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
+    const url = process.env.REACT_APP_API_ROOT;
+    console.log("URL here is:", url);
 
     // Pull all the ingredients from the cheese category
     useEffect(() => {
-        axios.get(`${url}ingredients/?ingr_type=VEGGIES`)
+        const controller = new AbortController();
+        axios.get(`${url}ingredients/?ingr_type=VEGGIES`, {signal:controller.signal})
             .then(res => {
                 setItems(res.data);
                 for (var i = 0; i < items.length; i++) {
@@ -26,7 +28,10 @@ function VegetableManager({lang, mode}) {
                     items.members.viewers[changedIngr] = false;
                 }
                 setData(true);
-            })
+            });
+            return () => {
+                controller.abort();
+              };
     }, []);
 
     // Check if data is loaded

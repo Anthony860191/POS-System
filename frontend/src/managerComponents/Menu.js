@@ -16,15 +16,19 @@ function MenuManager({ lang, mode }) {
     // execute the code
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
-    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
+    const url = process.env.REACT_APP_API_ROOT;
 
     // Pull the menu items from the database to display
     useEffect(() => {
-        axios.get( `${url}menu/`)
+        const controller = new AbortController();
+        axios.get( `${url}menu/`,{signal:controller.signal})
             .then(res => {
                 setItems(res.data);
                 setData(true);
-            })
+            });
+            return () => {
+                controller.abort();
+              };
     }, []);
 
 

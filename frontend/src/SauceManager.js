@@ -15,11 +15,12 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 function SauceManager({ lang, mode }) {
     const [DataisLoaded, setData] = useState();
     const [items, setItems] = useState([]);
-    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
+    const url = process.env.REACT_APP_API_ROOT;
 
     // Pull all the ingredients from the cheese category
     useEffect(() => {
-        axios.get(`${url}ingredients/?ingr_type=SAUCE`)
+        const controller = new AbortController();
+        axios.get(`${url}ingredients/?ingr_type=SAUCE`, {signal:controller.signal})
             .then(res => {
                 setItems(res.data);
                 for (var i = 0; i < items.length; i++) {
@@ -27,7 +28,10 @@ function SauceManager({ lang, mode }) {
                     items.members.viewers[changedIngr] = false;
                 }
                 setData(true);
-            })
+            });
+            return () => {
+                controller.abort();
+              };
     }, []);
 
     // Check if data is loaded

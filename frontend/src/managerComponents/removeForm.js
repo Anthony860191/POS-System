@@ -14,18 +14,22 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * @param {string} mode - The toggle for dark / light mode.
  */
 const RemoveMenuForm = ({lang, mode}) => {
-    const url = 'https://spin-n-stone-pos.herokuapp.com/api/';
+    const url = process.env.REACT_APP_API_ROOT;
     const dark = mode;
     // fetch list of menu items from the database for the user to select
     useEffect(() => {
+        const controller = new AbortController();
         const fetchIngredients = async () => {
-            const menuResponse = await fetch(`${url}menu/`);
+            const menuResponse = await fetch(`${url}menu/`,{signal:controller.signal});
             const menuData = await menuResponse.json();
 
             set_menu_list(menuData);
 
         };
         fetchIngredients();
+        return () => {
+            controller.abort();
+          };
     }, [])
 
     let navigate = useNavigate();

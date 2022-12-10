@@ -89,7 +89,7 @@ export function MenuBar({ setLang, setMode }) {
                                 <Dropdown.Item eventKey="de">Deutsch</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Button onClick = {toggleTheme}>{menuMode === "light" ? "Dark Mode" : "Light Mode"}</Button>
+                        <Button onClick = {toggleTheme}><Translate>{menuMode === "light" ? "Dark Mode" : "Light Mode"}</Translate></Button>
                     </Nav>
                 </div>
             </Translator>

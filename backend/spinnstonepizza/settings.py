@@ -24,7 +24,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(_
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(config("DEBUG_MODE"))
+DEBUG = bool(int(config("DEBUG_MODE")))
 
 ALLOWED_HOSTS = ["spin-n-stone-pos.herokuapp.com", "localhost"]
 

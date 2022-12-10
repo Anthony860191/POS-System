@@ -20,7 +20,8 @@ export default function Login({ lang, setToken }) {
         const initClient = () => {
             gapi.client.init({
                 clientId: clientId,
-                scope: ''
+                scope: '',
+                plugin_name: "chat",
             });
         };
         gapi.load('client:auth2', initClient);

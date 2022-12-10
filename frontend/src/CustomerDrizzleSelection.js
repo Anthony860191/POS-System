@@ -23,13 +23,18 @@ class CustomerDrizzleSelection extends React.Component {
     // ComponentDidMount is used to
     // execute the code 
     componentDidMount() {
-        axios.get("http://localhost:8000/ingredients/?ingr_type=DRIZZLE")
+        this.axiosCancelSource = axios.CancelToken.source();
+        axios.get("http://localhost:8000/ingredients/?ingr_type=DRIZZLE",{cancelToken:this.axiosCancelSource.token})
             .then(res => {
                 const res_data = res.data;
                 this.setState({ items: res_data, DataisLoaded: true });
             })
 
     }
+    componentWillUnmount()
+     {
+        this.axiosCancelSource.cancel('Axios request canceled.');
+     }
     render() {
         const { DataisLoaded, items } = this.state;
         if (!DataisLoaded) return <div>

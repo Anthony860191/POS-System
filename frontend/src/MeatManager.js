@@ -48,6 +48,7 @@ function MeatManager({ lang, mode }) {
 
     // POST changes if the ingredient has been altered
     const AlterIngredients = async () => {
+        const controller = new AbortController();
         for (let i = 0; i < items.length; i++) {
 
             const item = items.at(i);
@@ -63,7 +64,8 @@ function MeatManager({ lang, mode }) {
                 await axios({
                     method: 'put',
                     url: `${url}ingredients/${item.ingredient_name}/`,
-                    data: formField
+                    data: formField,
+                    signal: controller.signal,
                 }).then((response) => {
                     if (response.status === 200) {
                         console.log(response);
@@ -75,6 +77,10 @@ function MeatManager({ lang, mode }) {
             }
         }
         window.confirm("Order Submitted!");
+        return() =>
+        {
+            controller.abort();
+        }
     }
 
     const reverseChanges = (e) => {

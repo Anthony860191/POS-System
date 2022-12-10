@@ -21,9 +21,8 @@ import Chip from '@mui/material/Chip';
 import CheckIcon from '@mui/icons-material/Check';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import WarningIcon from '@mui/icons-material/Warning';
-axios.defaults.baseURL = 'http://localhost:8000/api/';
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-console.log(process.env.REACT_APP_API_ROOT);
+const API_PORT = process.env.REACT_APP_API_ROOT;
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
@@ -173,6 +172,7 @@ class SalesDashboard extends React.Component {
             { field: 'percent_change', headerName: <Translate>Daily Percent Change</Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', type: "number", renderCell: (params) => { return getIcon(params); } },
 
         ];
+        
 
     }
     /**
@@ -217,8 +217,9 @@ class SalesDashboard extends React.Component {
         if (startDate.length === 0 || endDate.length === 0) {
             return;
         }
-        console.log("In here: ", `ingredient_excess_report/?date=${endDate}`);
-        axios.get(`daily_sales_total/?start_date=${startDate}&end_date=${endDate}`)
+      //  console.log("In here: ", `ingredient_excess_report/?date=${endDate}`);
+        console.log(`${API_PORT}?start_date=${startDate}&end_date=${endDate}`)
+        axios.get(`${API_PORT}daily_sales_total/?start_date=${startDate}&end_date=${endDate}`,{ cancelToken: this.axiosCancelSource.token })
             .then(res => {
                 const res_data = res.data;
                 this.setState({ dailySales: res_data, loadedExcess: true });
@@ -237,7 +238,7 @@ class SalesDashboard extends React.Component {
      */
     setSalesBreakdownData() {
         const { startDate, endDate } = this.state;
-        axios.get(`sales_breakdown/?start_date=${startDate}&end_date=${endDate}`)
+        axios.get(`${API_PORT}sales_breakdown/?start_date=${startDate}&end_date=${endDate}`,{ cancelToken: this.axiosCancelSource.token })
             .then(res => {
                 const res_data = res.data;
                 this.setState({ breakDownData: res_data, loadedBreakdown: true });
@@ -248,7 +249,7 @@ class SalesDashboard extends React.Component {
      * Sets last weeks pizza counts. 
      */
     setLastWeeksPizzaCounts() {
-        axios.get(`pizza_counts/`)
+        axios.get(`${API_PORT}pizza_counts/`,{ cancelToken: this.axiosCancelSource.token })
             .then(res => {
                 const res_data = res.data;
                 let totalCounts = 0;
@@ -268,7 +269,7 @@ class SalesDashboard extends React.Component {
      * sets LastWeeksSales from API.
      */
     setLastWeeksSales() {
-        axios.get(`last_week_sales/`)
+        axios.get(`${API_PORT}last_week_sales/`,{ cancelToken: this.axiosCancelSource.token })
             .then(res => {
                 const res_data = res.data;
                 this.setState({ lastWeeksSales: this.numberWithCommas(res_data["last_week_total"]), loadedLastWeekSales: true });
@@ -302,7 +303,7 @@ class SalesDashboard extends React.Component {
     getIngredientReport() {
         const { value } = this.state;
         //  console.log("In here: ", `ingredient_excess_report/?date=${value}`);
-        axios.get(`ingredient_excess_report/?date=${value}`)
+        axios.get(`${API_PORT}ingredient_excess_report/?date=${value}`,{ cancelToken: this.axiosCancelSource.token })
             .then(res => {
                 const res_data = res.data;
                 this.setState({ ingrReport: res_data, loadedDailyData: true });
@@ -362,6 +363,7 @@ class SalesDashboard extends React.Component {
                 const res_data = res.data;
                 this.setState({ dailySales: res_data, loadedDailyData: true });
             })*/
+        this.axiosCancelSource = axios.CancelToken.source();
         this.getDailySalesData();
         this.getIngredientReport();
         this.setLastWeeksSales();
@@ -369,6 +371,9 @@ class SalesDashboard extends React.Component {
         this.setSalesBreakdownData();
 
     }
+    componentWillUnmount () {
+        this.axiosCancelSource.cancel('Axios request canceled.');
+      }
     /**
      * Helper function that gets sales data formatted nicely. 
      * @param {JSON} responseData 
@@ -493,6 +498,7 @@ class SalesDashboard extends React.Component {
                     options: { responsive: true }
                 },
             );
+            console.log("In here", dailySales);
             this.dailySalesLineChart = new Chart(
                 document.getElementById('dailysalestotal'),
                 {

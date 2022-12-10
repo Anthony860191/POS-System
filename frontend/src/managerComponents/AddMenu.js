@@ -14,23 +14,23 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
  * @param {string} mode - The toggle for dark / light mode.
  */
 const AddMenuForm = ({lang, mode}) => {
-    const url = 'http://localhost:8000/api/';
+    const url = process.env.REACT_APP_API_ROOT;
     const dark = mode;
     useEffect(() => {
-
+       const controller = new AbortController();
         // Obtain a list of all the separate ingredient types to display in our drop-down lists
         const fetchIngredients = async () => {
-            const VegResponse = await fetch(`${url}ingredients/?ingr_type=VEGGIES`);
+            const VegResponse = await fetch(`${url}ingredients/?ingr_type=VEGGIES`,{signal:controller.signal});
             const vegData = await VegResponse.json();
-            const MeatResponse = await fetch(`${url}ingredients/?ingr_type=MEAT`);
+            const MeatResponse = await fetch(`${url}ingredients/?ingr_type=MEAT`,{signal:controller.signal});
             const meatData = await MeatResponse.json();
-            const SauceResponse = await fetch(`${url}ingredients/?ingr_type=SAUCE`);
+            const SauceResponse = await fetch(`${url}ingredients/?ingr_type=SAUCE`,{signal:controller.signal});
             const sauceData = await SauceResponse.json();
-            const DrizzleResponse = await fetch(`${url}ingredients/?ingr_type=DRIZZLE`);
+            const DrizzleResponse = await fetch(`${url}ingredients/?ingr_type=DRIZZLE`,{signal:controller.signal});
             const drizzleData = await DrizzleResponse.json();
-            const CheeseResponse = await fetch(`${url}ingredients/?ingr_type=CHEESE`);
+            const CheeseResponse = await fetch(`${url}ingredients/?ingr_type=CHEESE`,{signal:controller.signal});
             const cheeseData = await CheeseResponse.json();
-            const CrustResponse = await fetch(`${url}ingredients/?ingr_type=CRUST`);
+            const CrustResponse = await fetch(`${url}ingredients/?ingr_type=CRUST`,{signal:controller.signal});
             const crustData = await CrustResponse.json();
             var ingredientData = [...vegData, ...meatData];
 
@@ -42,6 +42,9 @@ const AddMenuForm = ({lang, mode}) => {
             set_crust_list(crustData);
         };
         fetchIngredients();
+        return () => {
+            controller.abort();
+          };
     }, [])
 
     let navigate = useNavigate();

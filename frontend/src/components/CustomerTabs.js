@@ -72,12 +72,13 @@ function CustomerTabs({ lang, mode }) {
     const [ingredients, setIngredients] = useState([]); // variable to store the ingredients fetched from the database
     const [menuItems, setMenuItems] = useState([]); // variable to store the the menu items available
     const [maxToppings, setMaxToppings] = useState(0);
-    const url = 'http://localhost:8000/api/';
+    const url = process.env.REACT_APP_API_ROOT;
     
     useEffect(() => {
+      const controller = new AbortController();
       Promise.all([
-        fetch(`${url}menu/`),
-        fetch(`${url}ingredients/`)
+        fetch(`${url}menu/`,{signal:controller.signal}),
+        fetch(`${url}ingredients/`,{signal:controller.signal})
       ])
         .then(([resMenu, resIngr]) =>
           Promise.all([resMenu.json(), resIngr.json()])
@@ -85,7 +86,10 @@ function CustomerTabs({ lang, mode }) {
         .then(([dataMenu, dataIngr]) => {
           setMenuItems(dataMenu);
           setIngredients(dataIngr);
-      })
+      });
+      return () => {
+        controller.abort();
+      };
 
   }, []);
 

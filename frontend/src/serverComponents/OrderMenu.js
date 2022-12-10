@@ -96,10 +96,11 @@ const OrderMenuForm = ({ lang, mode }) => {
         if (item_type === '') {
             return;
         }
-        const responseId = await fetch(`${url}orders/?latest=true`);
+        const controller = new AbortController();
+        const responseId = await fetch(`${url}orders/?latest=true`,{signal:controller.signal});
         const resultId = await responseId.json();
 
-        const responsePrice = await fetch(`${url}price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`);
+        const responsePrice = await fetch(`${url}price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`,{signal:controller.signal});
         const resultPrice = await responsePrice.json();
 
         var pizzaOrder = {
@@ -134,21 +135,26 @@ const OrderMenuForm = ({ lang, mode }) => {
         set_cheese_type('');
         set_default_crust('');
         set_drink('');
+        return ()=>
+        {
+            controller.abort();
+        }
     }
 
     const AddMenu = async () => {
         if (item_type === '' && allOrders.length === 0) {
             return;
         }
-        const responsePrice = await fetch(`${url}price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`);
+        const controller = new AbortController();
+        const responsePrice = await fetch(`${url}price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`,{signal:controller.signal});
         const resultPrice = await responsePrice.json();
         
         const current = new Date();
         const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
 
-        const responseId = await fetch(`${url}orders/?latest=true`);
+        const responseId = await fetch(`${url}orders/?latest=true` ,{signal:controller.signal});
         const resultId = await responseId.json();
-
+       
         var pizzaOrder = {
             "orderid": 1 + parseInt(resultId[0].id),
             "pizza_type": item_type === '' ? null : item_type,
@@ -179,6 +185,7 @@ const OrderMenuForm = ({ lang, mode }) => {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
+            signal:controller.signal,
             body: JSON.stringify({
               "order_date": date, 
               "price": totalPrice,
@@ -194,7 +201,8 @@ const OrderMenuForm = ({ lang, mode }) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             },
-            body: allOrders
+            body: allOrders,
+            signal:controller.signal,
         });
     
 
@@ -210,6 +218,10 @@ const OrderMenuForm = ({ lang, mode }) => {
         set_cheese_type('');
         set_default_crust('');
         set_drink('');
+        return () =>
+        {
+            controller.abort();
+        }
     }
 
     const handleTypeChange = (event) => {

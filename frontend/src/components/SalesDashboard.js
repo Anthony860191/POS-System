@@ -12,8 +12,6 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Login from '../Login';
-import { GoogleLogout } from 'react-google-login';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import dayjs from 'dayjs';
@@ -21,6 +19,8 @@ import Chip from '@mui/material/Chip';
 import CheckIcon from '@mui/icons-material/Check';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import WarningIcon from '@mui/icons-material/Warning';
+import { googleLogout } from '@react-oauth/google';
+import Button from 'react-bootstrap/Button';
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const API_PORT = process.env.REACT_APP_API_ROOT;
 const darkTheme = createTheme({
@@ -106,11 +106,12 @@ class SalesDashboard extends React.Component {
      * @param {*} props Any property values to pass into parent. 
      * @param {string} lang Language code to use for Google Translate. Defaults to "en". 
      */
-    constructor(props, mode = {mode}, lang="en", token = "") {
+    constructor(props, mode = {mode}, lang="en", setToken = "") {
         super(props);
         this.theme = "light";
         this.lang = lang;
         this.clientId = clientId;
+        this.setToken = setToken;
         
         if (mode === "dark") {
             Chart.defaults.color = "#ffffff";
@@ -128,11 +129,9 @@ class SalesDashboard extends React.Component {
         endDate = "" + (endDate.getFullYear()) + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
         this.state = {
             dailySales: [],
-            isLogin: false,
             loadedDailyData: false,
             value: "2022-9-1",
             ingrReport: [],
-            token: token,
             startDate: endDate,
             endDate: startDate,
             lastWeeksSales: 0.0,
@@ -206,8 +205,9 @@ class SalesDashboard extends React.Component {
      * Logout function
      */
     logout() {
-
-        this.setState({ isLogin: false, token: '' });
+        window.location.reload();
+        this.setToken('false');
+        googleLogout();
     }
     /**
      * Gets daily sales data from startDate and endDate.
@@ -449,31 +449,12 @@ class SalesDashboard extends React.Component {
         let selectTheme = this.getTheme();
         let graphOptions = this.getOptions();
 
-        const { loadedExcess, isLogin, breakDownData, loadedBreakdown, popularPizza, loadedLastWeeksPizzas, lastWeeksTotalPizzas, dailySales, loadedDailyData, value, ingrReport, startDate, endDate, loadedLastWeekSales, lastWeeksSales } = this.state;
-        if (!isLogin) {
-            return (
-                <>
-                    <Login lang={this.lang} setToken={(newToken) => this.setState({ token: newToken, isLogin: true })} />
-                    <canvas id="dailysalestotal" height={"50%"} >
-
-                    </canvas>
-
-                    <canvas id="breakdownchart" height={"50%"}>
-
-                    </canvas>
-                </>
-            );
-        }
+        const { loadedExcess, breakDownData, loadedBreakdown, popularPizza, loadedLastWeeksPizzas, lastWeeksTotalPizzas, dailySales, loadedDailyData, value, ingrReport, startDate, endDate, loadedLastWeekSales, lastWeeksSales } = this.state;
         if (!(loadedDailyData && loadedLastWeekSales && loadedLastWeeksPizzas && loadedBreakdown && loadedExcess)) {
             return (
                 <div className="Logout">
                     <center>
-                        <GoogleLogout
-                            clientId={clientId}
-                            onLogoutSuccess={this.logout}
-                        >
-                            <Translate>Logout</Translate>
-                        </GoogleLogout>
+                        <Button class="g_id_signout" onClick = {this.logout}><Translate>Logout</Translate></Button>
                     </center>
                     <div>  <ThemeProvider theme={darkTheme}>Loading Sales Dashboard...
 
@@ -657,11 +638,7 @@ class SalesDashboard extends React.Component {
                     </div>
                     <center>
                         <div class="Logout">
-                            <GoogleLogout
-                                clientId={clientId}
-                                onLogoutSuccess={this.logout}>
-                                <Translate> Logout</Translate>
-                            </GoogleLogout>
+                            <Button class="g_id_signout" onClick = {this.logout}><Translate>Logout</Translate></Button>
                         </div>
                     </center>
                 </ThemeProvider>

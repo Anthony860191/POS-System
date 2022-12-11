@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Translator, Translate } from 'react-auto-translate';
 import Dropdown from 'react-bootstrap/Dropdown';
 import "./MenuBar.css";
@@ -44,16 +44,7 @@ export function MenuBar({ setLang, setMode }) {
                 to={menuLang}
                 googleApiKey={apiKey}
             >
-                <div className = "contained">
-                {/* 
-                    <Navbar bg={menuMode} variant={menuMode}>
-                        <Container>
-                            <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-                        </Container>
-                    </Navbar>
-                </Container>
-                <Container className={menuMode}>
-                */}
+                <div className="contained">
                     <Nav variant="pills">
                         <Nav.Item>
                             <Nav.Link as={NavLink} to="/" href="Home"><Translate>Home</Translate></Nav.Link>
@@ -89,7 +80,7 @@ export function MenuBar({ setLang, setMode }) {
                                 <Dropdown.Item eventKey="de">Deutsch</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Button onClick = {toggleTheme}><Translate>{menuMode === "light" ? "Dark Mode" : "Light Mode"}</Translate></Button>
+                        <Button onClick={toggleTheme}><Translate>{menuMode === "light" ? "Dark Mode" : "Light Mode"}</Translate></Button>
                     </Nav>
                 </div>
             </Translator>

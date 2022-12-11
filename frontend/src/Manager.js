@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import { GoogleLogout } from 'react-google-login';
+import React from 'react';
+import Button from 'react-bootstrap/Button';
 import { Translator, Translate } from 'react-auto-translate';
+import { googleLogout } from '@react-oauth/google';
 
 import Tabs from './managerComponents/ManagerTabs';
-import Login from './Login';
 
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 /**
  * @author Oliver Carver
@@ -18,20 +17,10 @@ const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
  * @returns Manager page
  */
 
-const Manager = ({ lang, mode }) => {
-
-  const [token, setToken] = useState();
-
-  if (!token) {
-    return (
-      <>
-        <Login lang={lang} setToken={setToken} />
-      </>
-    );
-  }
-
-  function logout() {
-    window.location.reload();
+const Manager = ({ lang, mode, setToken }) => {
+  const logout = () => {
+    setToken('false');
+    googleLogout();
   }
 
   return (
@@ -41,14 +30,9 @@ const Manager = ({ lang, mode }) => {
         to={lang}
         googleApiKey={apiKey}
       >
-        <div className="Logout">
+        <div className="Logout" class="g_id_signout">
           <center>
-            <GoogleLogout
-              clientId={clientId}
-              onLogoutSuccess={logout}
-            >
-              <Translate>Logout</Translate>
-            </GoogleLogout>
+          <Button class="g_id_signout" onClick = {logout}><Translate>Logout</Translate></Button>
           </center>
         </div>
       </Translator >

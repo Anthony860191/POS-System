@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script';
+import React from 'react';
 import { Translator, Translate } from 'react-auto-translate';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import "./Login.css"
 
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -15,47 +14,37 @@ const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
  * @returns Login button
  */
 
-export default function Login({ lang, setToken }) {
-    useEffect(() => {
-        const initClient = () => {
-            gapi.client.init({
-                clientId: clientId,
-                scope: '',
-                plugin_name: "chat",
-            });
-        };
-        gapi.load('client:auth2', initClient);
-    });
-
+export default function Login({ lang, setToken, mode }) {
     const onSuccess = (res) => {
         console.log('success:', res);
-        setToken(res);
+        setToken('true');
     };
     const onFailure = (err) => {
         console.log('failed:', err);
     };
-
+    const dark = mode;
     return (
-        <Translator
-            from='en'
-            to={lang}
-            googleApiKey={apiKey}
-        >
-            <div className="Login">
-                <center>
-                    <h1><Translate>Login</Translate></h1>
-                    <GoogleLogin
-                        clientId={clientId}
-                        onSuccess={onSuccess}
-                        onFailure={onFailure}
-                        cookiePolicy={'single_host_origin'}
-                        //For testing comment out isSignedIn
-                        isSignedIn={true}
-                    >
-                        <Translate>Login with your company provided Gmail account</Translate>
-                    </GoogleLogin>
-                </center>
-            </div>
-        </Translator >
+        <GoogleOAuthProvider clientId={clientId}>
+            <Translator
+                from='en'
+                to={lang}
+                googleApiKey={apiKey}
+            >
+                <div className={dark === 'dark' ? "Login-dark" : "Login-light"}>
+                    <center>
+                        <h1><Translate>Login</Translate></h1>
+                        <GoogleLogin
+                            type="standard"
+                            size="large"
+                            onSuccess={onSuccess}
+                            onError={onFailure}
+                            locale={lang}
+                            theme={mode === "light" ? "filled_blue" : "filled_black"}
+                            auto_select= "false"
+                        />
+                    </center>
+                </div>
+            </Translator >
+        </GoogleOAuthProvider >
     );
 }

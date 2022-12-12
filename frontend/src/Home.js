@@ -24,7 +24,7 @@ const Home = ({ lang, mode }) => {
         >
             <div className={dark === 'dark' ? "Home-dark" : "Home-light"}>
                 <center>
-                    <Image src={process.env.PUBLIC_URL + "/logo.png"} fluid style={{ width: '50%', height: '50%' }} />
+                    <Image src="https://iili.io/HodSsje.png" fluid style={{ width: '50%', height: '50%' }} />
                     <p>
                         <Translate>
                             Welcome to Spin 'N Stone Pizza, located in the MSC at Texas
@@ -36,7 +36,7 @@ const Home = ({ lang, mode }) => {
                             vegetables, and cheeses.
                         </Translate>
                     </p>
-                    <Image src={process.env.PUBLIC_URL + "/pizza.png"} thumbnail style={{ width: '50%', height: '50%' }} />
+                    <Image src="https://iili.io/HodURMG.png" thumbnail style={{ width: '50%', height: '50%' }} />
                     <p>
                         <br /><br />
                         <Translate>

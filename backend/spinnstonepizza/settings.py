@@ -83,6 +83,7 @@ CORS_ORIGIN_WHITELIST = (
     'http//:127.0.0.1:3000', 'http//:127.0.0.1:3001',
 )
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

@@ -38,7 +38,7 @@ function App() {
             <Route path='/Order' element={<Customer lang={lang} mode={mode} />} />
             <Route path='/Server' element={<Server lang={lang} mode={mode} />} />
             <Route path='/Manager' element={token === 'true' ? <Manager lang={lang} mode={mode} setToken={setToken} /> : <Login lang={lang} mode={mode} setToken={setToken} />} />
-            <Route path='/SalesDashboard' element={token === 'true' ? <SalesDashboard lang={lang} setToken={setToken} /> : <Login lang={lang} mode={mode} setToken={setToken} />} />
+            <Route path='/SalesDashboard' element={token === 'true' ? <SalesDashboard lang={lang} setToken={setToken} theme={mode}/>  : <div><Login lang={lang} mode={mode} setToken={setToken} theme={mode} />  </div>} />
           </Routes>
         </BrowserRouter>
       </div>

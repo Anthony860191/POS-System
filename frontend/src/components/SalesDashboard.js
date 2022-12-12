@@ -6,6 +6,7 @@ import { CardContent, TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DataGrid } from '@mui/x-data-grid';
+import {Pie, Line} from 'react-chartjs-2';
 import { Translator, Translate } from 'react-auto-translate';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -106,14 +107,15 @@ class SalesDashboard extends React.Component {
      * @param {*} props Any property values to pass into parent. 
      * @param {string} lang Language code to use for Google Translate. Defaults to "en". 
      */
-    constructor(props, mode = {mode}, lang="en", setToken = "") {
+    constructor(props, lang="en", setToken = "", theme="light") {
         super(props);
-        this.theme = "light";
-        this.lang = lang;
+      
+        this.theme = props.theme;
+        this.lang = props.lang;
         this.clientId = clientId;
-        this.setToken = setToken;
+        this.setToken = props.setToken;
         
-        if (mode === "dark") {
+        if (this.theme === "dark") {
             Chart.defaults.color = "#ffffff";
         }
         else {
@@ -132,8 +134,8 @@ class SalesDashboard extends React.Component {
             loadedDailyData: false,
             value: "2022-9-1",
             ingrReport: [],
-            startDate: endDate,
-            endDate: startDate,
+            startDate: "2022-11-1",
+            endDate: "2022-11-30",
             lastWeeksSales: 0.0,
             loadedLastWeekSales: false,
             loadedExcess: false,
@@ -282,6 +284,7 @@ class SalesDashboard extends React.Component {
      */
     updateStartDate(newValue) {
         this.setState({ startDate: newValue }, this.getDailySalesData);
+        this.setState({ endDate: newValue }, this.setSalesBreakdownData);
     }
     getTheme() {
         if (this.theme === "light") {
@@ -296,6 +299,7 @@ class SalesDashboard extends React.Component {
     updateEndDate(newValue) {
        
         this.setState({ endDate: newValue }, this.getDailySalesData);
+        this.setState({ endDate: newValue }, this.setSalesBreakdownData);
     }
 
     /**
@@ -405,6 +409,7 @@ class SalesDashboard extends React.Component {
     getSalesBreakdownRows(responseData) {
         let rows = [];
         let totalSales = 0; 
+        console.log("Breakdown:", responseData);
         for (var i = 0; i < responseData.length; i++) {
            
              totalSales += Number(responseData[i]["salescost"]);
@@ -425,6 +430,7 @@ class SalesDashboard extends React.Component {
     getOptions() {
         if (this.theme === "dark") {
             return {
+                responsive: true,
                 scales: {
                     y: {
                         grid: {
@@ -439,7 +445,7 @@ class SalesDashboard extends React.Component {
                 }
             };
         }
-        return {};
+        return {responsive: true};
     }
     /**
      * Returns HTML code to be rendered for sales dashboard. 
@@ -456,15 +462,17 @@ class SalesDashboard extends React.Component {
                     <center>
                         <Button class="g_id_signout" onClick = {this.logout}><Translate>Logout</Translate></Button>
                     </center>
-                    <div>  <ThemeProvider theme={darkTheme}>Loading Sales Dashboard...
-
+                    <div>  <ThemeProvider theme={selectTheme}>Loading Sales Dashboard...
+                        <div>
                         <canvas id="dailysalestotal" height={"50%"}>
-
+                        
                         </canvas>
-
-                        <canvas id="breakdownchart" height={"50%"}>
-
-                        </canvas></ThemeProvider>
+                        </div>
+                        <div>
+                        <canvas id="breakdownchart" height={"25%"} width={"25%"}>   </canvas>
+                
+                        </div>
+                        </ThemeProvider>
                     </div> </div>)
         }
         else {
@@ -479,33 +487,20 @@ class SalesDashboard extends React.Component {
             let excessRows = this.getIngredientReportRows(ingrReport, value);
             let breakPie = this.getSalesBreakdownData(breakDownData);
             let breakdownRows = this.getSalesBreakdownRows(breakDownData);
-            this.breakDownChart = new Chart(
-                document.getElementById("breakdownchart"),
-                {
-                    type: 'pie',
-                    data: breakPie,
-                    options: { responsive: true }
-                },
-            );
-            console.log("In here", dailySales);
-            this.dailySalesLineChart = new Chart(
-                document.getElementById('dailysalestotal'),
-                {
-                    type: 'line',
-                    data: {
-                        labels: dailySales.map(item => item.order_date),
-                        datasets: [
-                            {
-                                label: 'Daily Sales Total ($)',
-                                data: dailySales.map(item => item.sales_total)
-                            }
-                        ]
-                    },
-                    options:
-                        graphOptions
-                }
-            );
-            console.log(this.dailySalesLineChart);
+            
+            
+            let dailyLineData = {
+                labels: dailySales.map(item => item.order_date),
+                datasets: [
+                    {
+                        label: 'Daily Sales Total ($)',
+                        data: dailySales.map(item => item.sales_total)
+                    }
+                ]
+            }
+           
+            
+            
             let dailyRows = this.getDailySalesRows();
 
             return (<div>
@@ -596,12 +591,10 @@ class SalesDashboard extends React.Component {
                                 />}
                             /> </LocalizationProvider>
                     </div>
-                    <div style={{ marginTop: '50px', marginLeft: '50px', marginRight: '50px', marginBottom: '50px' }}>
-                        <canvas id="dailysalestotal" height={"50%"}>
-
-                        </canvas>
+                    <div style={{ width:'75%',height:'25%',margin:'auto'}}>
+                        <Line data={dailyLineData} options={graphOptions}></Line>
                     </div>
-                    <div style={{ height: 400, width: '100%' }}>
+                    <div style={{ marginTop:'10%',height: 400, width: '100%' }}>
 
                         <DataGrid columns={this.dailySalesColumns} rows={dailyRows}></DataGrid>
                     </div>
@@ -609,8 +602,9 @@ class SalesDashboard extends React.Component {
 
                     <h2><Translate>Breakdown By Item</Translate></h2>
                     <div style={{ width: '25%', margin: 'auto' }}>
-                        <canvas id="breakdownchart" height={"25%"} width={"25%"}>   </canvas>
+                        <Pie data={breakPie} options={{responsive:true}}></Pie>
                     </div>
+                    <div></div>
                     <br></br>
                     <div style={{ height: 400, width: '100%' }}>
 

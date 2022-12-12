@@ -12,6 +12,11 @@ from .serializers import DailySalesTotalSerializer, IngredientUsageSerializer, L
     AvailableIngredientsSerializer, SalesBreakdownSerializer
 from .models import Pizzas, Orders, Ingredients, Menu
 BASE_DIR = Path(__file__).resolve().parent.parent
+from django.shortcuts import redirect
+def view_404(request, exception=None):
+    # make a redirect to homepage
+    # you can use the name of url or just the plain link
+    return redirect('') # or redirect('name-of-index-url')
 
 class PizzaViewSet(viewsets.ModelViewSet):
     """Pizza views. Is not used by the API. """

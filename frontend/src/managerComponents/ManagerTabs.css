@@ -233,6 +233,15 @@
     background-color: #357b39;
   }
 
+  .form-group .btn-error {
+    background-color: #d32f2f;
+    color: white;
+  }
+
+  .form-group .btn-error:hover {
+    background-color: #b32525;
+  }
+ 
   .form-group-dark .btn { 
     width: 100%;
     border: none;
@@ -241,6 +250,15 @@
 
   .form-group-dark .btn:hover { 
     background-color: #357b39;
+  }
+
+  .form-group-dark .btn-error {
+    background-color: #d32f2f;
+    color: white;
+  }
+
+  .form-group-dark .btn-error:hover {
+    background-color: #b32525;
   }
 
   .container-form-dark table {

@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 def render_react(request):
     return render(request, "index.html")
+handler404 = "spinapi.views.view_404"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('spinapi.urls')),

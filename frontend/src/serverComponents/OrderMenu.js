@@ -57,9 +57,8 @@ const OrderMenuForm = ({ lang, mode }) => {
     let navigate = useNavigate();
     const {id} = useParams();
 
-    const [name, set_name] = useState('')
-    const [item_type, set_item_type] = useState('')
-    const [totalPrice, set_totalPrice] = useState('')
+    const [name, set_name] = useState('');
+    const [item_type, set_item_type] = useState('');
     const [pizzaList, set_pizza_list] = useState([]);
     const [topping1, set_topping1] = useState('')
     const [topping2, set_topping2] = useState('')
@@ -81,6 +80,7 @@ const OrderMenuForm = ({ lang, mode }) => {
     const [drink, set_drink] = useState('');
     const [quantity, set_quantity] = useState(1); // variable to store the amount of pizzas being orderd
     const [allOrders, setAllOrders] = useState([]); // variable to store all of the pizzas
+    let [totalPrice, setTotalPrice] = useState(0);
 
     for (let i = 0; i < pizzaList.length; i++) {
         if (pizzaList[i].item_type === "BASE_PIZZA") {
@@ -93,71 +93,19 @@ const OrderMenuForm = ({ lang, mode }) => {
     }
 
     const AddPizza = async() => {
-        if (item_type === '') {
+        if (item_type === '' && drink === '') {
             return;
         }
         const controller = new AbortController();
-        const responseId = await fetch(`${url}orders/?latest=true`,{signal:controller.signal});
+        const responseId = await fetch(`${url}orders/?latest=true`, {signal:controller.signal});
         const resultId = await responseId.json();
 
-        const responsePrice = await fetch(`${url}price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`,{signal:controller.signal});
+        const responsePrice = await fetch(`${url}price?pizzatype=${item_type === '' ? "" : item_type.menu_item}&crusttype=${default_crust}&drinktype=${drink}`, {signal:controller.signal});
         const resultPrice = await responsePrice.json();
 
         var pizzaOrder = {
             "orderid": 1 + parseInt(resultId[0].id),
-            "pizza_type": item_type,
-            "cheese_type": cheese_type,
-            "crust": default_crust,
-            "sauce": sauce,
-            "drizzle": drizzle,
-            "drink": drink,
-            "topping1": topping1 === '' ? '' : topping1,
-            "topping2": topping2 === '' ? '' : topping2,
-            "topping3": topping3 === '' ? '' : topping3,
-            "topping4": topping4 === '' ? '' : topping4,
-            "price": parseFloat(resultPrice.price)
-        }
-        var jsonPizzaOrder = JSON.stringify(pizzaOrder);
-
-        for(let i = 0; i < quantity; i++) {
-            allOrders.push(jsonPizzaOrder);
-            set_totalPrice(totalPrice + parseFloat(resultPrice.price));
-        }
-
-        set_quantity(1);
-        set_item_type('');
-        set_topping1('');
-        set_topping2('');
-        set_topping3('');
-        set_topping4('');
-        set_sauce('');
-        set_drizzle('');
-        set_cheese_type('');
-        set_default_crust('');
-        set_drink('');
-        return ()=>
-        {
-            controller.abort();
-        }
-    }
-
-    const AddMenu = async () => {
-        if (item_type === '' && allOrders.length === 0) {
-            return;
-        }
-        const controller = new AbortController();
-        const responsePrice = await fetch(`${url}price?pizzatype=${item_type}&crusttype=${default_crust}&drinktype=${drink}`,{signal:controller.signal});
-        const resultPrice = await responsePrice.json();
-        
-        const current = new Date();
-        const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
-
-        const responseId = await fetch(`${url}orders/?latest=true` ,{signal:controller.signal});
-        const resultId = await responseId.json();
-       
-        var pizzaOrder = {
-            "orderid": 1 + parseInt(resultId[0].id),
-            "pizza_type": item_type === '' ? null : item_type,
+            "pizza_type": item_type === '' ? null : item_type.menu_item,
             "cheese_type": cheese_type,
             "crust": default_crust,
             "sauce": sauce,
@@ -173,41 +121,10 @@ const OrderMenuForm = ({ lang, mode }) => {
 
         for(let i = 0; i < quantity; i++) {
             allOrders.push(jsonPizzaOrder);
-            set_totalPrice(totalPrice + parseFloat(resultPrice.price));
+            setTotalPrice(totalPrice + parseFloat(resultPrice.price));
         }
 
-        console.log(date, totalPrice, name);
-        console.log (allOrders);
-
-        fetch(`${url}/orders/`,  {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            signal:controller.signal,
-            body: JSON.stringify({
-              "order_date": date, 
-              "price": totalPrice,
-              "payment_type": "Credit Card", 
-              "customer_name": name
-            })
-          });
-
-        
-        fetch(`${url}/pizzas/`, {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            },
-            body: allOrders,
-            signal:controller.signal,
-        });
-    
-
-        setAllOrders([]);
-        set_name('');
+        set_quantity(1);
         set_item_type('');
         set_topping1('');
         set_topping2('');
@@ -224,8 +141,129 @@ const OrderMenuForm = ({ lang, mode }) => {
         }
     }
 
+    const AddMenu = async () => {
+        if (item_type === '' && allOrders.length === 0 && drink === '') {
+            return;
+        }
+        const controller = new AbortController();
+        const responsePrice = await fetch(`${url}price?pizzatype=${item_type === '' ? "" : item_type.menu_item}&crusttype=${default_crust}&drinktype=${drink}`, {signal:controller.signal});
+        const resultPrice = await responsePrice.json();
+        
+        const current = new Date();
+        const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
+
+        const responseId = await fetch(`${url}orders/?latest=true` ,{signal:controller.signal});
+        const resultId = await responseId.json();
+
+        var pizzaOrder = {
+            "orderid": 1 + parseInt(resultId[0].id),
+            "pizza_type": item_type === '' ? null : item_type.menu_item,
+            "cheese_type": cheese_type,
+            "crust": default_crust,
+            "sauce": sauce,
+            "drizzle": drizzle,
+            "drink": drink,
+            "topping1": topping1 === '' ? null : topping1,
+            "topping2": topping2 === '' ? null : topping2,
+            "topping3": topping3 === '' ? null : topping3,
+            "topping4": topping4 === '' ? null : topping4,
+            "price": parseFloat(resultPrice.price)
+        }
+        var jsonPizzaOrder = JSON.stringify(pizzaOrder);
+        
+        for(let i = 0; i < quantity; i++) {
+            allOrders.push(jsonPizzaOrder);
+            totalPrice += parseFloat(resultPrice.price);
+        }
+    
+        /*console.log(date, totalPrice, name);
+        console.log (allOrders);*/
+            
+        
+        fetch(`${url}orders/`,  {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            signal:controller.signal,
+            body: JSON.stringify({
+              "order_date": date, 
+              "price": totalPrice,
+              "payment_type": "", 
+              "customer_name": name
+            })
+          });
+
+        
+        fetch(`${url}pizzas/`, {
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            },
+            signal:controller.signal,
+            body: allOrders
+        });
+    
+
+        setAllOrders([]);
+        set_name('');
+        set_item_type('');
+        set_topping1('');
+        set_topping2('');
+        set_topping3('');
+        set_topping4('');
+        set_sauce('');
+        set_drizzle('');
+        set_cheese_type('');
+        set_default_crust('');
+        set_drink('');
+        setTotalPrice(0);
+        return () =>
+        {
+            controller.abort();
+        }
+    }
+    const CancelOrder = () => {
+        setAllOrders([]);
+        set_name('');
+        set_item_type('');
+        set_topping1('');
+        set_topping2('');
+        set_topping3('');
+        set_topping4('');
+        set_sauce('');
+        set_drizzle('');
+        set_cheese_type('');
+        set_default_crust('');
+        set_drink('');
+        setTotalPrice(0);
+    }
+    
     const handleTypeChange = (event) => {
-        set_item_type(event.target.value);
+        var pizzaInfo = event.target.value;
+        if(pizzaInfo.item_type === "PRESET_PIZZA") {
+            set_item_type(pizzaInfo);
+            set_topping1(pizzaInfo.topping1);
+            set_topping2(pizzaInfo.topping2);
+            set_topping3(pizzaInfo.topping3);
+            set_topping4(pizzaInfo.topping4);
+            set_sauce(pizzaInfo.sauce);
+            set_cheese_type(pizzaInfo.cheese_type);
+            set_default_crust(pizzaInfo.default_crust);
+            set_drizzle(pizzaInfo.drizzle);
+        } else {
+            set_item_type(pizzaInfo);
+            set_topping1('');
+            set_topping2('');
+            set_topping3('');
+            set_topping4('');
+            set_sauce('');
+            set_cheese_type('');
+            set_default_crust('');
+            set_drizzle('');
+        }
     }
     const handleTop1Change = (event) => {
         set_topping1(event.target.value);
@@ -285,46 +323,46 @@ const OrderMenuForm = ({ lang, mode }) => {
                             <b><Translate>Select Pizza Type</Translate></b>
                             <TextField label="Select Pizza Type" select value={item_type} onChange={handleTypeChange} fullWidth>
                                 {basePizzas.map(item => (
-                                    <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
+                                    <MenuItem value={item}><Translate>{item.menu_item}</Translate></MenuItem>
                                 ))}
                                 {presetPizzas.map(item => (
-                                    <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
+                                    <MenuItem value={item}><Translate>{item.menu_item}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
                         <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
                             <b><Translate>Select Topping One</Translate></b>
                             <TextField label="Select Topping One" select value={topping1} onChange={handleTop1Change} fullWidth>
-                                <MenuItem value=''>Remove Topping</MenuItem>
+                                <MenuItem value=''><Translate>Remove Topping</Translate></MenuItem>
                                 {toppingList.map(ingredient => (
-                                    <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                                    <MenuItem value={ingredient.ingredient_name}><Translate>{ingredient.ingredient_name}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
                         <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
                             <b><Translate>Select Topping Two</Translate></b>
                             <TextField label="Select Topping Two" select value={topping2} onChange={handleTop2Change} fullWidth>
-                                <MenuItem value=''>Remove Topping</MenuItem>
+                                <MenuItem value=''><Translate>Remove Topping</Translate></MenuItem>
                                 {toppingList.map(ingredient => (
-                                    <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                                    <MenuItem value={ingredient.ingredient_name}><Translate>{ingredient.ingredient_name}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
                         <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
                             <b><Translate>Select Toppping Three</Translate></b>
                             <TextField label="Select Topping Three" select value={topping3} onChange={handleTop3Change} fullWidth>
-                                <MenuItem value=''>Remove Topping</MenuItem>
+                                <MenuItem value=''><Translate>Remove Topping</Translate></MenuItem>
                                 {toppingList.map(ingredient => (
-                                    <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                                    <MenuItem value={ingredient.ingredient_name}><Translate>{ingredient.ingredient_name}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
                         <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
                             <b><Translate>Select Topping Four</Translate></b>
                             <TextField label="Select Topping Four" select value={topping4} onChange={handleTop4Change} fullWidth>
-                                <MenuItem value=''>Remove Topping</MenuItem>
+                                <MenuItem value=''><Translate>Remove Topping</Translate></MenuItem>
                                 {toppingList.map(ingredient => (
-                                    <MenuItem value={ingredient.ingredient_name}>{ingredient.ingredient_name}</MenuItem>
+                                    <MenuItem value={ingredient.ingredient_name}><Translate>{ingredient.ingredient_name}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
@@ -332,7 +370,7 @@ const OrderMenuForm = ({ lang, mode }) => {
                             <b><Translate>Select Sauce</Translate></b>
                             <TextField label="Select Sauce" select value={sauce} onChange={handleSauceChange} fullWidth>
                                 {sauceList.map(sauce => (
-                                    <MenuItem value={sauce.ingredient_name}>{sauce.ingredient_name}</MenuItem>
+                                    <MenuItem value={sauce.ingredient_name}><Translate>{sauce.ingredient_name}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
@@ -341,9 +379,9 @@ const OrderMenuForm = ({ lang, mode }) => {
                         <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
                             <b><Translate>Select Drizzle</Translate></b>
                             <TextField label="Select Drizzle" select value={drizzle} onChange={handleDrizzleChange} fullWidth>
-                                <MenuItem value=''>No Drizzle</MenuItem>
+                                <MenuItem value=''><Translate>No Drizzle</Translate></MenuItem>
                                 {drizzleList.map(drizzle => (
-                                    <MenuItem value={drizzle.ingredient_name}>{drizzle.ingredient_name}</MenuItem>
+                                    <MenuItem value={drizzle.ingredient_name}><Translate>{drizzle.ingredient_name}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
@@ -351,7 +389,7 @@ const OrderMenuForm = ({ lang, mode }) => {
                             <b><Translate>Select Cheese</Translate></b>
                             <TextField label="Select Cheese" select value={cheese_type} onChange={handleCheeseChange} fullWidth>
                                 {cheeseList.map(cheese_type => (
-                                    <MenuItem value={cheese_type.ingredient_name}>{cheese_type.ingredient_name}</MenuItem>
+                                    <MenuItem value={cheese_type.ingredient_name}><Translate>{cheese_type.ingredient_name}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
@@ -359,20 +397,21 @@ const OrderMenuForm = ({ lang, mode }) => {
                             <b><Translate>Select Crust</Translate></b>
                             <TextField label="Select Crust" select value={default_crust} onChange={handleCrustChange} fullWidth>
                                 {crustList.map(default_crust => (
-                                    <MenuItem value={default_crust.ingredient_name}>{default_crust.ingredient_name}</MenuItem>
+                                    <MenuItem value={default_crust.ingredient_name}><Translate>{default_crust.ingredient_name}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
                         <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
                             <b><Translate>Select Drink</Translate></b>
                             <TextField label="Select Drink" select value={drink} onChange={handleDrinkChange} fullWidth>
-                                <MenuItem value=''>No Drink</MenuItem>
+                                <MenuItem value=''><Translate>No Drink</Translate></MenuItem>
                                 {drinks.map(item => (
-                                    <MenuItem value={item.menu_item}>{item.menu_item}</MenuItem>
+                                    <MenuItem value={item.menu_item}><Translate>{item.menu_item}</Translate></MenuItem>
                                 ))}
                             </TextField>
                         </div>
                         <div className= {dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <b><Translate>Select Quantity</Translate></b>
                             <input
                                 type="number"
                                 className="form-control form-control-lg"
@@ -384,10 +423,13 @@ const OrderMenuForm = ({ lang, mode }) => {
                             />
                         </div>
                         <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
-                            <button onClick={AddPizza} className="btn btn-success btn-block">Add Item</button>
+                            <button onClick={AddPizza} className="btn btn-success btn-block"><Translate>Add Item</Translate></button>
                         </div>
                         <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
-                            <button onClick={AddMenu} className="btn btn-success btn-block">Place Order</button>
+                            <button onClick={AddMenu} className="btn btn-success btn-block"><Translate>Place Order</Translate></button>
+                        </div>
+                        <div className={dark === 'dark' ? "form-group-dark" : "form-group"}>
+                            <button onClick={CancelOrder} className = "btn btn-error"><Translate>Cancel Order</Translate></button>
                         </div>
                     </td>
                 </tr>

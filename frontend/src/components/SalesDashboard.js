@@ -6,6 +6,7 @@ import { CardContent, TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DataGrid } from '@mui/x-data-grid';
+import {Pie, Line} from 'react-chartjs-2';
 import { Translator, Translate } from 'react-auto-translate';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -487,34 +488,19 @@ class SalesDashboard extends React.Component {
             let breakPie = this.getSalesBreakdownData(breakDownData);
             let breakdownRows = this.getSalesBreakdownRows(breakDownData);
             
-            console.log(document.getElementById('breakdownchart'));
-            this.breakDownChart = new Chart(
-                document.getElementById("breakdownchart"),
-                {
-                    type: 'pie',
-                    data: breakPie,
-                    options: { responsive: true }
-                },
-            );
-            console.log("daily sales total dom",  document.getElementById('dailysalestotal'));
-            this.dailySalesLineChart = new Chart(
-                document.getElementById('dailysalestotal'),
-                {
-                    type: 'line',
-                    data: {
-                        labels: dailySales.map(item => item.order_date),
-                        datasets: [
-                            {
-                                label: 'Daily Sales Total ($)',
-                                data: dailySales.map(item => item.sales_total)
-                            }
-                        ]
-                    },
-                    options:
-                        graphOptions
-                }
-            );
-            console.log(this.dailySalesLineChart);
+            
+            let dailyLineData = {
+                labels: dailySales.map(item => item.order_date),
+                datasets: [
+                    {
+                        label: 'Daily Sales Total ($)',
+                        data: dailySales.map(item => item.sales_total)
+                    }
+                ]
+            }
+           
+            
+            
             let dailyRows = this.getDailySalesRows();
 
             return (<div>
@@ -605,10 +591,8 @@ class SalesDashboard extends React.Component {
                                 />}
                             /> </LocalizationProvider>
                     </div>
-                    <div style={{ marginTop: '50px', marginLeft: '50px', marginRight: '50px', marginBottom: '50px'}}>
-                        <canvas id="dailysalestotal" height={"50%"}>
-
-                        </canvas>
+                    <div style={{ width:'75%',height:'25%',margin:'auto'}}>
+                        <Line data={dailyLineData} options={graphOptions}></Line>
                     </div>
                     <div style={{ marginTop:'10%',height: 400, width: '100%' }}>
 
@@ -618,8 +602,9 @@ class SalesDashboard extends React.Component {
 
                     <h2><Translate>Breakdown By Item</Translate></h2>
                     <div style={{ width: '25%', margin: 'auto' }}>
-                        <canvas id="breakdownchart" height={"25%"} width={"25%"}>   </canvas>
+                        <Pie data={breakPie} options={{responsive:true}}></Pie>
                     </div>
+                    <div></div>
                     <br></br>
                     <div style={{ height: 400, width: '100%' }}>
 

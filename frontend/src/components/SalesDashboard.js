@@ -162,7 +162,7 @@ class SalesDashboard extends React.Component {
         ]
         this.breakDownRows = [
 
-            { field: 'item_type', headerName: <Translate>Item</Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center' },
+            { field: 'item_type', headerName: <Translate>Item</Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', renderCell: (params) => { return <Translate> {params.value}</Translate>; } },
             { field: 'revenue', headerName: <Translate>Revenue</Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', type: "number" },
             { field: 'percent', headerName: <Translate> % </Translate>, minWidth: 200, flex: 1, align: 'center', headerAlign: 'center', type: "number" },
 

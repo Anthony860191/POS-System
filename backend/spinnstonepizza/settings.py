@@ -82,6 +82,7 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ORIGIN_WHITELIST = (
     'http//:127.0.0.1:3000', 'http//:127.0.0.1:3001',
 )
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

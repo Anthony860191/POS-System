@@ -180,7 +180,7 @@ const OrderMenuForm = ({ lang, mode }) => {
         console.log (allOrders);*/
             
         
-        fetch(`${url}orders/`,  {
+        await fetch(`${url}orders/`,  {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -195,16 +195,17 @@ const OrderMenuForm = ({ lang, mode }) => {
             })
           });
 
-        
-        fetch(`${url}pizzas/`, {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            },
-            signal:controller.signal,
-            body: allOrders
-        });
+        for (let i = 0; i < allOrders.length; i++) {
+            await fetch(`${url}pizzas/`, {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                },
+                signal:controller.signal,
+                body: allOrders[i]
+            });
+        }
     
 
         setAllOrders([]);

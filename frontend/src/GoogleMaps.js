@@ -48,11 +48,9 @@ export default function MyMap() {
                             >
                                 <div>
                                     <h6><b>Spin 'N Stone Pizza - MSC</b></h6>
-                                    <p>
                                         275 Joe Routt Blvd
                                         <br />
                                         College Station, TX 77840
-                                    </p>
                                 </div>
                             </InfoWindowF>
                         )}

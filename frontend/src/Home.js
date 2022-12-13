@@ -62,6 +62,7 @@ const Home = ({ lang, mode }) => {
                     </div>
                     <br />
                     <p><Translate>Come visit us at the MSC food court! Address provided in the map above</Translate></p>
+                    <br /><br /><br />
                 </center>
             </div>
         </Translator>

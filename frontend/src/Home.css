@@ -1,11 +1,19 @@
+html,body, #root {
+    height: 100%;
+  }
+
 .Home-dark {
-    color:whitesmoke;
     width:50%;
+    height:100%;
     margin:0 auto;
     text-align: justify;
 }
+.Home-dark p {
+    color:whitesmoke
+}
 .Home-light {
     width:50%;
+    height:100%;
     margin:0 auto;
     text-align: justify;
 }

@@ -112,9 +112,16 @@ function SauceManager({ lang, mode }) {
                                 placeholder={item.quantity}
                                 name="alterInventoryAmt"
                                 onChange={(e) => {
-                                    items.at(index).quantity = e.target.value;
-                                    items.at(index).changed = true
-                                }}
+                                        if (e.target.value >= 0) {
+                                            items.at(index).quantity = e.target.value;
+                                            items.at(index).changed = true;
+                                        } else {
+                                            e.target.value = 0;
+                                            items.at(index).quantity = e.target.value;
+                                            alert("No negative inputs allowed.");
+                                        }
+                                }
+                                }
                             />
                         </tr>
                     ))

@@ -112,9 +112,15 @@ function MeatManager({ lang, mode }) {
                                 placeholder={item.quantity}
                                 name="alterInventoryAmt"
                                 onChange={(e) => {
-                                    items.at(index).quantity = e.target.value;
-                                    items.at(index).changed = true
-                                }}
+                                        if (e.target.value >= 0) {
+                                            items.at(index).quantity = e.target.value;
+                                            items.at(index).changed = true;
+                                        } else {
+                                            items.at(index).quantity = 0;
+                                            alert("No negative inputs allowed.");
+                                        }
+                                }
+                                }
                             />
                         </tr>
                     ))

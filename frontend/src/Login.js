@@ -18,6 +18,7 @@ export default function Login({ lang, setToken, mode }) {
     const onSuccess = (res) => {
         console.log('success:', res);
         setToken('true');
+        localStorage.setItem('token', 'true');
     };
     const onFailure = (err) => {
         console.log('failed:', err);

@@ -207,8 +207,8 @@ class SalesDashboard extends React.Component {
      * Logout function
      */
     logout() {
-       // window.location.reload();
         this.setToken('false');
+        localStorage.setItem('token', 'false');
         googleLogout();
     }
     /**

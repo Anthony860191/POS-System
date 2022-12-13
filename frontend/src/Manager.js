@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Translator, Translate } from 'react-auto-translate';
 import { googleLogout } from '@react-oauth/google';
@@ -20,6 +20,7 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const Manager = ({ lang, mode, setToken }) => {
   const logout = () => {
     setToken('false');
+    localStorage.setItem('token', 'false');
     googleLogout();
   }
 
@@ -32,12 +33,12 @@ const Manager = ({ lang, mode, setToken }) => {
       >
         <div className="Logout" class="g_id_signout">
           <center>
-          <Button class="g_id_signout" onClick = {logout}><Translate>Logout</Translate></Button>
+            <Button class="g_id_signout" onClick={logout}><Translate>Logout</Translate></Button>
           </center>
         </div>
       </Translator >
       <center>
-        <Tabs lang={lang} mode={mode}/>
+        <Tabs lang={lang} mode={mode} />
       </center>
 
     </div>

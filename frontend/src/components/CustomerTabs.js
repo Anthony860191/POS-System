@@ -78,7 +78,7 @@ function CustomerTabs({ lang, mode }) {
       const controller = new AbortController();
       Promise.all([
         fetch(`${url}menu/`,{signal:controller.signal}),
-        fetch(`${url}ingredients/`,{signal:controller.signal})
+        fetch(`${url}available_ingredients`,{signal:controller.signal})
       ])
         .then(([resMenu, resIngr]) =>
           Promise.all([resMenu.json(), resIngr.json()])

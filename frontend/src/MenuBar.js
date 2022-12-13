@@ -21,20 +21,23 @@ const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 export function MenuBar({ setLang, setMode }) {
     //Here we have a separate state for menu langauge, since passing in lang from app
     //makes it to where the language from other components do not update on state change
-    const [menuLang, setMenuLang] = useState();
-    const [menuMode, setMenuMode] = useState('light');
+    const [menuLang, setMenuLang] = useState(localStorage.getItem( 'lang' ) || 0);
+    const [menuMode, setMenuMode] = useState(localStorage.getItem( 'mode' ) || 'light');
 
     const handleSelect = eventKey => {
         setLang(eventKey);
         setMenuLang(eventKey);
+        localStorage.setItem('lang', eventKey);
     }
     const toggleTheme = () => {
         if (menuMode == 'light') {
             setMenuMode('dark');
             setMode('dark');
+            localStorage.setItem('mode', 'dark');
         } else {
             setMenuMode('light');
             setMode('light');
+            localStorage.setItem('mode', 'light');
         }
     }
     return (

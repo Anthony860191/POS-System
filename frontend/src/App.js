@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
 import { MenuBar } from "./MenuBar";
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import Customer from "./Customer";
 import Server from "./Server";
 import Manager from "./Manager";
@@ -31,7 +31,7 @@ function App() {
       googleApiKey={apiKey}
     >
       <div id={mode === "dark" ? "darkBackground" : ""}>
-        <BrowserRouter>
+        <HashRouter>
           <MenuBar setLang={setLang} setMode={setMode} />
           <Routes>
             <Route path='/' element={<Home lang={lang} mode={mode} />} />
@@ -40,7 +40,7 @@ function App() {
             <Route path='/Manager' element={token === 'true' ? <Manager lang={lang} mode={mode} setToken={setToken} /> : <Login lang={lang} mode={mode} setToken={setToken} />} />
             <Route path='/SalesDashboard' element={token === 'true' ? <SalesDashboard lang={lang} setToken={setToken} theme={mode}/>  : <div><Login lang={lang} mode={mode} setToken={setToken} theme={mode} />  </div>} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </div>
     </Translator>
   );
